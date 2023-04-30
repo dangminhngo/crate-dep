@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wait-port 8080 & vite",
+    "dev": "wait-port 8080 & vite --port 3000",
     "build": "tsc && vite build",
     "lint": "tsc --noEmit && eslint --fix \"src/**/*.{ts,tsx}\"",
     "preview": "vite preview"

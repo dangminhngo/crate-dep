@@ -1,7 +1,11 @@
+import path from 'path'
 import dotenv from 'dotenv'
 
 dotenv.config({
-  path: process.env.NODE_ENV == 'development' ? '.env.local' : '.env',
+  path:
+    process.env.NODE_ENV === 'development'
+      ? path.resolve(__dirname, '../.env.local')
+      : path.resolve(__dirname, '../.env'),
 })
 
 interface Config {

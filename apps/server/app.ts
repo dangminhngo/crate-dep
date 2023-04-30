@@ -4,8 +4,11 @@ import express, { Response } from 'express'
 
 import config from './config/default'
 import { createContext } from './context'
+import { connectDb } from './lib/prisma'
 import { userRouter } from './routers'
 import { router } from './trpc'
+
+connectDb()
 
 export const appRouter = router({
   user: userRouter,

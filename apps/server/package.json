@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "main": "app.ts",
+  "types": "app.ts",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch app",
     "lint": "tsc --noEmit && eslint --fix \"./**/*.{js,ts}\""
@@ -11,6 +12,7 @@
     "@trpc/server": "^10.23.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "database": "workspace:*",
     "express": "^4.18.2",
     "express-oauth2-jwt-bearer": "^1.4.1",
     "zod": "^3.21.4"

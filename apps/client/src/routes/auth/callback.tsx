@@ -7,5 +7,5 @@ export default function Callback() {
     return <div>There was an error. {error.message}</div>
   }
 
-  return <div>Callback Page</div>
+  return <div>Redirecting to Crate app...</div>
 }

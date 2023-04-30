@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { httpBatchLink } from '@trpc/client'
 
-import secrets from '@/lib/secrets'
+import config from '@/config/default'
 import { trpc } from '@/lib/trpc'
 
 export default function ServiceProvider({ children }: React.PropsWithChildren) {
@@ -14,10 +14,9 @@ export default function ServiceProvider({ children }: React.PropsWithChildren) {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: `${secrets.API_SERVER_URL}/trpc`,
+          url: `${config.apiServerURL}/trpc`,
           async headers() {
             const token = await getAccessTokenSilently()
-            console.log(token)
             return {
               Authorization: `Bearer ${token}`,
             }

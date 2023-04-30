@@ -2,7 +2,7 @@ import React from 'react'
 import { AppState, Auth0Provider } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
 
-import secrets from '@/lib/secrets'
+import config from '@/config/default'
 
 interface AuthProviderProps extends React.PropsWithChildren {}
 
@@ -14,23 +14,18 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   }
 
   if (
-    !(
-      secrets.AUTH0_DOMAIN &&
-      secrets.AUTH0_CLIENT_ID &&
-      secrets.AUTH0_CALLBACK_URL
-    )
+    !(config.auth0Domain && config.auth0ClientId && config.auth0CallbackURL)
   ) {
     return null
   }
 
   return (
     <Auth0Provider
-      domain={secrets.AUTH0_DOMAIN}
-      clientId={secrets.AUTH0_CLIENT_ID}
+      domain={config.auth0Domain}
+      clientId={config.auth0ClientId}
       authorizationParams={{
-        redirect_uri: secrets.AUTH0_CALLBACK_URL,
-        audience: `https://${secrets.AUTH0_DOMAIN}/api/v2/`,
-        scope: 'read:current_user update:current_user_metadata',
+        redirect_uri: config.auth0CallbackURL,
+        audience: config.auth0Audience,
       }}
       onRedirectCallback={onRedirectCallback}
     >

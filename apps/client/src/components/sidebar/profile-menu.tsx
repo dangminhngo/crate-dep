@@ -15,6 +15,7 @@ import ManageAccounts from '../icons/manage-accounts'
 
 export default function ProfileMenu() {
   const { user, logout } = useAuth0()
+  console.log(user)
 
   return (
     <Menu isLazy>

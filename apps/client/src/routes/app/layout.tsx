@@ -5,14 +5,21 @@ import Sidebar from '@/components/sidebar'
 import { trpc } from '@/lib/trpc'
 
 export default function AppLayout() {
-  const { status, data } = trpc.user.list.useQuery()
+  const { status: usersStatus, data: usersData } = trpc.user.list.useQuery()
+  const { status, data } = trpc.user.protectedList.useQuery()
 
   return (
     <Flex align="stretch" overflow="hidden" bg="slate.800">
       <Sidebar />
       <Outlet />
-      <div>Status: {JSON.stringify(status)}</div>
-      <div>Data: {JSON.stringify(data, null, 2)}</div>
+      <div>
+        List: {JSON.stringify(usersStatus)} -{' '}
+        {JSON.stringify(usersData, null, 2)}
+      </div>
+      <div>
+        Protected List: {JSON.stringify(status)} -{' '}
+        {JSON.stringify(data, null, 2)}
+      </div>
     </Flex>
   )
 }

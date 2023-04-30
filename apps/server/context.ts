@@ -19,6 +19,7 @@ const validateJwt = promisify(
 export async function createContext({ req, res }: CreateExpressContextOptions) {
   try {
     await validateJwt(req, res)
+    console.log(req.auth)
     return { user: 1 }
   } catch (err) {
     console.log(err)

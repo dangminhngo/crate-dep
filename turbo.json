@@ -1,0 +1,17 @@
+{
+  "$shema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "env": [
+        "NODE_ENV",
+        "DATABASE_URL",
+        "PORT",
+        "CLIENT_ORIGIN_URL",
+        "AUTH0_AUDIENCE",
+        "AUTH0_DOMAIN"
+      ]
+    },
+    "dev": { "cache": false, "persistent": true },
+    "lint": {}
+  }
+}

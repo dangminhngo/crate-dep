@@ -2,7 +2,11 @@ import { Flex, Icon, Text } from '@chakra-ui/react'
 
 import LoadingIndicator from './loading-indicator'
 
-export default function Loading() {
+interface LoadingProps {
+  message?: string
+}
+
+export default function Loading({ message = 'Just a minute' }: LoadingProps) {
   return (
     <Flex
       minHeight="100vh"
@@ -12,7 +16,7 @@ export default function Loading() {
       gap={8}
     >
       <Icon as={LoadingIndicator} w={40} h={40} color="brand.primary" />
-      <Text>Just a minute</Text>
+      <Text>{message}</Text>
     </Flex>
   )
 }

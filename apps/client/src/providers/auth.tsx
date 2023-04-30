@@ -27,7 +27,11 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     <Auth0Provider
       domain={secrets.AUTH0_DOMAIN}
       clientId={secrets.AUTH0_CLIENT_ID}
-      authorizationParams={{ redirect_uri: secrets.AUTH0_CALLBACK_URL }}
+      authorizationParams={{
+        redirect_uri: secrets.AUTH0_CALLBACK_URL,
+        audience: `https://${secrets.AUTH0_DOMAIN}/api/v2/`,
+        scope: 'read:current_user update:current_user_metadata',
+      }}
       onRedirectCallback={onRedirectCallback}
     >
       {children}

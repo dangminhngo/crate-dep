@@ -11,11 +11,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <RouterProvider>
       <AuthProvider>
-        <ChakraProvider>
-          <ServiceProvider>
+        <ServiceProvider>
+          <ChakraProvider>
             <App />
-          </ServiceProvider>
-        </ChakraProvider>
+          </ChakraProvider>
+        </ServiceProvider>
       </AuthProvider>
     </RouterProvider>
   </React.StrictMode>

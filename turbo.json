@@ -8,7 +8,8 @@
         "PORT",
         "CLIENT_ORIGIN_URL",
         "AUTH0_AUDIENCE",
-        "AUTH0_DOMAIN"
+        "AUTH0_DOMAIN",
+        "AUTH0_MANAGEMENT_API_TOKEN"
       ]
     },
     "dev": { "cache": false, "persistent": true },

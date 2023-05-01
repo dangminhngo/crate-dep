@@ -10,8 +10,7 @@
     "noImplicitReturns": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@prisma/client": ["node_modules/database"]
+      "@/*": ["./*"]
     }
   },
   "include": ["./**/*.ts"]

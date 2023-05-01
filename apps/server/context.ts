@@ -9,6 +9,7 @@ import {
 } from 'express-oauth2-jwt-bearer'
 
 import config from './config/default'
+import prisma from './lib/prisma'
 
 const validateJwt = promisify(
   auth({
@@ -34,9 +35,40 @@ export async function createContext({ req, res }: CreateExpressContextOptions) {
       domain: config.auth0Domain,
     })
     const profile = await management.getUser({ id: userId })
-    console.log(profile)
-    console.log(req.auth)
-    return { user: 1 }
+
+    if (
+      typeof profile.email_verified === 'boolean' &&
+      !profile.email_verified
+    ) {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'Email not verified',
+      })
+    }
+
+    if (!profile.user_id) {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'Missing user_id field',
+      })
+    }
+
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        userId: profile.user_id,
+      },
+    })
+
+    if (existingUser) {
+      return { user: existingUser }
+    }
+
+    const newUser = await prisma.user.create({
+      data: {
+        userId: profile.user_id,
+      },
+    })
+    return { user: newUser }
   } catch (err) {
     console.log(err)
     if (err instanceof InvalidTokenError) {

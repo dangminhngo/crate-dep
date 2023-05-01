@@ -178,9 +178,21 @@ importers:
         specifier: latest
         version: 4.13.0(prisma@4.13.0)
     devDependencies:
+      '@types/node':
+        specifier: ^18.16.3
+        version: 18.16.3
       prisma:
         specifier: latest
         version: 4.13.0
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
+      tsx:
+        specifier: ^3.12.7
+        version: 3.12.7
+      typescript:
+        specifier: ^5.0.4
+        version: 5.0.4
 
   packages/eslint-config-custom:
     dependencies:

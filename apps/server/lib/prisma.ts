@@ -18,14 +18,3 @@ export const prisma =
   })
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
-
-export default async function connectDb() {
-  try {
-    await prisma.$connect()
-    console.log('Database successfully connected')
-  } catch (error) {
-    console.error(error)
-    await prisma.$disconnect()
-    process.exit(1)
-  }
-}

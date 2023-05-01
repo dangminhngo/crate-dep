@@ -3,14 +3,22 @@
   "version": "0.0.0",
   "main": "./index.ts",
   "types": "./index.ts",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "scripts": {
     "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate"
+    "db:push": "prisma db push --skip-generate",
+    "db:seed": "prisma db seed"
   },
   "dependencies": {
     "@prisma/client": "latest"
   },
   "devDependencies": {
-    "prisma": "latest"
+    "@types/node": "^18.16.3",
+    "prisma": "latest",
+    "tsconfig": "workspace:*",
+    "tsx": "^3.12.7",
+    "typescript": "^5.0.4"
   }
 }

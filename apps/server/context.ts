@@ -9,7 +9,7 @@ import {
 } from 'express-oauth2-jwt-bearer'
 
 import config from './config/default'
-import prisma from './lib/prisma'
+import { prisma } from './lib/prisma'
 
 const validateJwt = promisify(
   auth({
@@ -68,9 +68,9 @@ export async function createContext({ req, res }: CreateExpressContextOptions) {
         userId: profile.user_id,
       },
     })
-    return { user: newUser }
+    return { user: newUser, profile, token }
   } catch (err) {
-    console.log(err)
+    console.error(err)
     if (err instanceof InvalidTokenError) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',

@@ -1,21 +1,25 @@
 /*
- * @link: https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices
+ * @link https://www.prisma.io/docs/support/help-articles/nextjs-prisma-client-dev-practices
  */
 
 import { PrismaClient } from 'database'
 
-declare global {
-  // eslint-disable-next-line no-var
-  var prisma: PrismaClient | undefined
+const globalForPrisma = global as unknown as {
+  prisma: PrismaClient | undefined
 }
 
-const prisma = global.prisma || new PrismaClient()
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log:
+      process.env.NODE_ENV === 'development'
+        ? ['query', 'error', 'warn']
+        : ['error'],
+  })
 
-if (process.env.NODE_ENV !== 'production') {
-  global.prisma = prisma
-}
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
-export async function connectDb() {
+export default async function connectDb() {
   try {
     await prisma.$connect()
     console.log('Database successfully connected')
@@ -25,5 +29,3 @@ export async function connectDb() {
     process.exit(1)
   }
 }
-
-export default prisma

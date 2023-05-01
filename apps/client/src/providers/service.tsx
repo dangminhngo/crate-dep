@@ -16,7 +16,12 @@ export default function ServiceProvider({ children }: React.PropsWithChildren) {
         httpBatchLink({
           url: `${config.apiServerURL}/trpc`,
           async headers() {
-            const token = await getAccessTokenSilently()
+            const token = await getAccessTokenSilently({
+              authorizationParams: {
+                audience: config.auth0Audience,
+                scope: 'read:current_user',
+              },
+            })
             return {
               Authorization: `Bearer ${token}`,
             }

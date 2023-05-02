@@ -3,41 +3,55 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  const userOne = await prisma.user.upsert({
+  const user = await prisma.user.upsert({
     where: { userId: 'github|123913864' },
     update: {},
     create: {
       userId: 'github|123913864',
-      notes: {
-        create: [
-          {
-            title: 'JavaScript asynchronous',
-            description: 'Promise, callback, async/await',
-            code: '# JavaScript asynchronous',
-          },
-          {
-            title: 'React state hooks',
-            description: 'useState, useReducer',
-            code: '# React state hooks',
-          },
-        ],
-      },
+    },
+  })
+
+  await prisma.note.create({
+    data: {
+      title: 'JavaScript history',
+      description: 'JavaScript history',
+      code: '# JavaScript history',
+      ownerId: user.id,
       tags: {
         create: [
           {
-            title: 'React',
-            description: 'React related notes',
+            title: 'JavaScript',
+            ownerId: user.id,
           },
           {
-            title: 'JavaScript',
-            description: 'JS related notes',
+            title: 'React',
+            ownerId: user.id,
+          },
+        ],
+      },
+    },
+  })
+  await prisma.note.create({
+    data: {
+      title: 'Next.js data fetching',
+      description: 'Data fetching in Next.js',
+      code: '# Next.js data fetching',
+      ownerId: user.id,
+      tags: {
+        create: [
+          {
+            title: 'Next',
+            ownerId: user.id,
           },
         ],
       },
     },
   })
 
-  console.log({ userOne })
+  const notes = await prisma.note.findMany({ where: { ownerId: user.id } })
+  const tags = await prisma.tag.findMany({ where: { ownerId: user.id } })
+
+  return { user, notes, tags }
 }
 
 main()

@@ -37,7 +37,6 @@ model Note {
 model Tag {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title String @db.String
-  description String @db.String
   color String?
   noteIds String[] @db.ObjectId
   notes Note[] @relation(fields: [noteIds], references: [id])

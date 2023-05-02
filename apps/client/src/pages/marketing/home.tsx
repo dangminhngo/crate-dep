@@ -1,6 +1,6 @@
 import { Button, Center, Container, Flex, Heading } from '@chakra-ui/react'
 
-export default function Home() {
+export default function HomePage() {
   return (
     <Center>
       <Container

@@ -7,7 +7,7 @@ import NoteList from '@/components/notes/note-list'
 import IconButton from '@/components/ui/icon-button'
 import { useNoteList } from '@/hooks'
 
-export default function Notes() {
+export default function NotesPage() {
   const { status, data: notes } = useNoteList()
 
   if (status === 'loading') return <div>Loading...</div>

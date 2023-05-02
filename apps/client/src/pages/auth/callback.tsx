@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 
 import Loading from '@/components/loading'
 
-export default function Callback() {
+export default function CallbackPage() {
   const { error } = useAuth0()
 
   if (error) {

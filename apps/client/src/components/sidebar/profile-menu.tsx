@@ -15,7 +15,6 @@ import ManageAccounts from '../icons/manage-accounts'
 
 export default function ProfileMenu() {
   const { user, logout } = useAuth0()
-  console.log(user)
 
   return (
     <Menu isLazy>
@@ -51,8 +50,8 @@ export default function ProfileMenu() {
       <MenuList minW="224px">
         <MenuItem icon={<ManageAccounts />}>Account</MenuItem>
         <MenuItem
-          color="red.400"
-          _hover={{ color: 'red.400', bg: 'slate.700' }}
+          color="red"
+          _hover={{ color: 'red', bg: 'slate.700' }}
           icon={<Logout />}
           onClick={() => logout()}
         >

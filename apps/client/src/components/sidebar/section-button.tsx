@@ -12,9 +12,9 @@ const sectionButtonVariants = {
       },
     },
     danger: {
-      color: 'red.400',
+      color: 'red',
       _hover: {
-        color: 'red.300',
+        color: 'red',
         bg: 'slate.800',
       },
     },
@@ -53,7 +53,7 @@ export default function SectionButton({
         {...sectionButtonVariants.variants[variant]}
         onClick={onClick}
       >
-        <Icon as={ButtonIcon} />
+        <Icon h={5} w={5} as={ButtonIcon} />
         {children}
       </Button>
     </Tooltip>

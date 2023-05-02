@@ -21,7 +21,8 @@ const palette = {
     600: '#5a6372',
     700: '#434a56',
     800: '#2c313a',
-    900: '#1d2026',
+    900: '#242930',
+    950: '#1d2026',
   },
   red: '#de6a6d',
   green: '#a4c76f',
@@ -40,7 +41,7 @@ export const getTheme = () => {
       global: {
         body: {
           color: 'slate.100',
-          bg: 'slate.900',
+          bg: 'slate.950',
           lineHeight: 'none',
         },
       },
@@ -71,7 +72,7 @@ export const getTheme = () => {
       },
       editorActiveLine: {
         fg: palette.slate['200'],
-        bg: palette.slate['700'],
+        bg: palette.slate['900'],
       },
       editorBracketMatch: {
         fg: palette.green,
@@ -84,7 +85,7 @@ export const getTheme = () => {
       },
       editorActiveLineGutter: {
         fg: palette.green,
-        bg: palette.slate['700'],
+        bg: palette.slate['900'],
         border: 'none',
       },
       editorFoldPlaceholder: {

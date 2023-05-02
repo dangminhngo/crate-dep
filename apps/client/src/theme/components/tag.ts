@@ -6,7 +6,7 @@ const Tag = defineStyleConfig({
       py: 1.5,
       px: 3,
       bg: 'slate.100',
-      color: 'slate.900',
+      color: 'slate.950',
       borderRadius: 'full',
       fontSize: 'xs',
       fontWeight: 'medium',

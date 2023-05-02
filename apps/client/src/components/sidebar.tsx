@@ -14,7 +14,7 @@ export default function Sidebar() {
   const navigate = useNavigate()
 
   return (
-    <Container minW="256px" minH="100vh" bg="slate.900" fontSize="sm">
+    <Container minW="256px" minH="100vh" bg="slate.950" fontSize="sm">
       <Flex h="100%" direction="column" align="stretch" p={4}>
         <Flex direction="column" align="stretch" gap={4}>
           <ProfileMenu />

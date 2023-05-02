@@ -21,7 +21,7 @@ const Button = defineStyleConfig({
   variants: {
     default: {
       bg: 'brand.primary',
-      color: 'slate.900',
+      color: 'slate.950',
       _hover: {
         bg: 'brand.light',
       },

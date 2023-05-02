@@ -1,6 +1,7 @@
 import { Container } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 
+import Editor from '@/components/editor'
 import { useNoteById } from '@/hooks'
 
 export default function NotePage() {
@@ -11,8 +12,18 @@ export default function NotePage() {
   if (status === 'error') return <div>Loading...</div>
 
   return (
-    <Container flex={1} px={4} py={32}>
-      {JSON.stringify(data, null, 2)}
+    <Container flex={1}>
+      <Editor
+        code={data.code}
+        setCode={(c) => console.log(c)}
+        config={{
+          autocomplete: true,
+          highlightActiveLine: true,
+          lineNumbers: true,
+          lineWrapping: true,
+          tabSize: 2,
+        }}
+      />
     </Container>
   )
 }

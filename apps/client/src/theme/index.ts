@@ -1,11 +1,12 @@
 import { theme as chakraTheme, extendBaseTheme } from '@chakra-ui/react'
 
 import Button from './components/button'
-import Icon from './components/icon'
 import Menu from './components/menu'
+import Table from './components/table'
+import Tag from './components/tag'
 import Tooltip from './components/tooltip'
 
-const { Avatar } = chakraTheme.components
+const { Avatar, Heading } = chakraTheme.components
 
 export const getTheme = () => {
   const theme = extendBaseTheme({
@@ -41,8 +42,10 @@ export const getTheme = () => {
     components: {
       Avatar,
       Button,
-      Icon,
+      Heading,
       Menu,
+      Table,
+      Tag,
       Tooltip,
     },
   })

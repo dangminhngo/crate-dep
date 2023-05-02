@@ -21,7 +21,7 @@ export default function ProfileMenu() {
     <Menu isLazy>
       <MenuButton
         px={4}
-        py={2}
+        py={2.5}
         color="slate.200"
         borderRadius="base"
         border="1px solid"

@@ -3,6 +3,8 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "commonjs",
+    "declaration": false,
+    "declarationMap": false,
     "strictPropertyInitialization": false
   },
   "include": ["./**/*.ts"]

@@ -1,6 +1,6 @@
 import { Flex, Icon, Text } from '@chakra-ui/react'
 
-import LoadingIndicator from './loading-indicator'
+import LoadingIndicator from './ui/loading-indicator'
 
 interface LoadingProps {
   message?: string

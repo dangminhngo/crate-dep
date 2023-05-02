@@ -1,7 +1,8 @@
 import { Container, Flex, Spacer } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
 
-import Dashboard from './icons/dashboard'
 import Delete from './icons/delete'
+import Label from './icons/label'
 import Search from './icons/search'
 import Settings from './icons/settings'
 import Star from './icons/star'
@@ -10,10 +11,12 @@ import ProfileMenu from './sidebar/profile-menu'
 import SectionButton from './sidebar/section-button'
 
 export default function Sidebar() {
+  const navigate = useNavigate()
+
   return (
     <Container minW="256px" minH="100vh" bg="slate.900" fontSize="sm">
-      <Flex h="100%" direction="column" align="stretch" py={8} px={4}>
-        <Flex direction="column" align="stretch" gap={6}>
+      <Flex h="100%" direction="column" align="stretch" p={4}>
+        <Flex direction="column" align="stretch" gap={4}>
           <ProfileMenu />
           <Flex direction="column" align="stretch">
             <SectionButton
@@ -35,21 +38,21 @@ export default function Sidebar() {
             <SectionButton
               icon={StickyNote}
               tooltip="Your notes"
-              onClick={() => console.log('search')}
+              onClick={() => navigate('/app/notes')}
             >
               Notes
             </SectionButton>
             <SectionButton
-              icon={Dashboard}
+              icon={Label}
               tooltip="Organize your tags"
-              onClick={() => console.log('search')}
+              onClick={() => navigate('/app/tags')}
             >
               Tags
             </SectionButton>
             <SectionButton
               icon={Star}
               tooltip="Starred"
-              onClick={() => console.log('search')}
+              onClick={() => navigate('/app/starred')}
             >
               Starred
             </SectionButton>
@@ -59,7 +62,7 @@ export default function Sidebar() {
               variant="danger"
               icon={Delete}
               tooltip="Your trash"
-              onClick={() => console.log('search')}
+              onClick={() => navigate('/app/trash')}
             >
               Trash
             </SectionButton>

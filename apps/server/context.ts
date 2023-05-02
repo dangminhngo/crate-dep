@@ -1,7 +1,6 @@
 import { promisify } from 'util'
 import { TRPCError, inferAsyncReturnType } from '@trpc/server'
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express'
-import { ManagementClient } from 'auth0'
 import {
   InvalidTokenError,
   UnauthorizedError,
@@ -30,45 +29,16 @@ export async function createContext({ req, res }: CreateExpressContextOptions) {
         message: 'Missing token or payload user sub',
       })
     }
-    const management = new ManagementClient({
-      token: config.auth0ManagementApiToken,
-      domain: config.auth0Domain,
-    })
-    const profile = await management.getUser({ id: userId })
 
-    if (
-      typeof profile.email_verified === 'boolean' &&
-      !profile.email_verified
-    ) {
-      throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        message: 'Email not verified',
-      })
-    }
-
-    if (!profile.user_id) {
-      throw new TRPCError({
-        code: 'UNAUTHORIZED',
-        message: 'Missing user_id field',
-      })
-    }
-
-    const existingUser = await prisma.user.findUnique({
-      where: {
-        userId: profile.user_id,
+    const user = await prisma.user.upsert({
+      where: { userId },
+      update: {},
+      create: {
+        userId,
       },
     })
 
-    if (existingUser) {
-      return { user: existingUser }
-    }
-
-    const newUser = await prisma.user.create({
-      data: {
-        userId: profile.user_id,
-      },
-    })
-    return { user: newUser, profile, token }
+    return { user, token }
   } catch (err) {
     console.error(err)
     if (err instanceof InvalidTokenError) {

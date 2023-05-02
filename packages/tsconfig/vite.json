@@ -8,9 +8,9 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "sourceMap": true,
+    "declaration": false,
+    "declarationMap": false,
     "jsx": "react-jsx",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true
   },

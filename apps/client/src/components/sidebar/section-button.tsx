@@ -40,7 +40,7 @@ export default function SectionButton({
       <Button
         variant="unstyled"
         px={4}
-        py={2}
+        py={2.5}
         h="auto"
         bg="transparent"
         display="flex"

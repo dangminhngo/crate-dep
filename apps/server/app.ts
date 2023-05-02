@@ -1,14 +1,14 @@
 import { createExpressMiddleware } from '@trpc/server/adapters/express'
 import cors from 'cors'
-import express, { Response } from 'express'
+import express, { Request, Response } from 'express'
 
 import config from './config/default'
 import { createContext } from './context'
-import { userRouter } from './routers'
+import { noteRouter } from './routers'
 import { router } from './trpc'
 
 export const appRouter = router({
-  user: userRouter,
+  note: noteRouter,
 })
 
 export type AppRouter = typeof appRouter
@@ -30,7 +30,7 @@ app.use(
   })
 )
 
-app.use('/', (_, res: Response) => {
+app.use('/', (_: Request, res: Response) => {
   return res.status(200).json({ status: 'ok' })
 })
 

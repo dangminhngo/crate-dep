@@ -17,7 +17,7 @@ export default function Notes() {
   return (
     <Container flex={1} px={4} py={32}>
       <Container maxW="1024px" mx="auto">
-        <Flex direction="column" align="stretch">
+        <Flex direction="column" align="stretch" gap={12}>
           <Flex align="center" justify="space-between">
             <Heading
               as="h3"

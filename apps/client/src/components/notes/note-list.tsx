@@ -20,6 +20,7 @@ interface NoteListProps {
 
 export default function NoteList({ notes }: NoteListProps) {
   const navigate = useNavigate()
+
   return (
     <TableContainer>
       <Table>
@@ -33,9 +34,19 @@ export default function NoteList({ notes }: NoteListProps) {
         </Thead>
         <Tbody>
           {notes.map(({ id, title, description, tags, updatedAt }) => (
-            <Tr key={id} onClick={() => navigate(`/app/notes/${id}`)}>
+            <Tr
+              key={id}
+              onClick={() => navigate(`/app/notes/${id}`)}
+              cursor="pointer"
+              transitionProperty="color, background-color, border-color"
+              transitionDuration="150ms"
+              transitionTimingFunction="ease-out"
+              _hover={{
+                bg: 'slate.700',
+              }}
+            >
               <Td>{title}</Td>
-              <Td>{description}</Td>
+              <Td color="slate.300">{description}</Td>
               <Td>
                 <Flex gap={1}>
                   {tags.map((tag) => (
@@ -43,7 +54,9 @@ export default function NoteList({ notes }: NoteListProps) {
                   ))}
                 </Flex>
               </Td>
-              <Td>{formatDateTime(updatedAt, 'LLL dd, yyyy')}</Td>
+              <Td color="slate.300">
+                {formatDateTime(updatedAt, 'LLL dd, yyyy')}
+              </Td>
             </Tr>
           ))}
         </Tbody>

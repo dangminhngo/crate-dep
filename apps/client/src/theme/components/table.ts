@@ -8,13 +8,19 @@ const Table = defineStyleConfig({
       textAlign: 'left',
     },
     th: {
-      p: 2,
+      px: 4,
+      py: 3,
       fontSize: 'xs',
       textTransform: 'uppercase',
       color: 'slate.400',
+      border: `1px solid`,
+      borderColor: 'slate.700',
     },
     td: {
-      p: 2,
+      px: 4,
+      py: 2,
+      border: `1px solid`,
+      borderColor: 'slate.700',
     },
   },
 })

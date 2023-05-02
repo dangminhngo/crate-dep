@@ -5,7 +5,8 @@ const Tag = defineStyleConfig({
     container: {
       py: 1.5,
       px: 3,
-      bg: 'slate.700',
+      bg: 'slate.100',
+      color: 'slate.900',
       borderRadius: 'full',
       fontSize: 'xs',
       fontWeight: 'medium',

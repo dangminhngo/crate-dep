@@ -42,7 +42,7 @@ export default function NoteList({ notes }: NoteListProps) {
               transitionDuration="150ms"
               transitionTimingFunction="ease-out"
               _hover={{
-                bg: 'slate.700',
+                bg: 'slate.900',
               }}
             >
               <Td>{title}</Td>

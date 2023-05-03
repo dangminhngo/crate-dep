@@ -6,7 +6,7 @@ import Table from './components/table'
 import Tag from './components/tag'
 import Tooltip from './components/tooltip'
 
-const { Avatar, Heading } = chakraTheme.components
+const { Avatar, Heading, Skeleton } = chakraTheme.components
 
 const palette = {
   transparent: 'transparent',
@@ -133,6 +133,7 @@ export const getTheme = () => {
       Button,
       Heading,
       Menu,
+      Skeleton,
       Table,
       Tag,
       Tooltip,

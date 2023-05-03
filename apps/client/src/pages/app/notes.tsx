@@ -4,13 +4,14 @@ import FilterAlt from '@/components/icons/filter-alt'
 import Sort from '@/components/icons/sort'
 import StickyNote from '@/components/icons/sticky-note'
 import NoteList from '@/components/notes/note-list'
+import NotesSkeleton from '@/components/skeletons/notes-skeleton'
 import IconButton from '@/components/ui/icon-button'
 import { useNoteList } from '@/hooks'
 
 export default function NotesPage() {
   const { status, data: notes } = useNoteList()
 
-  if (status === 'loading') return <div>Loading...</div>
+  if (status === 'loading') return <NotesSkeleton />
 
   if (status === 'error') return <div>There was an error</div>
 

@@ -6,15 +6,18 @@ import AuthProvider from './providers/auth'
 import ChakraProvider from './providers/chakra'
 import RouterProvider from './providers/router'
 import ServiceProvider from './providers/service'
+import StoreProvider from './providers/store'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <RouterProvider>
       <AuthProvider>
         <ServiceProvider>
-          <ChakraProvider>
-            <App />
-          </ChakraProvider>
+          <StoreProvider>
+            <ChakraProvider>
+              <App />
+            </ChakraProvider>
+          </StoreProvider>
         </ServiceProvider>
       </AuthProvider>
     </RouterProvider>

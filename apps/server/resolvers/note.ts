@@ -4,23 +4,32 @@ import { z } from 'zod'
 import { prisma } from '../lib/prisma'
 import { protectedProcedure } from '../trpc'
 
-export const listNotes = protectedProcedure.query(async ({ ctx }) => {
-  const notes = await prisma.note.findMany({
-    where: {
-      ownerId: ctx.user.id,
-    },
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      tags: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  })
+export const listNotes = protectedProcedure
+  .input(
+    z
+      .object({
+        starred: z.boolean(),
+      })
+      .partial()
+  )
+  .query(async ({ ctx, input }) => {
+    const notes = await prisma.note.findMany({
+      where: {
+        ownerId: ctx.user.id,
+        ...(input.starred ? { starred: true } : {}),
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        tags: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    })
 
-  return notes
-})
+    return notes
+  })
 
 export const getNoteById = protectedProcedure
   .input(z.string())

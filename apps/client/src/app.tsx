@@ -5,6 +5,7 @@ import AppLayout from './pages/app/layout'
 import NotePage from './pages/app/note'
 import NotesPage from './pages/app/notes'
 import StarredPage from './pages/app/starred'
+import TagPage from './pages/app/tag'
 import TagsPage from './pages/app/tags'
 import TrashPage from './pages/app/trash'
 import CallbackPage from './pages/auth/callback'
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/app/notes" element={<NotesPage />} />
         <Route path="/app/notes/:id" element={<NotePage />} />
         <Route path="/app/tags" element={<TagsPage />} />
+        <Route path="/app/tags/:id" element={<TagPage />} />
         <Route path="/app/starred" element={<StarredPage />} />
         <Route path="/app/trash" element={<TrashPage />} />
       </Route>

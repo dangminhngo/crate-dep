@@ -2,8 +2,10 @@ import { defineStyleConfig } from '@chakra-ui/react'
 
 const Tooltip = defineStyleConfig({
   baseStyle: {
-    p: 2,
-    bg: 'slate.700',
+    px: 2,
+    py: 1,
+    bg: 'slate.200',
+    color: 'slate.900',
     fontSize: 'sm',
     borderRadius: 'base',
     boxShadow: 'md',

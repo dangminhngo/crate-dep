@@ -4,54 +4,65 @@ import { z } from 'zod'
 import { prisma } from '../lib/prisma'
 import { protectedProcedure } from '../trpc'
 
-export const listNotes = protectedProcedure.query(async ({ ctx }) => {
-  const notes = await prisma.note.findMany({
+export const listTags = protectedProcedure.query(async ({ ctx }) => {
+  const tags = await prisma.tag.findMany({
     where: {
       ownerId: ctx.user.id,
     },
     select: {
       id: true,
       title: true,
-      description: true,
-      tags: true,
       createdAt: true,
       updatedAt: true,
+      _count: {
+        select: {
+          notes: true,
+        },
+      },
     },
   })
 
-  return notes
+  return tags
 })
 
-export const getNoteById = protectedProcedure
+export const getTagById = protectedProcedure
   .input(z.string())
   .query(async ({ ctx, input }) => {
-    const note = await prisma.note.findFirstOrThrow({
+    const tag = await prisma.tag.findFirstOrThrow({
       where: { id: input, ownerId: ctx.user.id },
       select: {
         id: true,
         title: true,
-        description: true,
-        tags: {
+        notes: {
           select: {
             id: true,
             title: true,
-            color: true,
+            description: true,
+            tags: {
+              select: {
+                id: true,
+                title: true,
+                color: true,
+                createdAt: true,
+                updatedAt: true,
+              },
+            },
+            code: true,
             createdAt: true,
             updatedAt: true,
           },
         },
-        code: true,
         createdAt: true,
         updatedAt: true,
       },
     })
 
-    if (!note) {
+    if (!tag) {
       throw new TRPCError({
         code: 'NOT_FOUND',
-        message: `Cannot find a note with id ${input}`,
+        message: `Cannot find a tag with id ${input}`,
       })
     }
 
-    return note
+    return tag
   })

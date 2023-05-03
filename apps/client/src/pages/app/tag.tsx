@@ -1,17 +1,19 @@
 import { Container, Flex, Heading, Icon, Text } from '@chakra-ui/react'
+import { useParams } from 'react-router-dom'
 
 import FilterAlt from '@/components/icons/filter-alt'
 import Label from '@/components/icons/label'
 import Sort from '@/components/icons/sort'
-import TagsSkeleton from '@/components/skeletons/tags-skeleton'
-import TagList from '@/components/tags/tag-list'
+import NoteList from '@/components/notes/note-list'
+import NotesSkeleton from '@/components/skeletons/notes-skeleton'
 import IconButton from '@/components/ui/icon-button'
-import { useTagList } from '@/hooks'
+import { useTagById } from '@/hooks'
 
-export default function TagsPage() {
-  const { status, data: tags } = useTagList()
+export default function TagPage() {
+  const params = useParams()
+  const { status, data: tag } = useTagById(params.id as string)
 
-  if (status === 'loading') return <TagsSkeleton />
+  if (status === 'loading') return <NotesSkeleton />
 
   if (status === 'error') return <div>There was an error</div>
 
@@ -29,18 +31,18 @@ export default function TagsPage() {
               gap={2}
             >
               <Icon h={8} w={8} as={Label} />
-              Tags
+              {tag.title}
             </Heading>
             <Flex align="center" gap={6}>
               <Text color="slate.400">Last edited Apr 28</Text>
-              <Text>{tags.length} tags</Text>
+              <Text>{tag.notes.length} notes</Text>
               <Flex align="center" gap={2}>
                 <IconButton icon={FilterAlt} tooltip="Filter" />
                 <IconButton icon={Sort} tooltip="Sort" />
               </Flex>
             </Flex>
           </Flex>
-          <TagList tags={tags} />
+          <NoteList notes={tag.notes} />
         </Flex>
       </Container>
     </Container>

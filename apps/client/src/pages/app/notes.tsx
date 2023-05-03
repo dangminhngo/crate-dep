@@ -33,7 +33,7 @@ export default function NotesPage() {
             </Heading>
             <Flex align="center" gap={6}>
               <Text color="slate.400">Last edited Apr 28</Text>
-              <Text>2 notes</Text>
+              <Text>{notes.length} notes</Text>
               <Flex align="center" gap={2}>
                 <IconButton icon={FilterAlt} tooltip="Filter" />
                 <IconButton icon={Sort} tooltip="Sort" />

@@ -1,8 +1,6 @@
 import {
-  Flex,
   Table,
   TableContainer,
-  Tag,
   Tbody,
   Td,
   Th,
@@ -11,14 +9,14 @@ import {
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 
-import type { NoteListOutput, TagByIdOutput } from '@/hooks'
+import type { TagListOutput } from '@/hooks'
 import { formatDateTime } from '@/lib/helpers'
 
-interface NoteListProps {
-  notes: NoteListOutput | TagByIdOutput['notes']
+interface TagListProps {
+  tags: TagListOutput
 }
 
-export default function NoteList({ notes }: NoteListProps) {
+export default function TagList({ tags }: TagListProps) {
   const navigate = useNavigate()
 
   return (
@@ -27,16 +25,16 @@ export default function NoteList({ notes }: NoteListProps) {
         <Thead>
           <Tr>
             <Th>Title</Th>
-            <Th>Description</Th>
-            <Th>Tags</Th>
+            <Th>Notes</Th>
+            <Th>Created</Th>
             <Th>Edited</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {notes.map(({ id, title, description, tags, updatedAt }) => (
+          {tags.map(({ id, title, _count, createdAt, updatedAt }) => (
             <Tr
               key={id}
-              onClick={() => navigate(`/app/notes/${id}`)}
+              onClick={() => navigate(`/app/tags/${id}`)}
               cursor="pointer"
               transitionProperty="color, background-color, border-color"
               transitionDuration="150ms"
@@ -45,14 +43,10 @@ export default function NoteList({ notes }: NoteListProps) {
                 bg: 'slate.900',
               }}
             >
-              <Td>{title}</Td>
-              <Td color="slate.300">{description}</Td>
-              <Td>
-                <Flex gap={1}>
-                  {tags.map((tag) => (
-                    <Tag key={tag.id}>{tag.title}</Tag>
-                  ))}
-                </Flex>
+              <Td py={3}>{title}</Td>
+              <Td>{_count.notes} notes</Td>
+              <Td color="slate.300">
+                {formatDateTime(createdAt, 'LLL dd, yyyy')}
               </Td>
               <Td color="slate.300">
                 {formatDateTime(updatedAt, 'LLL dd, yyyy')}

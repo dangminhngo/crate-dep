@@ -8,14 +8,14 @@ const iconButtonVariants = {
       color: 'slate.300',
       _hover: {
         color: 'slate.100',
-        bg: 'slate.800',
+        bg: 'slate.700',
       },
     },
     danger: {
       color: 'red',
       _hover: {
         color: 'red',
-        bg: 'slate.800',
+        bg: 'slate.700',
       },
     },
   },

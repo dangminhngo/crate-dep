@@ -1,7 +1,7 @@
-import { getNoteById, listUserNotes } from '../resolvers/note'
+import { getNoteById, listNotes } from '../resolvers/note'
 import { router } from '../trpc'
 
 export const noteRouter = router({
-  list: listUserNotes,
+  list: listNotes,
   byId: getNoteById,
 })

@@ -18,7 +18,7 @@ export const listNotes = protectedProcedure
       where: {
         ownerId: ctx.user.id,
         ...(input.starred ? { starred: true } : {}),
-        ...(input.trashed ? { trashed: true } : {}),
+        ...(input.trashed ? { trashed: true } : { trashed: false }),
       },
       select: {
         id: true,

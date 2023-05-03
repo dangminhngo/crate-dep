@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Container, Flex, Text } from '@chakra-ui/react'
+import { Container, Flex, Icon, Text } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 
 import Editor from '@/components/editor'
@@ -8,6 +8,7 @@ import Download from '@/components/icons/download'
 import Fullscreen from '@/components/icons/fullscreen'
 import Recycling from '@/components/icons/recycling'
 import Star from '@/components/icons/star'
+import StickyNote from '@/components/icons/sticky-note'
 import Visibility from '@/components/icons/visibility'
 import Preview from '@/components/preview'
 import IconButton from '@/components/ui/icon-button'
@@ -48,7 +49,10 @@ export default function NotePage() {
           )}
         </Flex>
         <Flex align="center" justify="space-between" pl={4} bg="slate.950">
-          <Text fontWeight="medium">{note.title}</Text>
+          <Flex align="center" gap={2}>
+            <Icon h={5} w={5} as={StickyNote} />
+            <Text fontWeight="medium">{note.title}</Text>
+          </Flex>
           <Flex align="center" gap={4}>
             <Text color="slate.400">
               Edited at {formatDateTime(note.updatedAt, 'HH:MM')} on{' '}

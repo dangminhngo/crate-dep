@@ -42,7 +42,13 @@ export default function TagPage() {
               </Flex>
             </Flex>
           </Flex>
-          <NoteList notes={tag.notes} />
+          {tag.notes.length > 0 ? (
+            <NoteList notes={tag.notes} />
+          ) : (
+            <Text textAlign="center">
+              You have no notes with tag "{tag.title}".
+            </Text>
+          )}
         </Flex>
       </Container>
     </Container>

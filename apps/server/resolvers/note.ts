@@ -9,6 +9,7 @@ export const listNotes = protectedProcedure
     z
       .object({
         starred: z.boolean(),
+        trashed: z.boolean(),
       })
       .partial()
   )
@@ -17,6 +18,7 @@ export const listNotes = protectedProcedure
       where: {
         ownerId: ctx.user.id,
         ...(input.starred ? { starred: true } : {}),
+        ...(input.trashed ? { trashed: true } : {}),
       },
       select: {
         id: true,

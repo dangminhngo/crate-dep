@@ -40,7 +40,11 @@ export default function TagsPage() {
               </Flex>
             </Flex>
           </Flex>
-          <TagList tags={tags} />
+          {tags.length > 0 ? (
+            <TagList tags={tags} />
+          ) : (
+            <Text textAlign="center">You have no tags.</Text>
+          )}
         </Flex>
       </Container>
     </Container>

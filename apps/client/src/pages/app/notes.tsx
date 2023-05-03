@@ -40,7 +40,11 @@ export default function NotesPage() {
               </Flex>
             </Flex>
           </Flex>
-          <NoteList notes={notes} />
+          {notes.length > 0 ? (
+            <NoteList notes={notes} />
+          ) : (
+            <Text textAlign="center">You have no notes</Text>
+          )}
         </Flex>
       </Container>
     </Container>

@@ -2,12 +2,33 @@ import { Button, Icon, Tooltip } from '@chakra-ui/react'
 
 import { SVGProps } from '@/types/shared'
 
+const iconButtonVariants = {
+  variants: {
+    default: {
+      color: 'slate.300',
+      _hover: {
+        color: 'slate.100',
+        bg: 'slate.800',
+      },
+    },
+    danger: {
+      color: 'red',
+      _hover: {
+        color: 'red',
+        bg: 'slate.800',
+      },
+    },
+  },
+}
+
 interface IconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'default' | 'danger'
   icon: React.FC<SVGProps>
   tooltip?: string
 }
 
 export default function IconButton({
+  variant = 'default',
   icon: ButtonIcon,
   tooltip = '',
   ...props
@@ -21,10 +42,7 @@ export default function IconButton({
         w={9}
         display="grid"
         placeItems="center"
-        _hover={{
-          color: 'brand.primary',
-          bg: 'slate.700',
-        }}
+        {...iconButtonVariants.variants[variant]}
       >
         <Icon h={5} w={5} as={ButtonIcon} />
       </Button>

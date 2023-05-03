@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import Editor from '@/components/editor'
 import Delete from '@/components/icons/delete'
 import Download from '@/components/icons/download'
+import Draw from '@/components/icons/draw'
 import Fullscreen from '@/components/icons/fullscreen'
 import Recycling from '@/components/icons/recycling'
 import Star from '@/components/icons/star'
@@ -60,7 +61,7 @@ export default function NotePage() {
             </Text>
             <Flex align="center">
               <IconButton
-                icon={Visibility}
+                icon={preview ? Visibility : Draw}
                 tooltip="Change mode"
                 onClick={() => setPreview((preview) => !preview)}
               />

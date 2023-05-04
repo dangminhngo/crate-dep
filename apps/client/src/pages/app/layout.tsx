@@ -1,19 +1,12 @@
-import { Flex } from '@chakra-ui/react'
 import { Outlet } from 'react-router-dom'
 
 import Sidebar from '@/components/sidebar'
 
 export default function AppLayout() {
   return (
-    <Flex
-      align="stretch"
-      maxH="100vh"
-      overflow="hidden"
-      bg="slate.800"
-      fontSize="sm"
-    >
+    <div className="flex h-screen max-h-screen items-stretch text-sm">
       <Sidebar />
       <Outlet />
-    </Flex>
+    </div>
   )
 }

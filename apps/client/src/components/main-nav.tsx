@@ -1,4 +1,3 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
 import { Link, useLocation } from 'react-router-dom'
 
 const items = [
@@ -23,29 +22,27 @@ export default function MainNav() {
   const { pathname } = useLocation()
 
   return (
-    <Box as="nav" fontSize={14} fontWeight="semibold">
-      <Flex as="ul" align="center" gap={8} listStyleType="none">
+    <nav>
+      <ul className="list-style-none flex items-center gap-8 text-sm font-semibold">
         {items.map((item) => (
           <li key={item.title}>
-            <Link to={item.href}>
-              <Text
-                color={
-                  (
-                    item.href === '/'
-                      ? pathname === item.href
-                      : pathname.startsWith(item.href) && pathname !== '/'
-                  )
-                    ? 'slate.100'
-                    : 'slate.400'
-                }
-                transition="all .1s ease-out"
-              >
-                {item.title}
-              </Text>
+            <Link
+              to={item.href}
+              className={`${
+                (
+                  item.href === '/'
+                    ? pathname === item.href
+                    : pathname.startsWith(item.href)
+                )
+                  ? 'text-slate-100'
+                  : 'text-slate-400 hover:text-slate-200'
+              } transition-colors duration-300`}
+            >
+              {item.title}
             </Link>
           </li>
         ))}
-      </Flex>
-    </Box>
+      </ul>
+    </nav>
   )
 }

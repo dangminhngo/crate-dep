@@ -1,36 +1,24 @@
-import { Button, Center, Container, Flex, Heading } from '@chakra-ui/react'
+import { Button } from '@/components/ui'
 
 export default function HomePage() {
   return (
-    <Center>
-      <Container
-        maxW="1280px"
-        w="1280px"
-        px={10}
-        py="200px"
-        minH="calc(100vh - 61px)"
-      >
-        <Flex direction="column" align="center" gap={24}>
-          <Flex
-            direction="column"
-            align="center"
-            gap={8}
-            fontFamily="heading"
-            fontWeight="bold"
-          >
-            <Heading fontSize="4xl">Changes the way a developer</Heading>
-            <Heading as="h1" fontSize="8xl" color="brand.primary">
-              writes markdown
-            </Heading>
-          </Flex>
-          <Flex gap={4}>
-            <Button size="lg">Try now</Button>
-            <Button variant="outline" size="lg">
-              Github
-            </Button>
-          </Flex>
-        </Flex>
-      </Container>
-    </Center>
+    <div className="container pt-[200px]">
+      <div className="flex flex-col items-center gap-16">
+        <div className="flex flex-col items-center gap-6">
+          <h2 className="font-heading text-6xl font-bold">
+            Changes the way a developer
+          </h2>
+          <h1 className="font-heading text-primary text-8xl font-bold">
+            writes markdown
+          </h1>
+        </div>
+        <div className="flex items-center gap-8">
+          <Button size="lg">Try now</Button>
+          <Button variant="outline" size="lg">
+            Github
+          </Button>
+        </div>
+      </div>
+    </div>
   )
 }

@@ -1,6 +1,6 @@
 import { withAuthenticationRequired } from '@auth0/auth0-react'
 
-import Loading from './loading'
+import SplashScreen from './splash-screen'
 
 interface AuthGuardProps {
   component: React.ComponentType
@@ -8,7 +8,7 @@ interface AuthGuardProps {
 
 export default function AuthGuard({ component }: AuthGuardProps) {
   const Component = withAuthenticationRequired(component, {
-    onRedirecting: () => <Loading />,
+    onRedirecting: () => <SplashScreen />,
   })
 
   return <Component />

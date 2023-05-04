@@ -2,9 +2,8 @@ import { HighlightStyle, syntaxHighlighting } from '@codemirror/language'
 import { EditorView } from '@codemirror/view'
 import { tags as t } from '@lezer/highlight'
 
-import type { AppTheme } from '@/theme'
-
-export function createEditorThemeExtension(theme: AppTheme) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function createEditorThemeExtension(theme: any) {
   const c = theme.colors
 
   const codeMirrorTheme = EditorView.theme(

@@ -1,8 +1,24 @@
 import { motion, useTime, useTransform } from 'framer-motion'
 
 import { SVGProps } from '@/types/shared'
+import { Icon } from './ui'
 
-export default function LoadingIndicator(props: SVGProps) {
+interface SplashProps {
+  message?: string
+}
+
+export default function SplashScreen({
+  message = 'Just a minute',
+}: SplashProps) {
+  return (
+    <div className="flex h-screen w-full flex-col items-center justify-center gap-6">
+      <Icon as={SplashLogo} className="text-primary h-36 w-36" />
+      <p>{message}</p>
+    </div>
+  )
+}
+
+function SplashLogo(props: SVGProps) {
   const time = useTime()
   const rotate = useTransform(time, [0, 4000], [0, 360], { clamp: false })
 

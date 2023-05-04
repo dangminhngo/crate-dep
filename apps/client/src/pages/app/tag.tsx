@@ -1,12 +1,9 @@
-import { Container, Flex, Heading, Icon, Text } from '@chakra-ui/react'
+import { ArrowUpDown, Filter, Tag } from 'lucide-react'
 import { useParams } from 'react-router-dom'
 
-import FilterAlt from '@/components/icons/filter-alt'
-import Label from '@/components/icons/label'
-import Sort from '@/components/icons/sort'
-import NoteList from '@/components/notes/note-list'
+import NoteList from '@/components/note-list'
 import NotesSkeleton from '@/components/skeletons/notes-skeleton'
-import IconButton from '@/components/ui/icon-button'
+import { Icon, IconButton } from '@/components/ui'
 import { useTagById } from '@/hooks'
 
 export default function TagPage() {
@@ -18,39 +15,30 @@ export default function TagPage() {
   if (status === 'error') return <div>There was an error</div>
 
   return (
-    <Container flex={1} px={4} py={32}>
-      <Container maxW="1024px" mx="auto">
-        <Flex direction="column" align="stretch" gap={12}>
-          <Flex align="center" justify="space-between">
-            <Heading
-              as="h3"
-              size="lg"
-              fontFamily="body"
-              display="flex"
-              alignItems="center"
-              gap={2}
-            >
-              <Icon h={8} w={8} as={Label} />
-              {tag.title}
-            </Heading>
-            <Flex align="center" gap={6}>
-              <Text color="slate.400">Last edited Apr 28</Text>
-              <Text>{tag.notes.length} notes</Text>
-              <Flex align="center" gap={2}>
-                <IconButton icon={FilterAlt} tooltip="Filter" />
-                <IconButton icon={Sort} tooltip="Sort" />
-              </Flex>
-            </Flex>
-          </Flex>
-          {tag.notes.length > 0 ? (
-            <NoteList notes={tag.notes} />
-          ) : (
-            <Text textAlign="center">
-              You have no notes with tag "{tag.title}".
-            </Text>
-          )}
-        </Flex>
-      </Container>
-    </Container>
+    <div className="container flex flex-col items-stretch gap-12 py-48">
+      <div className="flex items-center justify-between">
+        <h3 className="flex items-center gap-2 text-3xl font-bold">
+          <Icon size="xl" as={Tag} />
+          Tag: {tag.title}
+        </h3>
+        <div className="flex items-center gap-6">
+          <span className="text-slate-400">Last edited Apr 28</span>
+          <span className="text-slate-400">{tag.notes.length} notes</span>
+          <div className="flex items-center gap-2">
+            <IconButton variant="ghost" size="sm" tooltip="Filter">
+              <Icon as={Filter} />
+            </IconButton>
+            <IconButton variant="ghost" size="sm" tooltip="Sort">
+              <Icon as={ArrowUpDown} />
+            </IconButton>
+          </div>
+        </div>
+      </div>
+      {tag.notes.length > 0 ? (
+        <NoteList notes={tag.notes} />
+      ) : (
+        <p>You have no notes</p>
+      )}
+    </div>
   )
 }

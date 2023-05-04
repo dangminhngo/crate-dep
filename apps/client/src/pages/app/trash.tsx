@@ -1,10 +1,8 @@
-import { Container, Flex, Heading, Icon, Text } from '@chakra-ui/react'
+import { ArrowUpDown, Trash } from 'lucide-react'
 
-import Delete from '@/components/icons/delete'
-import Sort from '@/components/icons/sort'
-import NoteList from '@/components/notes/note-list'
+import NoteList from '@/components/note-list'
 import NotesSkeleton from '@/components/skeletons/notes-skeleton'
-import IconButton from '@/components/ui/icon-button'
+import { Icon, IconButton } from '@/components/ui'
 import { useNoteList } from '@/hooks'
 
 export default function TrashPage() {
@@ -17,37 +15,27 @@ export default function TrashPage() {
   const trashedNotes = notes.filter((note) => note.trashed)
 
   return (
-    <Container flex={1} px={4} py={32}>
-      <Container maxW="1024px" mx="auto">
-        <Flex direction="column" align="stretch" gap={12}>
-          <Flex align="center" justify="space-between">
-            <Heading
-              as="h3"
-              size="lg"
-              fontFamily="body"
-              display="flex"
-              alignItems="center"
-              gap={2}
-              color="red"
-            >
-              <Icon h={8} w={8} as={Delete} />
-              Trash
-            </Heading>
-            <Flex align="center" gap={6}>
-              <Text color="slate.400">Last edited Apr 28</Text>
-              <Text>{trashedNotes.length} notes</Text>
-              <Flex align="center" gap={2}>
-                <IconButton icon={Sort} tooltip="Sort" />
-              </Flex>
-            </Flex>
-          </Flex>
-          {trashedNotes.length > 0 ? (
-            <NoteList notes={trashedNotes} />
-          ) : (
-            <Text textAlign="center">Your trash is empty</Text>
-          )}
-        </Flex>
-      </Container>
-    </Container>
+    <div className="container flex flex-col items-stretch gap-12 py-48">
+      <div className="flex items-center justify-between">
+        <h3 className="flex items-center gap-2 text-3xl font-bold text-red-400">
+          <Icon size="xl" as={Trash} />
+          Trash
+        </h3>
+        <div className="flex items-center gap-6">
+          <span className="text-slate-400">Last edited Apr 28</span>
+          <span className="text-slate-400">{trashedNotes.length} notes</span>
+          <div className="flex items-center gap-2">
+            <IconButton variant="ghost" size="sm" tooltip="Sort">
+              <Icon as={ArrowUpDown} />
+            </IconButton>
+          </div>
+        </div>
+      </div>
+      {trashedNotes.length > 0 ? (
+        <NoteList notes={trashedNotes} />
+      ) : (
+        <p>You have no notes</p>
+      )}
+    </div>
   )
 }

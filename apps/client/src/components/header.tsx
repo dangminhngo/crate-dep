@@ -1,18 +1,9 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import {
-  Box,
-  Button,
-  Center,
-  Container,
-  Flex,
-  Icon,
-  Spacer,
-  Text,
-} from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
 import Logo from './logo'
 import MainNav from './main-nav'
+import { Button, Icon } from './ui'
 
 export default function Header() {
   const { loginWithRedirect } = useAuth0()
@@ -29,34 +20,22 @@ export default function Header() {
   }
 
   return (
-    <Box as="header">
-      <Center borderBottom="1px" borderColor="slate.800">
-        <Container maxW="1280px" w="1280px" py={4} px={10}>
-          <Flex align="center" gap={12}>
-            <Link to="/">
-              <Flex align="center" gap={3} color="brand.primary">
-                <Icon as={Logo} boxSize={8} />
-                <Text
-                  fontFamily="heading"
-                  textTransform="uppercase"
-                  fontWeight="bold"
-                  fontSize={24}
-                >
-                  Crate
-                </Text>
-              </Flex>
-            </Link>
-            <MainNav />
-            <Spacer />
-            <Flex align="center" gap={4}>
-              <Button variant="text" onClick={handleLogin}>
-                Sign in
-              </Button>
-              <Button>Try for free</Button>
-            </Flex>
-          </Flex>
-        </Container>
-      </Center>
-    </Box>
+    <header className="border-b border-slate-800">
+      <div className="container flex items-center gap-12 py-6">
+        <Link to="/" className="text-primary flex items-center gap-4">
+          <Icon as={Logo} className="h-8 w-8" />
+          <span className="font-heading text-3xl font-bold uppercase">
+            Crate
+          </span>
+        </Link>
+        <MainNav />
+        <div className="ml-auto flex gap-4">
+          <Button variant="ghost" onClick={handleLogin}>
+            Sign in
+          </Button>
+          <Button>Try for free</Button>
+        </div>
+      </div>
+    </header>
   )
 }

@@ -1,5 +1,4 @@
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
-import { useTheme } from '@chakra-ui/react'
 import { Compartment, EditorState } from '@codemirror/state'
 import { EditorView, ViewUpdate } from '@codemirror/view'
 
@@ -22,7 +21,7 @@ export function useEditor({
   ref: RefObject<HTMLDivElement>
   view: EditorView | null
 } {
-  const theme = useTheme()
+  const theme = {}
   const ref = useRef<HTMLDivElement>(null)
   const [view, setView] = useState<EditorView | null>(null)
 

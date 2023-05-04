@@ -1,20 +1,21 @@
 import { useState } from 'react'
-import { Container, Flex, Icon, Text, useToast } from '@chakra-ui/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { getQueryKey } from '@trpc/react-query'
+import {
+  Download,
+  Edit3,
+  Expand,
+  Recycle,
+  Star,
+  StickyNote,
+  Trash,
+  View,
+} from 'lucide-react'
 import { useParams } from 'react-router-dom'
 
 import Editor from '@/components/editor'
-import Delete from '@/components/icons/delete'
-import Download from '@/components/icons/download'
-import Draw from '@/components/icons/draw'
-import Fullscreen from '@/components/icons/fullscreen'
-import Recycling from '@/components/icons/recycling'
-import Star from '@/components/icons/star'
-import StickyNote from '@/components/icons/sticky-note'
-import Visibility from '@/components/icons/visibility'
 import Preview from '@/components/preview'
-import IconButton from '@/components/ui/icon-button'
+import { Icon, IconButton } from '@/components/ui'
 import { useNoteById, useUpdateNoteById } from '@/hooks'
 import { formatDateTime } from '@/lib/helpers'
 import { trpc } from '@/lib/trpc'
@@ -22,7 +23,6 @@ import { trpc } from '@/lib/trpc'
 export default function NotePage() {
   const params = useParams()
   const [preview, setPreview] = useState(false)
-  const toast = useToast()
   const queryClient = useQueryClient()
   const { status, data: note } = useNoteById(params.id as string)
   const mutation = useUpdateNoteById({
@@ -39,14 +39,9 @@ export default function NotePage() {
   if (status === 'error') return <div>Loading...</div>
 
   return (
-    <Container flex={1} maxH="100vh">
-      <Flex h="full" direction="column" align="stretch" overflow="hidden">
-        <Flex
-          direction="column"
-          maxH="calc(100vh-36px)"
-          flex="1"
-          overflow="hidden"
-        >
+    <div>
+      <div>
+        <div>
           {preview ? (
             <Preview code={note.code} />
           ) : (
@@ -62,56 +57,56 @@ export default function NotePage() {
               }}
             />
           )}
-        </Flex>
-        <Flex align="center" justify="space-between" pl={4} bg="slate.950">
-          <Flex align="center" gap={2}>
-            <Icon h={5} w={5} as={StickyNote} />
-            <Text fontWeight="medium">{note.title}</Text>
-          </Flex>
-          <Flex align="center" gap={4}>
-            <Text color="slate.400">
+        </div>
+        <div>
+          <div>
+            <Icon as={StickyNote} />
+            <span>{note.title}</span>
+          </div>
+          <div>
+            <p>
               Edited at {formatDateTime(note.updatedAt, 'HH:MM')} on{' '}
               {formatDateTime(note.updatedAt, 'LLL dd, yyyy')}
-            </Text>
-            <Flex align="center">
+            </p>
+            <div>
               <IconButton
-                variant={preview ? 'highlight' : 'default'}
-                icon={preview ? Visibility : Draw}
+                variant={preview ? 'secondary' : 'default'}
                 tooltip="Change mode"
                 onClick={() => setPreview((preview) => !preview)}
-              />
-              <IconButton icon={Fullscreen} tooltip="Fullscreen" />
-              <IconButton icon={Download} tooltip="Download" />
+              >
+                <Icon as={preview ? View : Edit3} />
+              </IconButton>
+              <IconButton tooltip="Fullscreen">
+                <Icon as={Expand} />
+              </IconButton>
+              <IconButton tooltip="Download">
+                <Icon as={Download} />
+              </IconButton>
               <IconButton
-                variant={note.starred ? 'highlight' : 'default'}
-                icon={Star}
+                variant={note.starred ? 'secondary' : 'default'}
                 tooltip={note.starred ? 'Unstar' : 'Star'}
-                onClick={() => {
+                onClick={() =>
                   mutation.mutate({ id: note.id, starred: !note.starred })
-                  toast({
-                    title: note.starred ? 'Unstarred' : 'Starred',
-                    description: `"${note.title}" has been ${
-                      note.starred ? 'unstarred' : 'starred'
-                    }.`,
-                    status: 'success',
-                    duration: null,
-                    isClosable: true,
-                  })
-                }}
-              />
+                }
+              >
+                <Icon as={Star} />
+              </IconButton>
               <IconButton
-                variant={note.trashed ? 'danger' : 'default'}
-                icon={Delete}
+                variant={note.trashed ? 'destructive' : 'default'}
                 tooltip="Delete"
                 onClick={() =>
                   mutation.mutate({ id: note.id, trashed: !note.trashed })
                 }
-              />
-              <IconButton icon={Recycling} tooltip="Restore" />
-            </Flex>
-          </Flex>
-        </Flex>
-      </Flex>
-    </Container>
+              >
+                <Icon as={Trash} />
+              </IconButton>
+              <IconButton tooltip="Restore">
+                <Icon as={Recycle} />
+              </IconButton>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

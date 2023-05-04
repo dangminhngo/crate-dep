@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Container, Flex, Icon, Text } from '@chakra-ui/react'
+import { Container, Flex, Icon, Text, useToast } from '@chakra-ui/react'
 import { useQueryClient } from '@tanstack/react-query'
 import { getQueryKey } from '@trpc/react-query'
 import { useParams } from 'react-router-dom'
@@ -22,6 +22,7 @@ import { trpc } from '@/lib/trpc'
 export default function NotePage() {
   const params = useParams()
   const [preview, setPreview] = useState(false)
+  const toast = useToast()
   const queryClient = useQueryClient()
   const { status, data: note } = useNoteById(params.id as string)
   const mutation = useUpdateNoteById({
@@ -74,14 +75,38 @@ export default function NotePage() {
             </Text>
             <Flex align="center">
               <IconButton
+                variant={preview ? 'highlight' : 'default'}
                 icon={preview ? Visibility : Draw}
                 tooltip="Change mode"
                 onClick={() => setPreview((preview) => !preview)}
               />
               <IconButton icon={Fullscreen} tooltip="Fullscreen" />
-              <IconButton icon={Download} tooltip="Download as JSON" />
-              <IconButton icon={Star} tooltip="Star" />
-              <IconButton icon={Delete} tooltip="Delete" />
+              <IconButton icon={Download} tooltip="Download" />
+              <IconButton
+                variant={note.starred ? 'highlight' : 'default'}
+                icon={Star}
+                tooltip={note.starred ? 'Unstar' : 'Star'}
+                onClick={() => {
+                  mutation.mutate({ id: note.id, starred: !note.starred })
+                  toast({
+                    title: note.starred ? 'Unstarred' : 'Starred',
+                    description: `"${note.title}" has been ${
+                      note.starred ? 'unstarred' : 'starred'
+                    }.`,
+                    status: 'success',
+                    duration: null,
+                    isClosable: true,
+                  })
+                }}
+              />
+              <IconButton
+                variant={note.trashed ? 'danger' : 'default'}
+                icon={Delete}
+                tooltip="Delete"
+                onClick={() =>
+                  mutation.mutate({ id: note.id, trashed: !note.trashed })
+                }
+              />
               <IconButton icon={Recycling} tooltip="Restore" />
             </Flex>
           </Flex>

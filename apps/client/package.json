@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.0.2",
+    "@chakra-ui/anatomy": "^2.1.1",
     "@chakra-ui/react": "^2.6.0",
     "@codemirror/autocomplete": "^6.6.0",
     "@codemirror/commands": "^6.2.3",

@@ -41,7 +41,7 @@ export default function TrashPage() {
               </Flex>
             </Flex>
           </Flex>
-          {notes.length > 0 ? (
+          {trashedNotes.length > 0 ? (
             <NoteList notes={trashedNotes} />
           ) : (
             <Text textAlign="center">Your trash is empty</Text>

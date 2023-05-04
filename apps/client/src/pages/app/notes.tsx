@@ -15,6 +15,8 @@ export default function NotesPage() {
 
   if (status === 'error') return <div>There was an error</div>
 
+  const filteredNotes = notes.filter((note) => !note.trashed)
+
   return (
     <Container flex={1} px={4} py={32}>
       <Container maxW="1024px" mx="auto">
@@ -33,15 +35,15 @@ export default function NotesPage() {
             </Heading>
             <Flex align="center" gap={6}>
               <Text color="slate.400">Last edited Apr 28</Text>
-              <Text>{notes.length} notes</Text>
+              <Text>{filteredNotes.length} notes</Text>
               <Flex align="center" gap={2}>
                 <IconButton icon={FilterAlt} tooltip="Filter" />
                 <IconButton icon={Sort} tooltip="Sort" />
               </Flex>
             </Flex>
           </Flex>
-          {notes.length > 0 ? (
-            <NoteList notes={notes} />
+          {filteredNotes.length > 0 ? (
+            <NoteList notes={filteredNotes} />
           ) : (
             <Text textAlign="center">You have no notes</Text>
           )}

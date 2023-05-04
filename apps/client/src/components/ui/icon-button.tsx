@@ -11,6 +11,13 @@ const iconButtonVariants = {
         bg: 'slate.700',
       },
     },
+    highlight: {
+      color: 'brand.primary',
+      _hover: {
+        color: 'brand.light',
+        bg: 'slate.700',
+      },
+    },
     danger: {
       color: 'red',
       _hover: {
@@ -22,7 +29,7 @@ const iconButtonVariants = {
 }
 
 interface IconProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'danger'
+  variant?: 'default' | 'highlight' | 'danger'
   icon: React.FC<SVGProps>
   tooltip?: string
 }

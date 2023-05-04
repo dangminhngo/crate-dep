@@ -15,7 +15,7 @@ export default function StarredPage() {
 
   if (status === 'error') return <div>There was an error</div>
 
-  const starredNotes = notes.filter((note) => note.starred)
+  const starredNotes = notes.filter((note) => note.starred && !note.trashed)
 
   return (
     <Container flex={1} px={4} py={32}>
@@ -42,7 +42,7 @@ export default function StarredPage() {
               </Flex>
             </Flex>
           </Flex>
-          {notes.length > 0 ? (
+          {starredNotes.length > 0 ? (
             <NoteList notes={starredNotes} />
           ) : (
             <Text textAlign="center">You have starred no notes</Text>

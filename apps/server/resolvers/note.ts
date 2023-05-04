@@ -43,6 +43,8 @@ export const getNoteById = protectedProcedure
           },
         },
         code: true,
+        starred: true,
+        trashed: true,
         createdAt: true,
         updatedAt: true,
       },

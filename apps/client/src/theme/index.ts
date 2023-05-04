@@ -1,5 +1,6 @@
 import { theme as chakraTheme, extendBaseTheme } from '@chakra-ui/react'
 
+import Alert from './components/alert'
 import Button from './components/button'
 import Menu from './components/menu'
 import Table from './components/table'
@@ -129,6 +130,7 @@ export const getTheme = () => {
       mono: 'JetBrains Mono, monospace',
     },
     components: {
+      Alert,
       Avatar,
       Button,
       Heading,

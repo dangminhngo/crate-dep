@@ -9,11 +9,13 @@ import IconButton from '@/components/ui/icon-button'
 import { useNoteList } from '@/hooks'
 
 export default function StarredPage() {
-  const { status, data: notes } = useNoteList({ starred: true })
+  const { status, data: notes } = useNoteList()
 
   if (status === 'loading') return <NotesSkeleton />
 
   if (status === 'error') return <div>There was an error</div>
+
+  const starredNotes = notes.filter((note) => note.starred)
 
   return (
     <Container flex={1} px={4} py={32}>
@@ -33,7 +35,7 @@ export default function StarredPage() {
             </Heading>
             <Flex align="center" gap={6}>
               <Text color="slate.400">Last edited Apr 28</Text>
-              <Text>{notes.length} notes</Text>
+              <Text>{starredNotes.length} notes</Text>
               <Flex align="center" gap={2}>
                 <IconButton icon={FilterAlt} tooltip="Filter" />
                 <IconButton icon={Sort} tooltip="Sort" />
@@ -41,7 +43,7 @@ export default function StarredPage() {
             </Flex>
           </Flex>
           {notes.length > 0 ? (
-            <NoteList notes={notes} />
+            <NoteList notes={starredNotes} />
           ) : (
             <Text textAlign="center">You have starred no notes</Text>
           )}

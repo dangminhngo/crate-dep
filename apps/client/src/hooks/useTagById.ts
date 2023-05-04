@@ -10,5 +10,5 @@ export type TagByIdInput = RouterInputs['tag']['byId']
 export type TagByIdOutput = RouterOutputs['tag']['byId']
 
 export function useTagById(input: TagByIdInput, options?: TagByIdOptions) {
-  return trpc.tag.byId.useQuery<TagByIdOutput, TagByIdOutput>(input, options)
+  return trpc.tag.byId.useQuery(input, options)
 }

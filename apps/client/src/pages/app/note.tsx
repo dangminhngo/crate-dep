@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Container, Flex, Icon, Text } from '@chakra-ui/react'
+import { useQueryClient } from '@tanstack/react-query'
+import { getQueryKey } from '@trpc/react-query'
 import { useParams } from 'react-router-dom'
 
 import Editor from '@/components/editor'
@@ -13,13 +15,24 @@ import StickyNote from '@/components/icons/sticky-note'
 import Visibility from '@/components/icons/visibility'
 import Preview from '@/components/preview'
 import IconButton from '@/components/ui/icon-button'
-import { useNoteById } from '@/hooks'
+import { useNoteById, useUpdateNoteById } from '@/hooks'
 import { formatDateTime } from '@/lib/helpers'
+import { trpc } from '@/lib/trpc'
 
 export default function NotePage() {
   const params = useParams()
   const [preview, setPreview] = useState(false)
+  const queryClient = useQueryClient()
   const { status, data: note } = useNoteById(params.id as string)
+  const mutation = useUpdateNoteById({
+    onMutate: async (data) => {
+      const noteQueryKey = getQueryKey(trpc.note.byId)
+      await queryClient.cancelQueries({ queryKey: noteQueryKey })
+      const previousNote = queryClient.getQueryData(noteQueryKey)
+      queryClient.setQueryData(noteQueryKey, () => data)
+      return previousNote
+    },
+  })
 
   if (status === 'loading') return <div>Loading...</div>
   if (status === 'error') return <div>Loading...</div>
@@ -38,7 +51,7 @@ export default function NotePage() {
           ) : (
             <Editor
               code={note.code}
-              setCode={(c) => console.log(c)}
+              setCode={(code) => mutation.mutate({ id: note.id, code })}
               config={{
                 autocomplete: true,
                 highlightActiveLine: true,

@@ -10,5 +10,5 @@ export type NoteByIdInput = RouterInputs['note']['byId']
 export type NoteByIdOutput = RouterOutputs['note']['byId']
 
 export function useNoteById(input: NoteByIdInput, options?: NoteByIdOptions) {
-  return trpc.note.byId.useQuery<NoteByIdOutput, NoteByIdOutput>(input, options)
+  return trpc.note.byId.useQuery(input, options)
 }

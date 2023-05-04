@@ -10,5 +10,5 @@ export type NoteListInput = RouterInputs['note']['list']
 export type NoteListOutput = RouterOutputs['note']['list']
 
 export function useNoteList(input: NoteListInput, options?: NoteListOptions) {
-  return trpc.note.list.useQuery<NoteListOutput, NoteListOutput>(input, options)
+  return trpc.note.list.useQuery(input, options)
 }

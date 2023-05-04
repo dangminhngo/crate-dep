@@ -10,5 +10,5 @@ export type TagListInput = RouterInputs['tag']['list']
 export type TagListOutput = RouterOutputs['tag']['list']
 
 export function useTagList(input?: TagListInput, options?: TagListOptions) {
-  return trpc.tag.list.useQuery<TagListOutput, TagListOutput>(input, options)
+  return trpc.tag.list.useQuery(input, options)
 }

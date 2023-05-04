@@ -8,11 +8,13 @@ import IconButton from '@/components/ui/icon-button'
 import { useNoteList } from '@/hooks'
 
 export default function TrashPage() {
-  const { status, data: notes } = useNoteList({ trashed: true })
+  const { status, data: notes } = useNoteList()
 
   if (status === 'loading') return <NotesSkeleton />
 
   if (status === 'error') return <div>There was an error</div>
+
+  const trashedNotes = notes.filter((note) => note.trashed)
 
   return (
     <Container flex={1} px={4} py={32}>
@@ -33,14 +35,14 @@ export default function TrashPage() {
             </Heading>
             <Flex align="center" gap={6}>
               <Text color="slate.400">Last edited Apr 28</Text>
-              <Text>{notes.length} notes</Text>
+              <Text>{trashedNotes.length} notes</Text>
               <Flex align="center" gap={2}>
                 <IconButton icon={Sort} tooltip="Sort" />
               </Flex>
             </Flex>
           </Flex>
           {notes.length > 0 ? (
-            <NoteList notes={notes} />
+            <NoteList notes={trashedNotes} />
           ) : (
             <Text textAlign="center">Your trash is empty</Text>
           )}

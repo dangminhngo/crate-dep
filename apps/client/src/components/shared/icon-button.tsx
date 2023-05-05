@@ -36,12 +36,12 @@ const StyledIconButton = styled('button', {
     },
     size: {
       default: {
-        h: '$10',
-        w: '$10',
-      },
-      sm: {
         h: '$9',
         w: '$9',
+      },
+      sm: {
+        h: '$8',
+        w: '$8',
       },
       lg: {
         h: '$12',

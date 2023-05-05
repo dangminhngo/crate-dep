@@ -20,6 +20,7 @@ import IconButton from '@/components/shared/icon-button'
 import { useNoteById, useUpdateNoteById } from '@/hooks'
 import { formatDateTime } from '@/lib/helpers'
 import { trpc } from '@/lib/trpc'
+import { styled } from '@/stitches.config'
 
 export default function NotePage() {
   const params = useParams()
@@ -40,74 +41,115 @@ export default function NotePage() {
   if (status === 'error') return <div>Loading...</div>
 
   return (
-    <div>
-      <div>
-        <div>
-          {preview ? (
-            <Preview code={note.code} />
-          ) : (
-            <Editor
-              code={note.code}
-              setCode={(code) => mutation.mutate({ id: note.id, code })}
-              config={{
-                autocomplete: true,
-                highlightActiveLine: true,
-                lineNumbers: true,
-                lineWrapping: true,
-                tabSize: 2,
-              }}
-            />
-          )}
+    <StyledNotePage>
+      <div className="editor">
+        {preview ? (
+          <Preview code={note.code} />
+        ) : (
+          <Editor
+            code={note.code}
+            setCode={(code) => mutation.mutate({ id: note.id, code })}
+            config={{
+              autocomplete: true,
+              highlightActiveLine: true,
+              lineNumbers: true,
+              lineWrapping: true,
+              tabSize: 2,
+            }}
+          />
+        )}
+      </div>
+      <div className="toolbar">
+        <div className="toolbar__left">
+          <Icon as={StickyNote} />
+          <span>{note.title}</span>
         </div>
-        <div>
-          <div>
-            <Icon as={StickyNote} />
-            <span>{note.title}</span>
-          </div>
-          <div>
-            <p>
-              Edited at {formatDateTime(note.updatedAt, 'HH:MM')} on{' '}
-              {formatDateTime(note.updatedAt, 'LLL dd, yyyy')}
-            </p>
-            <div>
-              <IconButton
-                variant={preview ? 'secondary' : 'default'}
-                tooltip="Change mode"
-                onClick={() => setPreview((preview) => !preview)}
-              >
-                <Icon as={preview ? Visibility : Draw} />
-              </IconButton>
-              <IconButton tooltip="Fullscreen">
-                <Icon as={Fullscreen} />
-              </IconButton>
-              <IconButton tooltip="Download">
-                <Icon as={Download} />
-              </IconButton>
-              <IconButton
-                variant={note.starred ? 'secondary' : 'default'}
-                tooltip={note.starred ? 'Unstar' : 'Star'}
-                onClick={() =>
-                  mutation.mutate({ id: note.id, starred: !note.starred })
-                }
-              >
-                <Icon as={Star} />
-              </IconButton>
-              <IconButton
-                variant={note.trashed ? 'destructive' : 'default'}
-                tooltip="Delete"
-                onClick={() =>
-                  mutation.mutate({ id: note.id, trashed: !note.trashed })
-                }
-              >
-                <Icon as={Delete} />
-              </IconButton>
-              <IconButton tooltip="Restore">
-                <Icon as={Recycling} />
-              </IconButton>
-            </div>
+        <div className="toolbar__right">
+          <p>
+            Edited at {formatDateTime(note.updatedAt, 'HH:MM')} on{' '}
+            {formatDateTime(note.updatedAt, 'LLL dd, yyyy')}
+          </p>
+          <div className="toolbar__buttons">
+            <IconButton
+              variant={preview ? 'active' : 'default'}
+              tooltip="Change mode"
+              onClick={() => setPreview((preview) => !preview)}
+            >
+              <Icon as={preview ? Visibility : Draw} />
+            </IconButton>
+            <IconButton tooltip="Fullscreen">
+              <Icon as={Fullscreen} />
+            </IconButton>
+            <IconButton tooltip="Download">
+              <Icon as={Download} />
+            </IconButton>
+            <IconButton
+              variant={note.starred ? 'active' : 'default'}
+              tooltip={note.starred ? 'Unstar' : 'Star'}
+              onClick={() =>
+                mutation.mutate({ id: note.id, starred: !note.starred })
+              }
+            >
+              <Icon as={Star} />
+            </IconButton>
+            <IconButton
+              variant={note.trashed ? 'active' : 'default'}
+              tooltip="Delete"
+              onClick={() =>
+                mutation.mutate({ id: note.id, trashed: !note.trashed })
+              }
+            >
+              <Icon as={Delete} />
+            </IconButton>
+            <IconButton tooltip="Restore">
+              <Icon as={Recycling} />
+            </IconButton>
           </div>
         </div>
       </div>
-    </div>
+    </StyledNotePage>
   )
 }
+
+const StyledNotePage = styled('div', {
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+
+  '.editor': {
+    flex: 1,
+    overflow: 'hidden',
+  },
+
+  '.toolbar': {
+    h: '$12',
+    px: '$4',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  '.toolbar__left': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$2',
+    fontWeight: '$semibold',
+  },
+
+  '.toolbar__right': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$8',
+
+    '& > p': {
+      color: '$slate400',
+    },
+  },
+
+  '.toolbar__buttons': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$2',
+  },
+})

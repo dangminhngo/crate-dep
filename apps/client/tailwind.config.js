@@ -7,7 +7,6 @@ export default {
   content: [
     './src/components/**/*.{js,jsx,ts,tsx}',
     './src/pages/**/*.{js,jsx,ts,tsx}',
-    './index.html',
   ],
   theme: {
     colors: {

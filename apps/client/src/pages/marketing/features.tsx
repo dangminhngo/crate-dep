@@ -1,3 +1,13 @@
+import Container from '@/components/shared/container'
+import { styled } from '@/stitches.config'
+
 export default function FeaturesPage() {
-  return <div className="container py-24">Featuress</div>
+  return (
+    <StyledFeaturesPage>
+      {' '}
+      <Container className="container">Featuress</Container>
+    </StyledFeaturesPage>
+  )
 }
+
+const StyledFeaturesPage = styled('div', {})

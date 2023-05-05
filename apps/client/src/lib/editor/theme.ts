@@ -2,72 +2,73 @@ import { HighlightStyle, syntaxHighlighting } from '@codemirror/language'
 import { EditorView } from '@codemirror/view'
 import { tags as t } from '@lezer/highlight'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function createEditorThemeExtension(theme: any) {
-  const c = theme.colors
+import type { Theme } from '@/stitches.config'
+
+export function createEditorThemeExtension(theme: Theme) {
+  const c = JSON.parse(JSON.stringify(theme.colors))
 
   const codeMirrorTheme = EditorView.theme(
     {
       '&': {
-        color: c.editor.fg,
-        backgroundColor: c.editor.bg,
+        color: c.editorFg,
+        backgroundColor: c.editorBg,
       },
 
       '.cm-content': {
-        caretColor: c.editorCursor.bg,
+        caretColor: c.editorCursorBg,
       },
 
-      '.cm-cursor, .cm-dropCursor': { borderLeftColor: c.editorCursor.bg },
+      '.cm-cursor, .cm-dropCursor': { borderLeftColor: c.editorCursorBg },
       '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection':
         {
-          backgroundColor: c.editorSelection.bg,
+          backgroundColor: c.editorSelectionBg,
         },
 
       '.cm-panels': {
-        backgroundColor: c.editorPanel.bg,
-        color: c.editorPanel.fg,
+        backgroundColor: c.editorPanelBg,
+        color: c.editorPanelFg,
       },
       '.cm-panels.cm-panels-top': {
-        borderBottom: c.editorPanel.border ?? 'none',
+        borderBottom: c.editorPanelBorder ?? 'none',
       },
       '.cm-panels.cm-panels-bottom': {
-        borderTop: c.editorPanel.border ?? 'none',
+        borderTop: c.editorPanelBorder ?? 'none',
       },
 
       '.cm-searchMatch': {
-        backgroundColor: c.editorSearchMatch.bg,
-        outline: c.editorSearchMatch.border ?? 'none',
+        backgroundColor: c.editorSearchMatchBg,
+        outline: c.editorSearchMatchBorder ?? 'none',
       },
       '.cm-searchMatch.cm-searchMatch-selected': {
-        backgroundColor: c.editorSearchMatch.bg,
+        backgroundColor: c.editorSearchMatchBg,
       },
 
-      '.cm-activeLine': { backgroundColor: c.editorActiveLine.bg },
-      '.cm-selectionMatch': { backgroundColor: c.editorSelection.bg },
+      '.cm-activeLine': { backgroundColor: c.editorActiveLineBg },
+      '.cm-selectionMatch': { backgroundColor: c.editorSelectionBg },
 
       '&.cm-focused .cm-matchingBracket, &.cm-focused .cm-nonmatchingBracket': {
-        backgroundColor: c.editorBracketMatch.bg,
+        backgroundColor: c.editorBracketMatchBg,
       },
 
       '.cm-gutters': {
-        backgroundColor: c.editorGutter.bg,
-        color: c.editorGutter.fg,
-        border: c.editorGutter.border ?? 'none',
+        backgroundColor: c.editorGutterBg,
+        color: c.editorGutterFg,
+        border: c.editorGutterBorder ?? 'none',
       },
 
       '.cm-activeLineGutter': {
-        backgroundColor: c.editorActiveLineGutter.bg,
+        backgroundColor: c.editorActiveLineGutterBg,
       },
 
       '.cm-foldPlaceholder': {
-        backgroundColor: c.editorFoldPlaceholder.bg,
-        color: c.editorFoldPlaceholder.fg,
-        border: c.editorFoldPlaceholder.border ?? 'none',
+        backgroundColor: c.editorFoldPlaceholderBg,
+        color: c.editorFoldPlaceholderFg,
+        border: c.editorFoldPlaceholderBorder ?? 'none',
       },
 
       '.cm-tooltip': {
-        backgroundColor: c.editorTooltip.bg,
-        border: c.editorTooltip.border ?? 'none',
+        backgroundColor: c.editorTooltipBg,
+        border: c.editorTooltipBorder ?? 'none',
       },
 
       '.cm-tooltip .cm-tooltip-arrow:before': {
@@ -76,13 +77,13 @@ export function createEditorThemeExtension(theme: any) {
       },
 
       '.cm-tooltip .cm-tooltip-arrow:after': {
-        borderTopColor: c.editorTooltip.bg,
-        borderBottomColor: c.editorTooltip.bg,
+        borderTopColor: c.editorTooltipBg,
+        borderBottomColor: c.editorTooltipBg,
       },
       '.cm-tooltip-autocomplete': {
         '& > ul > li[aria-selected]': {
-          backgroundColor: c.editorSelection.bg,
-          color: c.editorTooltip.fg,
+          backgroundColor: c.editorSelectionBg,
+          color: c.editorTooltipFg,
         },
       },
     },
@@ -90,31 +91,29 @@ export function createEditorThemeExtension(theme: any) {
   )
 
   /// The highlighting style for code in codemirror.
-  const tk = theme.colors.languageTokens
-
   const codeMirrorHighlightStyle = HighlightStyle.define([
-    { tag: [t.keyword, t.modifier], color: tk.keyword },
-    { tag: [t.definition(t.name)], color: tk.variable },
-    { tag: [t.definition(t.function(t.name))], color: tk.function },
+    { tag: [t.keyword, t.modifier], color: c.tokenKeyword },
+    { tag: [t.definition(t.name)], color: c.tokenVariable },
+    { tag: [t.definition(t.function(t.name))], color: c.tokenFunction },
     {
       tag: [t.deleted, t.character, t.propertyName, t.macroName],
-      color: tk.property,
+      color: c.tokenProperty,
     },
-    { tag: [t.attributeName], color: tk.attribute },
+    { tag: [t.attributeName], color: c.tokenAttribute },
     {
       tag: [
         t.function(t.variableName),
         t.function(t.propertyName),
         t.labelName,
       ],
-      color: tk.function,
+      color: c.tokenFunction,
     },
     {
       tag: [t.color, t.constant(t.name), t.standard(t.name)],
-      color: tk.constant,
+      color: c.tokenConstant,
     },
-    { tag: [t.separator], color: tk.definition },
-    { tag: t.tagName, color: tk.tag },
+    { tag: [t.separator], color: c.tokenDefinition },
+    { tag: t.tagName, color: c.tokenTag },
     {
       tag: [
         t.typeName,
@@ -124,11 +123,11 @@ export function createEditorThemeExtension(theme: any) {
         t.self,
         t.namespace,
       ],
-      color: tk.type,
+      color: c.tokenType,
     },
     {
       tag: [t.number],
-      color: tk.number,
+      color: c.tokenNumber,
     },
     {
       tag: [
@@ -139,20 +138,20 @@ export function createEditorThemeExtension(theme: any) {
         t.regexp,
         t.special(t.string),
       ],
-      color: tk.operator,
+      color: c.tokenOperator,
     },
-    { tag: [t.controlKeyword, t.moduleKeyword], color: tk.flow },
-    { tag: [t.meta, t.comment], color: tk.comment },
+    { tag: [t.controlKeyword, t.moduleKeyword], color: c.tokenFlow },
+    { tag: [t.meta, t.comment], color: c.tokenComment },
     { tag: t.strong, fontWeight: 'bold' },
     { tag: t.emphasis, fontStyle: 'italic' },
     { tag: t.strikethrough, textDecoration: 'line-through' },
-    { tag: t.link, color: tk.link, textDecoration: 'underline' },
-    { tag: t.heading, fontWeight: 'bold', color: tk.heading },
-    { tag: [t.atom, t.bool, t.special(t.variableName)], color: tk.boolean },
-    { tag: [t.processingInstruction, t.inserted], color: tk.preproc },
-    { tag: [t.string, t.character], color: tk.string },
-    { tag: [t.punctuation], color: tk.punctuation },
-    { tag: t.invalid, color: tk.invalid },
+    { tag: t.link, color: c.tokenLink, textDecoration: 'underline' },
+    { tag: t.heading, fontWeight: 'bold', color: c.tokenHeading },
+    { tag: [t.atom, t.bool, t.special(t.variableName)], color: c.tokenBoolean },
+    { tag: [t.processingInstruction, t.inserted], color: c.tokenPreproc },
+    { tag: [t.string, t.character], color: c.tokenString },
+    { tag: [t.punctuation], color: c.tokenPunctuation },
+    { tag: t.invalid, color: c.tokenInvalid },
   ])
 
   /// Extension to enable the One Dark theme (both the editor theme and

@@ -1,17 +1,18 @@
 import { useAuth0 } from '@auth0/auth0-react'
+import { useLocation, useNavigate } from 'react-router-dom'
+
+import { styled } from '@/stitches.config'
 import {
-  ChevronDown,
-  LogOut,
+  Delete,
+  ExpandMore,
+  Label,
+  Logout,
+  ManageAccounts,
   Search,
   Settings,
   Star,
   StickyNote,
-  Tag,
-  Trash,
-  User,
-} from 'lucide-react'
-import { useLocation, useNavigate } from 'react-router-dom'
-
+} from './icons'
 import {
   Avatar,
   AvatarFallback,
@@ -23,8 +24,8 @@ import {
   DropdownMenuPortal,
   DropdownMenuTrigger,
   Icon,
-  SectionButton,
-} from './ui'
+} from './primitive'
+import SectionButton from './shared/section-button'
 
 export default function Sidebar() {
   const { user, logout } = useAuth0()
@@ -32,41 +33,38 @@ export default function Sidebar() {
   const { pathname } = useLocation()
 
   return (
-    <div className="flex min-w-[272px] flex-col items-stretch justify-between bg-slate-950 p-4">
-      <div className="flex flex-col items-stretch gap-6">
+    <StyledSidebar>
+      <div className="top">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              className="h-10 justify-between focus:outline-none"
-            >
-              <div className="flex items-center gap-4">
-                <Avatar className="h-[18px] w-[18px]">
+            <Button variant="outline" className="profile-button">
+              <div className="profile-button__user">
+                <Avatar className="profile-button__avatar">
                   <AvatarImage src={user?.picture} alt={user?.name} />
                   <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <span>{user?.name}</span>
               </div>
-              <Icon as={ChevronDown} />
+              <Icon as={ExpandMore} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuPortal>
             <DropdownMenuContent className="min-w-[240px]">
               <DropdownMenuItem className="flex items-center gap-4">
-                <Icon as={User} />
+                <Icon as={ManageAccounts} />
                 <span>Account</span>
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-4 text-red-400"
                 onClick={() => logout()}
               >
-                <Icon as={LogOut} />
+                <Icon as={Logout} />
                 <span>Logout</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenuPortal>
         </DropdownMenu>
-        <div className="flex flex-col items-stretch gap-1">
+        <div>
           <SectionButton
             icon={Search}
             tooltip="Search notes"
@@ -82,7 +80,7 @@ export default function Sidebar() {
             Settings
           </SectionButton>
         </div>
-        <div className="flex flex-col items-stretch gap-1">
+        <div>
           <SectionButton
             variant={pathname.startsWith('/app/notes') ? 'active' : 'default'}
             icon={StickyNote}
@@ -93,7 +91,7 @@ export default function Sidebar() {
           </SectionButton>
           <SectionButton
             variant={pathname.startsWith('/app/tags') ? 'active' : 'default'}
-            icon={Tag}
+            icon={Label}
             tooltip="Organize your tags"
             onClick={() => navigate('/app/tags')}
           >
@@ -108,14 +106,12 @@ export default function Sidebar() {
             Starred
           </SectionButton>
         </div>
-        <div className="flex flex-col items-stretch gap-1">
+        <div>
           <SectionButton
             variant={
-              pathname.startsWith('/app/trash')
-                ? 'destructiveActive'
-                : 'destructive'
+              pathname.startsWith('/app/trash') ? 'active' : 'destructive'
             }
-            icon={Trash}
+            icon={Delete}
             tooltip="Your trash"
             onClick={() => navigate('/app/trash')}
           >
@@ -123,7 +119,45 @@ export default function Sidebar() {
           </SectionButton>
         </div>
       </div>
-      <div>Version: 0.1.1</div>
-    </div>
+      <div className="bottom">Version: 0.0.1</div>
+    </StyledSidebar>
   )
 }
+
+const StyledSidebar = styled('aside', {
+  p: '$4',
+  minW: '272px',
+  backgroundColor: '$sidebarBg',
+  color: '$sidebarFg',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+  justifyContent: 'space-between',
+
+  '.top, .bottom': {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    gap: '$4',
+  },
+
+  '.top > div, .bottom > div': {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    gap: '$1',
+  },
+
+  '& .profile-button': {
+    h: '$10',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  '& .profile-button__user': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$4',
+  },
+})

@@ -1,35 +1,78 @@
-import { ArrowUpDown, Tag } from 'lucide-react'
-
-import TagsSkeleton from '@/components/skeletons/tags-skeleton'
+import { Label, Sort } from '@/components/icons'
+import { Icon } from '@/components/primitive'
+import IconButton from '@/components/shared/icon-button'
+import SectionSkeleton from '@/components/skeletons/section-skeleton'
 import TagList from '@/components/tag-list'
-import { Icon, IconButton } from '@/components/ui'
 import { useTagList } from '@/hooks'
+import { styled } from '@/stitches.config'
 
 export default function TagsPage() {
   const { status, data: tags } = useTagList()
 
-  if (status === 'loading') return <TagsSkeleton />
+  if (status === 'loading') return <SectionSkeleton />
 
   if (status === 'error') return <div>There was an error</div>
 
   return (
-    <div className="container flex flex-col items-stretch gap-12 py-48">
-      <div className="flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-3xl font-bold">
-          <Icon size="xl" as={Tag} />
-          Tags
-        </h3>
-        <div className="flex items-center gap-6">
-          <span className="text-slate-400">Last edited Apr 28</span>
-          <span className="text-slate-400">{tags.length} tags</span>
-          <div className="flex items-center gap-2">
-            <IconButton variant="ghost" size="sm" tooltip="Sort">
-              <Icon as={ArrowUpDown} />
+    <StyledTagsPage>
+      <div className="titlebar">
+        <div className="titlebar__left">
+          <h3>
+            <Icon size="xl" as={Label} />
+            Tags
+          </h3>
+        </div>
+        <div className="titlebar__right">
+          <span>Last edited Apr 28</span>
+          <span>{tags.length} notes</span>
+          <div className="buttons">
+            <IconButton size="sm" tooltip="Sort">
+              <Icon as={Sort} />
             </IconButton>
           </div>
         </div>
       </div>
       {tags.length > 0 ? <TagList tags={tags} /> : <p>You have no tags</p>}
-    </div>
+    </StyledTagsPage>
   )
 }
+
+const StyledTagsPage = styled('div', {
+  flex: 1,
+  px: '$64',
+  py: '$48',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+  gap: '$8',
+
+  '.titlebar': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  '.titlebar__left': {
+    '& h3': {
+      display: 'flex',
+      alignItems: 'center',
+      fontSize: '$2xl',
+      gap: '$2',
+    },
+  },
+
+  '.titlebar__right': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$6',
+    '& span': {
+      color: '$slate400',
+    },
+  },
+
+  '.titlebar__right .buttons': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$2',
+  },
+})

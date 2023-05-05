@@ -1,9 +1,11 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { Link } from 'react-router-dom'
 
+import { styled } from '@/stitches.config'
 import Logo from './logo'
 import MainNav from './main-nav'
-import { Button, Icon } from './ui'
+import { Button, Icon } from './primitive'
+import Container from './shared/container'
 
 export default function Header() {
   const { loginWithRedirect } = useAuth0()
@@ -20,22 +22,43 @@ export default function Header() {
   }
 
   return (
-    <header className="border-b border-slate-800">
-      <div className="container flex items-center gap-12 py-6">
-        <Link to="/" className="text-primary flex items-center gap-4">
-          <Icon as={Logo} className="h-8 w-8" />
-          <span className="font-heading text-3xl font-bold uppercase">
-            Crate
-          </span>
+    <StyledHeader>
+      <Container className="container">
+        <Link to="/" className="logo">
+          <Icon as={Logo} size="xl" />
+          <span>Crate</span>
         </Link>
         <MainNav />
-        <div className="ml-auto flex gap-4">
+        <div className="buttons">
           <Button variant="ghost" onClick={handleLogin}>
             Sign in
           </Button>
           <Button>Try for free</Button>
         </div>
-      </div>
-    </header>
+      </Container>
+    </StyledHeader>
   )
 }
+
+const StyledHeader = styled('header', {
+  borderBottom: '1px solid $slate800',
+  '.container': {
+    py: '$4',
+  },
+  '.logo': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$3',
+    fontSize: '$3xl',
+    fontWeight: '$bold',
+    fontFamily: '$heading',
+    textTransform: 'uppercase',
+    color: '$primary',
+  },
+  '.buttons': {
+    ml: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$2',
+  },
+})

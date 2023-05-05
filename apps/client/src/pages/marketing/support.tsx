@@ -1,3 +1,13 @@
+import Container from '@/components/shared/container'
+import { styled } from '@/stitches.config'
+
 export default function SupportPage() {
-  return <div className="container py-24">Supports</div>
+  return (
+    <StyledSupportPage>
+      {' '}
+      <Container className="container">Support</Container>
+    </StyledSupportPage>
+  )
 }
+
+const StyledSupportPage = styled('div', {})

@@ -1,5 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 
+import { styled } from '@/stitches.config'
+
 const items = [
   {
     title: 'Home',
@@ -22,27 +24,48 @@ export default function MainNav() {
   const { pathname } = useLocation()
 
   return (
-    <nav>
-      <ul className="list-style-none flex items-center gap-8 text-sm font-semibold">
+    <StyledNav>
+      <ul>
         {items.map((item) => (
           <li key={item.title}>
             <Link
               to={item.href}
-              className={`${
+              className={
                 (
                   item.href === '/'
                     ? pathname === item.href
                     : pathname.startsWith(item.href)
                 )
-                  ? 'text-slate-100'
-                  : 'text-slate-400 hover:text-slate-200'
-              } transition-colors duration-300`}
+                  ? 'navlink--active'
+                  : 'navlink'
+              }
             >
               {item.title}
             </Link>
           </li>
         ))}
       </ul>
-    </nav>
+    </StyledNav>
   )
 }
+
+const StyledNav = styled('nav', {
+  '& ul': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$8',
+    fontSize: '$sm',
+    fontWeight: '$semibold',
+    listStyle: 'none',
+  },
+  '.navlink': {
+    color: '$slate400',
+    transition: '$base',
+    '&:hover': {
+      color: '$slate200',
+    },
+  },
+  '.navlink--active': {
+    color: '$slate200',
+  },
+})

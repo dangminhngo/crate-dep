@@ -1,14 +1,21 @@
 import { Outlet } from 'react-router-dom'
 
 import Header from '@/components/header'
+import { styled } from '@/stitches.config'
 
 export default function MarketingLayout() {
   return (
-    <div className="flex flex-col items-stretch">
+    <StyledMarketingLayout>
       <Header />
       <main>
         <Outlet />
       </main>
-    </div>
+    </StyledMarketingLayout>
   )
 }
+
+const StyledMarketingLayout = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+})

@@ -1,24 +1,49 @@
-import { Button } from '@/components/ui'
+import { Button } from '@/components/primitive'
+import Container from '@/components/shared/container'
+import { styled } from '@/stitches.config'
 
 export default function HomePage() {
   return (
-    <div className="container pt-[200px]">
-      <div className="flex flex-col items-center gap-16">
-        <div className="flex flex-col items-center gap-6">
-          <h2 className="font-heading text-6xl font-bold">
-            Changes the way a developer
-          </h2>
-          <h1 className="font-heading text-primary text-8xl font-bold">
-            writes markdown
-          </h1>
+    <StyledHomePage>
+      <Container className="container">
+        <div className="hero__content">
+          <h2>Changes the way a developer</h2>
+          <h1>writes markdown</h1>
         </div>
-        <div className="flex items-center gap-8">
+        <div className="hero__buttons">
           <Button size="lg">Try now</Button>
           <Button variant="outline" size="lg">
             Github
           </Button>
         </div>
-      </div>
-    </div>
+      </Container>
+    </StyledHomePage>
   )
 }
+
+const StyledHomePage = styled('div', {
+  '.container': {
+    pt: '200px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '$8',
+  },
+  '.hero__content': {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    fontFamily: '$heading',
+    '& h1': {
+      fontSize: '$8xl',
+    },
+    '& h2': {
+      fontSize: '$4xl',
+    },
+  },
+  '.hero__buttons': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '$6',
+  },
+})

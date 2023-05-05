@@ -1,21 +1,22 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { getQueryKey } from '@trpc/react-query'
-import {
-  Download,
-  Edit3,
-  Expand,
-  Recycle,
-  Star,
-  StickyNote,
-  Trash,
-  View,
-} from 'lucide-react'
 import { useParams } from 'react-router-dom'
 
 import Editor from '@/components/editor'
+import {
+  Delete,
+  Download,
+  Draw,
+  Fullscreen,
+  Recycling,
+  Star,
+  StickyNote,
+  Visibility,
+} from '@/components/icons'
 import Preview from '@/components/preview'
-import { Icon, IconButton } from '@/components/ui'
+import { Icon } from '@/components/primitive'
+import IconButton from '@/components/shared/icon-button'
 import { useNoteById, useUpdateNoteById } from '@/hooks'
 import { formatDateTime } from '@/lib/helpers'
 import { trpc } from '@/lib/trpc'
@@ -74,10 +75,10 @@ export default function NotePage() {
                 tooltip="Change mode"
                 onClick={() => setPreview((preview) => !preview)}
               >
-                <Icon as={preview ? View : Edit3} />
+                <Icon as={preview ? Visibility : Draw} />
               </IconButton>
               <IconButton tooltip="Fullscreen">
-                <Icon as={Expand} />
+                <Icon as={Fullscreen} />
               </IconButton>
               <IconButton tooltip="Download">
                 <Icon as={Download} />
@@ -98,10 +99,10 @@ export default function NotePage() {
                   mutation.mutate({ id: note.id, trashed: !note.trashed })
                 }
               >
-                <Icon as={Trash} />
+                <Icon as={Delete} />
               </IconButton>
               <IconButton tooltip="Restore">
-                <Icon as={Recycle} />
+                <Icon as={Recycling} />
               </IconButton>
             </div>
           </div>

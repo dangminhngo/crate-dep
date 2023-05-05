@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom'
 
 import type { TagListOutput } from '@/hooks'
 import { formatDateTime } from '@/lib/helpers'
-import { Table, Tbody, Td, Th, Thead, Tr } from './ui'
+import { styled } from '@/stitches.config'
+import { Table } from './primitive'
 
 interface TagListProps {
   tags: TagListOutput
@@ -12,33 +13,56 @@ export default function TagList({ tags }: TagListProps) {
   const navigate = useNavigate()
 
   return (
-    <Table>
-      <Thead>
-        <Tr>
-          <Th>Title</Th>
-          <Th>Notes</Th>
-          <Th>Created</Th>
-          <Th>Edited</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {tags.map(({ id, title, _count, createdAt, updatedAt }) => (
-          <Tr
-            key={id}
-            onClick={() => navigate(`/app/tags/${id}`)}
-            className="cursor-pointer transition-colors duration-200 hover:bg-slate-800"
-          >
-            <Td className="font-medium">{title}</Td>
-            <Td className="text-slate-400">{_count.notes} notes</Td>
-            <Td className="text-slate-400">
-              {formatDateTime(createdAt, 'LLL dd, yyyy')}
-            </Td>
-            <Td className="text-slate-400">
-              {formatDateTime(updatedAt, 'LLL dd, yyyy')}
-            </Td>
-          </Tr>
-        ))}
-      </Tbody>
-    </Table>
+    <StyledTagList>
+      <Table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Notes</th>
+            <th>Created</th>
+            <th>Edited</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tags.map(({ id, title, _count, createdAt, updatedAt }) => (
+            <tr
+              key={id}
+              onClick={() => navigate(`/app/tags/${id}`)}
+              className="cursor-pointer transition-colors duration-200 hover:bg-slate-800"
+            >
+              <td className="title">{title}</td>
+              <td className="count">{_count.notes} notes</td>
+              <td className="date">
+                {formatDateTime(createdAt, 'LLL dd, yyyy')}
+              </td>
+              <td className="date">
+                {formatDateTime(updatedAt, 'LLL dd, yyyy')}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </StyledTagList>
   )
 }
+
+const StyledTagList = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+  '& .title': {
+    fontWeight: '$medium',
+  },
+  '& .count': {
+    color: '$slate300',
+  },
+  '& .tags': {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: '$2',
+  },
+  '& .date': {
+    color: '$slate500',
+  },
+})

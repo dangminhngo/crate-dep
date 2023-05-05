@@ -1,3 +1,13 @@
+import Container from '@/components/shared/container'
+import { styled } from '@/stitches.config'
+
 export default function DocsPage() {
-  return <div className="container py-24">Docs</div>
+  return (
+    <StyledDocsPage>
+      {' '}
+      <Container className="container">Docs</Container>
+    </StyledDocsPage>
+  )
 }
+
+const StyledDocsPage = styled('div', {})

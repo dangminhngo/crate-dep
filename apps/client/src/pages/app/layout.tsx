@@ -1,12 +1,23 @@
 import { Outlet } from 'react-router-dom'
 
 import Sidebar from '@/components/sidebar'
+import { styled } from '@/stitches.config'
 
 export default function AppLayout() {
   return (
-    <div className="flex h-screen max-h-screen items-stretch text-sm">
+    <StyledAppLayout>
       <Sidebar />
       <Outlet />
-    </div>
+    </StyledAppLayout>
   )
 }
+
+const StyledAppLayout = styled('div', {
+  minW: '$screenX',
+  minH: '$screenY',
+  w: '$screenX',
+  h: '$screenY',
+  display: 'flex',
+  alignItems: 'stretch',
+  fontSize: '$sm',
+})

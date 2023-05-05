@@ -1,7 +1,8 @@
 import { motion, useTime, useTransform } from 'framer-motion'
 
+import { styled } from '@/stitches.config'
 import { SVGProps } from '@/types/shared'
-import { Icon } from './ui'
+import { Icon } from './primitive'
 
 interface SplashProps {
   message?: string
@@ -11,12 +12,27 @@ export default function SplashScreen({
   message = 'Just a minute',
 }: SplashProps) {
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center gap-6">
-      <Icon as={SplashLogo} className="text-primary h-36 w-36" />
+    <StyledSplashScreen>
+      <Icon as={SplashLogo} />
       <p>{message}</p>
-    </div>
+    </StyledSplashScreen>
   )
 }
+
+const StyledSplashScreen = styled('div', {
+  h: '$screenY',
+  w: '$full',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '$6',
+  '& svg': {
+    h: '$32',
+    w: '$32',
+    color: '$primary',
+  },
+})
 
 function SplashLogo(props: SVGProps) {
   const time = useTime()

@@ -1,14 +1,12 @@
 /** @type {import('prettier').Config} */
 module.exports = {
+  printWidth: 80,
   endOfLine: 'lf',
   semi: false,
   singleQuote: true,
   tabWidth: 2,
   trailingComma: 'es5',
-  plugins: [
-    require.resolve('@ianvs/prettier-plugin-sort-imports'),
-    require.resolve('prettier-plugin-tailwindcss'),
-  ],
+  plugins: [require.resolve('@ianvs/prettier-plugin-sort-imports')],
   importOrder: [
     '^(react/(.*)$)|^(react$)',
     '<THIRD_PARTY_MODULES>',

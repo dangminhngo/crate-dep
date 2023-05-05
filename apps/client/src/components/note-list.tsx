@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom'
 
 import type { NoteListOutput, TagByIdOutput } from '@/hooks'
 import { formatDateTime } from '@/lib/helpers'
-import { Chip, ChipLabel, Table, Tbody, Td, Th, Thead, Tr } from './ui'
+import { styled } from '@/stitches.config'
+import { Chip, ChipLabel, Table } from './primitive'
 
 interface NoteListProps {
   notes: NoteListOutput | TagByIdOutput['notes']
@@ -12,39 +13,58 @@ export default function NoteList({ notes }: NoteListProps) {
   const navigate = useNavigate()
 
   return (
-    <Table>
-      <Thead>
-        <Tr>
-          <Th>Title</Th>
-          <Th>Description</Th>
-          <Th>Tags</Th>
-          <Th>Edited</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {notes.map(({ id, title, description, tags, updatedAt }) => (
-          <Tr
-            key={id}
-            onClick={() => navigate(`/app/notes/${id}`)}
-            className="cursor-pointer transition-colors duration-200 hover:bg-slate-800"
-          >
-            <Td className="font-medium">{title}</Td>
-            <Td className="text-slate-400">{description}</Td>
-            <Td>
-              <div className="flex flex-wrap items-center gap-2">
-                {tags.map((tag) => (
-                  <Chip key={tag.id}>
-                    <ChipLabel>{tag.title}</ChipLabel>
-                  </Chip>
-                ))}
-              </div>
-            </Td>
-            <Td className="text-slate-400">
-              {formatDateTime(updatedAt, 'LLL dd, yyyy')}
-            </Td>
-          </Tr>
-        ))}
-      </Tbody>
-    </Table>
+    <StyledNoteList>
+      <Table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Tags</th>
+            <th>Edited</th>
+          </tr>
+        </thead>
+        <tbody>
+          {notes.map(({ id, title, description, tags, updatedAt }) => (
+            <tr key={id} onClick={() => navigate(`/app/notes/${id}`)}>
+              <td className="title">{title}</td>
+              <td className="desc">{description}</td>
+              <td>
+                <div className="tags">
+                  {tags.map((tag) => (
+                    <Chip key={tag.id}>
+                      <ChipLabel>{tag.title}</ChipLabel>
+                    </Chip>
+                  ))}
+                </div>
+              </td>
+              <td className="date">
+                {formatDateTime(updatedAt, 'LLL dd, yyyy')}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </StyledNoteList>
   )
 }
+
+const StyledNoteList = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+  '& .title': {
+    fontWeight: '$medium',
+  },
+  '& .desc': {
+    color: '$slate300',
+  },
+  '& .tags': {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: '$2',
+  },
+  '& .date': {
+    color: '$slate500',
+  },
+})

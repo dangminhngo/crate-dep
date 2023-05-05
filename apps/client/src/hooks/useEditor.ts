@@ -7,6 +7,7 @@ import {
   createEditorThemeExtension,
   getCustomExtensionsFromConfig,
 } from '@/lib/editor'
+import { theme } from '@/stitches.config'
 import { EditorConfig } from '@/types'
 
 export function useEditor({
@@ -21,14 +22,10 @@ export function useEditor({
   ref: RefObject<HTMLDivElement>
   view: EditorView | null
 } {
-  const theme = {}
   const ref = useRef<HTMLDivElement>(null)
   const [view, setView] = useState<EditorView | null>(null)
 
-  const themeExtension = useMemo(
-    () => createEditorThemeExtension(theme),
-    [theme]
-  )
+  const themeExtension = useMemo(() => createEditorThemeExtension(theme), [])
 
   const compartmentRef = useRef(new Compartment())
 

@@ -1,6 +1,6 @@
 import { styled } from '@/stitches.config'
 
-const Chip = styled('button', {
+const Chip = styled('div', {
   backgroundColor: '$slate100',
   color: '$slate900',
   fontWeight: '$medium',

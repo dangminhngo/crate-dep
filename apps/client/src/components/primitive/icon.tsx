@@ -10,6 +10,10 @@ const iconVariants = css({
         h: '$5',
         w: '$5',
       },
+      xs: {
+        h: '$3',
+        w: '$3',
+      },
       sm: {
         h: '$4',
         w: '$4',

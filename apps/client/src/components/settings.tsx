@@ -9,6 +9,7 @@ import {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+  Icon,
   Switch,
   SwitchThumb,
 } from './primitive'
@@ -64,13 +65,8 @@ export default function Settings() {
               }}
             />
           </StyledSettingsContainer>
-          <DialogClose asChild>
-            <IconButton
-              tooltip="Close"
-              css={{ position: 'absolute', top: '$2', right: '$2' }}
-            >
-              <Clear />
-            </IconButton>
+          <DialogClose>
+            <Icon as={Clear} />
           </DialogClose>
         </DialogContent>
       </DialogPortal>

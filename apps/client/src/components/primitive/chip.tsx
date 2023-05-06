@@ -4,13 +4,16 @@ const Chip = styled('div', {
   backgroundColor: '$slate100',
   color: '$slate900',
   fontWeight: '$medium',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$1',
   variants: {
     variant: {
-      default: {
+      square: {
         br: '$sm',
       },
       rounded: {
-        br: '$full',
+        br: '9999px',
       },
     },
     size: {
@@ -27,13 +30,22 @@ const Chip = styled('div', {
     },
   },
   defaultVariants: {
-    variant: 'default',
+    variant: 'rounded',
     size: 'default',
   },
 })
 
 const ChipLabel = styled('span', {})
 
-const ChipDeleteButton = styled('button', {})
+const ChipDeleteButton = styled('button', {
+  h: '$4',
+  w: '$4',
+  br: '$full',
+  display: 'grid',
+  placeItems: 'center',
+  '&:hover': {
+    bgAlpha: ['$slate300', 0.5],
+  },
+})
 
 export { Chip, ChipLabel, ChipDeleteButton }

@@ -15,7 +15,6 @@ const contentShow = keyframes({
 const Dialog = DialogPrimitive.Root
 const DialogTrigger = DialogPrimitive.Trigger
 const DialogPortal = DialogPrimitive.Portal
-const DialogClose = DialogPrimitive.Close
 
 const DialogOverlay = styled(DialogPrimitive.Overlay, {
   bgAlpha: ['$slate900', 0.8],
@@ -56,6 +55,24 @@ const DialogDescription = styled(DialogPrimitive.Description, {
   color: '$slate400',
   fontSize: '$sm',
   lineHeight: '$base',
+})
+
+const DialogClose = styled(DialogPrimitive.Close, {
+  all: 'unset',
+  fontFamily: 'inherit',
+  br: '$full',
+  h: '$6',
+  w: '$6',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: '$slate200',
+  position: 'absolute',
+  top: '$2',
+  right: '$2',
+
+  '&:hover': { backgroundColor: '$slate700' },
+  '&:focus': { boxShadow: `0 0 0 2px $slate900` },
 })
 
 export {

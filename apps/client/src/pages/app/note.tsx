@@ -30,6 +30,7 @@ import {
 } from '@/components/primitive'
 import Flex from '@/components/shared/flex'
 import IconButton from '@/components/shared/icon-button'
+import TagsPopover from '@/components/tags-popover'
 import { useDeleteNoteById, useNoteById, useUpdateNoteById } from '@/hooks'
 import { downloadAsMd, formatDateTime } from '@/lib/helpers'
 import { trpc } from '@/lib/trpc'
@@ -97,6 +98,7 @@ export default function NotePage() {
             >
               <Icon as={preview ? Visibility : Draw} />
             </IconButton>
+            <TagsPopover note={note} />
             <IconButton
               tooltip="Download"
               onClick={() => downloadAsMd(note.title, note.code)}

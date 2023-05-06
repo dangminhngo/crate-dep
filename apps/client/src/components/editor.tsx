@@ -1,14 +1,13 @@
-import { useEditor } from '@/hooks'
+import { useEditor, useSelector } from '@/hooks'
 import { styled } from '@/stitches.config'
-import type { EditorConfig } from '@/types'
 
 interface EditorProps {
   code: string
   setCode: (c: string) => void
-  config: EditorConfig
 }
 
-export default function Editor({ code, setCode, config }: EditorProps) {
+export default function Editor({ code, setCode }: EditorProps) {
+  const config = useSelector((state) => state.settings.editor)
   const { ref } = useEditor({ code, setCode, config })
   return <StyledEditor ref={ref} />
 }

@@ -70,13 +70,6 @@ export default function NotePage() {
           <Editor
             code={note.code}
             setCode={(code) => updateNote({ id: note.id, code })}
-            config={{
-              autocomplete: true,
-              highlightActiveLine: true,
-              lineNumbers: true,
-              lineWrapping: true,
-              tabSize: 2,
-            }}
           />
         )}
       </div>

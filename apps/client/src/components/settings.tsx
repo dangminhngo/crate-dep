@@ -1,4 +1,11 @@
+import { useDispatch, useSelector } from '@/hooks'
 import { styled } from '@/stitches.config'
+import {
+  _toggleAutocomplete,
+  _toggleHighlightActiveLine,
+  _toggleLineNumbers,
+  _toggleLineWrapping,
+} from '@/store/slices/settings.slice'
 import { Clear, Cog } from './icons'
 import {
   Dialog,
@@ -13,10 +20,17 @@ import {
   Switch,
   SwitchThumb,
 } from './primitive'
-import IconButton from './shared/icon-button'
 import SectionButton from './shared/section-button'
 
 export default function Settings() {
+  const { editor } = useSelector((state) => state.settings)
+  const dispatch = useDispatch()
+
+  const toggleAutocomplete = () => dispatch(_toggleAutocomplete())
+  const toggleLineNumbers = () => dispatch(_toggleLineNumbers())
+  const toggleLineWrapping = () => dispatch(_toggleLineWrapping())
+  const toggleHighlightActiveLine = () => dispatch(_toggleHighlightActiveLine())
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,38 +46,39 @@ export default function Settings() {
             You can change your workspace settings
           </DialogDescription>
           <StyledSettingsContainer>
-            <SettingsSwitch
-              id="autocomplete"
-              title="Autocomplete"
-              description="Enable autocomplete engine"
-              onClick={() => {
-                console.log('Autocomplete')
-              }}
-            />
-            <SettingsSwitch
-              id="line-numbers"
-              title="Line numbers"
-              description="Show editor line numbers"
-              onClick={() => {
-                console.log('Line number')
-              }}
-            />
-            <SettingsSwitch
-              id="active-line"
-              title="Highlight active line"
-              description="Highlight editor active line"
-              onClick={() => {
-                console.log('Active line')
-              }}
-            />
-            <SettingsSwitch
-              id="line-wrap"
-              title="Line wrapping"
-              description="Wrap the line if they overflow the editor width"
-              onClick={() => {
-                console.log('Wrapping')
-              }}
-            />
+            <div className="section">
+              <h3 className="section__title">Editor Configurations</h3>
+              <div className="section__container">
+                <SettingsSwitch
+                  id="autocomplete"
+                  title="Autocomplete"
+                  description="Enable autocomplete engine"
+                  checked={editor.autocomplete}
+                  onClick={toggleAutocomplete}
+                />
+                <SettingsSwitch
+                  id="line-numbers"
+                  title="Line numbers"
+                  description="Show editor line numbers"
+                  checked={editor.lineNumbers}
+                  onClick={toggleLineNumbers}
+                />
+                <SettingsSwitch
+                  id="active-line"
+                  title="Highlight active line"
+                  description="Highlight editor active line"
+                  checked={editor.highlightActiveLine}
+                  onClick={toggleHighlightActiveLine}
+                />
+                <SettingsSwitch
+                  id="line-wrap"
+                  title="Line wrapping"
+                  description="Wrap the line if they overflow the editor width"
+                  checked={editor.lineWrapping}
+                  onClick={toggleHighlightActiveLine}
+                />
+              </div>
+            </div>
           </StyledSettingsContainer>
           <DialogClose>
             <Icon as={Clear} />
@@ -81,6 +96,23 @@ const StyledSettingsContainer = styled('div', {
   flexDirection: 'column',
   alignItems: 'stretch',
   gap: '$12',
+
+  '.section': {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '$8',
+  },
+
+  '.section__title': {
+    fontWeight: '$semibold',
+  },
+
+  '.section__container': {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    gap: '$8',
+  },
 })
 
 interface SettingsSwitchProps
@@ -117,5 +149,6 @@ const StyledSettingsSwitch = styled('div', {
   justifyContent: 'space-between',
 
   '.title': { fontWeight: '$semibold' },
+
   '.description': { mt: '$2', color: '$slate400' },
 })

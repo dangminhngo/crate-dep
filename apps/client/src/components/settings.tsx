@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from '@/hooks'
 import { styled } from '@/stitches.config'
 import {
+  _setTabSize,
   _toggleAutocomplete,
   _toggleHighlightActiveLine,
   _toggleLineNumbers,
@@ -21,6 +22,7 @@ import {
   SwitchThumb,
 } from './primitive'
 import SectionButton from './shared/section-button'
+import Select from './shared/select'
 
 export default function Settings() {
   const { editor } = useSelector((state) => state.settings)
@@ -30,6 +32,7 @@ export default function Settings() {
   const toggleLineNumbers = () => dispatch(_toggleLineNumbers())
   const toggleLineWrapping = () => dispatch(_toggleLineWrapping())
   const toggleHighlightActiveLine = () => dispatch(_toggleHighlightActiveLine())
+  const setTabSize = (size: number) => dispatch(_setTabSize(size))
 
   return (
     <Dialog>
@@ -75,7 +78,16 @@ export default function Settings() {
                   title="Line wrapping"
                   description="Wrap the line if they overflow the editor width"
                   checked={editor.lineWrapping}
-                  onClick={toggleHighlightActiveLine}
+                  onClick={toggleLineWrapping}
+                />
+                <SettingsSelect
+                  title="Tab size"
+                  description="Set editor tab size"
+                  items={Array.from({ length: 16 }, (_, x) =>
+                    String(x + 1)
+                  ).map((value) => ({ value, label: value }))}
+                  placeholder="Select tab size"
+                  onValueChange={(value) => setTabSize(+value)}
                 />
               </div>
             </div>
@@ -144,6 +156,34 @@ function SettingsSwitch({
 }
 
 const StyledSettingsSwitch = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+
+  '.title': { fontWeight: '$semibold' },
+
+  '.description': { mt: '$2', color: '$slate400' },
+})
+
+interface SettingsSelectProps
+  extends React.ComponentPropsWithoutRef<typeof Select> {
+  title: string
+  description: string
+}
+
+function SettingsSelect({ title, description, ...props }: SettingsSelectProps) {
+  return (
+    <StyledSettingsSelect>
+      <div className="text">
+        <div className="title">{title}</div>
+        <p className="description">{description}</p>
+      </div>
+      <Select {...props} />
+    </StyledSettingsSelect>
+  )
+}
+
+const StyledSettingsSelect = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',

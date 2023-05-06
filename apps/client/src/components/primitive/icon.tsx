@@ -1,6 +1,6 @@
-import type { VariantProps } from '@stitches/react'
+import type { CSS, VariantProps } from '@stitches/react'
 
-import { css } from '@/stitches.config'
+import { css, styled } from '@/stitches.config'
 import { SVGProps } from '@/types/shared'
 
 const iconVariants = css({
@@ -39,10 +39,12 @@ const iconVariants = css({
 
 interface IconProps extends SVGProps, VariantProps<typeof iconVariants> {
   as: React.FC<SVGProps>
+  css?: CSS
 }
 
-function Icon({ as: Component, size = 'base', ...props }: IconProps) {
-  return <Component className={iconVariants({ size })} {...props} />
+function Icon({ as, size = 'base', ...props }: IconProps) {
+  const StyledIcon = styled(as, {})
+  return <StyledIcon className={iconVariants({ size })} {...props} />
 }
 
 export { Icon }

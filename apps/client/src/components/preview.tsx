@@ -5,6 +5,7 @@ import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 
 import { styled } from '@/stitches.config'
+import Container from './shared/container'
 
 interface PreviewProps {
   code: string
@@ -13,12 +14,14 @@ interface PreviewProps {
 export default function Preview({ code }: PreviewProps) {
   return (
     <StyledPreview>
-      <ReactMarkdown
-        rehypePlugins={[rehypeCodeTitles, rehypePrism, rehypeSlug]}
-        remarkPlugins={[remarkGfm]}
-      >
-        {code}
-      </ReactMarkdown>
+      <Container className="container">
+        <ReactMarkdown
+          rehypePlugins={[rehypeCodeTitles, rehypePrism, rehypeSlug]}
+          remarkPlugins={[remarkGfm]}
+        >
+          {code}
+        </ReactMarkdown>
+      </Container>
     </StyledPreview>
   )
 }
@@ -30,6 +33,13 @@ const StyledPreview = styled('div', {
   backgroundColor: '$slate900',
   overflowX: 'hidden',
   overflowY: 'auto',
+
+  '.container': {
+    maxW: '$md',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+  },
 
   '& hr': {
     mt: '$4',
@@ -116,6 +126,7 @@ const StyledPreview = styled('div', {
   },
   // Prism codeblock highlighting
   "code[class*='language-'], pre[class*='language-']": {
+    px: 0,
     backgroundColor: '$editorBg',
     color: '$editorFg',
     fontFamily: '$mono',
@@ -139,7 +150,8 @@ const StyledPreview = styled('div', {
     },
   // Codeblocks
   "pre[class*='language-']": {
-    p: '$6',
+    px: '$6',
+    py: '$4',
     my: '$4',
     overflow: 'auto',
     borderRadius: '$base',

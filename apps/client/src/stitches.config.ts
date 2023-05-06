@@ -65,6 +65,7 @@ const tokens = {
     iconButtonBgHover: p.slate800,
     iconButtonFgActive: p.accent,
     iconButtonBgActive: 'transparent',
+    iconButtonFgDestructive: p.red,
     buttonFg: p.slate300,
     buttonBg: 'transparent',
     buttonSecondaryFg: p.slate300,

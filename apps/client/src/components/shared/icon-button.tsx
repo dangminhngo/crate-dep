@@ -33,6 +33,13 @@ const StyledIconButton = styled('button', {
           color: '$iconButtonFgActive',
         },
       },
+      destructive: {
+        backgroundColor: '$iconButtonBg',
+        color: '$iconButtonFgDestructive',
+        '&:hover': {
+          backgroundColor: '$iconButtonBgHover',
+        },
+      },
     },
     size: {
       default: {

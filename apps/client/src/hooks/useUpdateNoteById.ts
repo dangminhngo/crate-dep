@@ -14,9 +14,12 @@ export function useUpdateNoteById(options?: UpdateNoteByIdOptions) {
 
   return trpc.note.updateById.useMutation({
     ...options,
-    onSuccess(input) {
+    onSuccess(data, ...rest) {
       utils.note.list.invalidate()
-      utils.note.byId.invalidate(input.id)
+      utils.note.byId.invalidate(data.id)
+      if (options?.onSuccess) {
+        options.onSuccess(data, ...rest)
+      }
     },
   })
 }

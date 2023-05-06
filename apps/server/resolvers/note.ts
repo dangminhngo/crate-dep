@@ -148,3 +148,33 @@ export const updateNoteById = protectedProcedure
 
     return updateNote
   })
+
+export const deleteNoteById = protectedProcedure
+  .input(z.string())
+  .mutation(async ({ ctx, input }) => {
+    const note = await prisma.note.findUnique({
+      where: {
+        id: input,
+      },
+    })
+
+    if (!note) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: `Cannot find the note with id "${input}"`,
+      })
+    }
+
+    if (note.ownerId !== ctx.user.id) {
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: 'No privileges to access this note',
+      })
+    }
+
+    const deleteNote = await prisma.note.delete({
+      where: { id: note.id },
+    })
+
+    return deleteNote
+  })

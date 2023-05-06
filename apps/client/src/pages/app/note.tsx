@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { getQueryKey } from '@trpc/react-query'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import Editor from '@/components/editor'
 import {
@@ -32,16 +32,18 @@ import {
 import Flex from '@/components/shared/flex'
 import IconButton from '@/components/shared/icon-button'
 import { useNoteById, useUpdateNoteById } from '@/hooks'
+import { useDeleteNoteById } from '@/hooks/useDeleteNoteById'
 import { downloadAsMd, formatDateTime } from '@/lib/helpers'
 import { trpc } from '@/lib/trpc'
 import { styled } from '@/stitches.config'
 
 export default function NotePage() {
+  const navigate = useNavigate()
   const params = useParams()
   const [preview, setPreview] = useState(false)
   const queryClient = useQueryClient()
   const { status, data: note } = useNoteById(params.id as string)
-  const mutation = useUpdateNoteById({
+  const { mutate: updateNote } = useUpdateNoteById({
     onMutate: async (data) => {
       const noteQueryKey = getQueryKey(trpc.note.byId)
       await queryClient.cancelQueries({ queryKey: noteQueryKey })
@@ -50,9 +52,15 @@ export default function NotePage() {
       return previousNote
     },
   })
+  const { mutate: deleteNote } = useDeleteNoteById({
+    onSuccess: () => {
+      console.log('Note deleted')
+      navigate(-1)
+    },
+  })
 
   if (status === 'loading') return <div>Loading...</div>
-  if (status === 'error') return <div>Loading...</div>
+  if (status === 'error') return <div>There was an error</div>
 
   return (
     <StyledNotePage>
@@ -62,7 +70,7 @@ export default function NotePage() {
         ) : (
           <Editor
             code={note.code}
-            setCode={(code) => mutation.mutate({ id: note.id, code })}
+            setCode={(code) => updateNote({ id: note.id, code })}
             config={{
               autocomplete: true,
               highlightActiveLine: true,
@@ -104,7 +112,7 @@ export default function NotePage() {
               variant={note.starred ? 'active' : 'default'}
               tooltip={note.starred ? 'Unstar' : 'Star'}
               onClick={() =>
-                mutation.mutate({ id: note.id, starred: !note.starred })
+                updateNote({ id: note.id, starred: !note.starred })
               }
             >
               <Icon as={Star} />
@@ -113,39 +121,49 @@ export default function NotePage() {
               variant={note.trashed ? 'active' : 'default'}
               tooltip={note.trashed ? 'Restore' : 'Delete'}
               onClick={() =>
-                mutation.mutate({ id: note.id, trashed: !note.trashed })
+                updateNote({ id: note.id, trashed: !note.trashed })
               }
             >
               <Icon as={note.trashed ? Recycling : Delete} />
             </IconButton>
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <IconButton tooltip="Delete permanently">
-                  <Icon as={DeleteForever} />
-                </IconButton>
-              </AlertDialogTrigger>
-              <AlertDialogPortal>
-                <AlertDialogOverlay>
-                  <AlertDialogContent>
-                    <AlertDialogTitle>
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      this note.
-                    </AlertDialogDescription>
-                    <Flex css={{ justifyContent: 'flex-end', gap: '$2' }}>
-                      <AlertDialogAction>
-                        <Button variant="destructive">Yes, delete</Button>
-                      </AlertDialogAction>
-                      <AlertDialogCancel>
-                        <Button variant="outline">Cancel</Button>
-                      </AlertDialogCancel>
-                    </Flex>
-                  </AlertDialogContent>
-                </AlertDialogOverlay>
-              </AlertDialogPortal>
-            </AlertDialog>
+            {note.trashed && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <IconButton
+                    variant="destructive"
+                    tooltip="Delete permanently"
+                  >
+                    <Icon as={DeleteForever} />
+                  </IconButton>
+                </AlertDialogTrigger>
+                <AlertDialogPortal>
+                  <AlertDialogOverlay>
+                    <AlertDialogContent>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete this note.
+                      </AlertDialogDescription>
+                      <Flex css={{ justifyContent: 'flex-end', gap: '$2' }}>
+                        <AlertDialogCancel>
+                          <Button variant="outline">Cancel</Button>
+                        </AlertDialogCancel>
+                        <AlertDialogAction asChild>
+                          <Button
+                            variant="destructive"
+                            onClick={() => deleteNote(note.id)}
+                          >
+                            Yes, delete
+                          </Button>
+                        </AlertDialogAction>
+                      </Flex>
+                    </AlertDialogContent>
+                  </AlertDialogOverlay>
+                </AlertDialogPortal>
+              </AlertDialog>
+            )}
           </div>
         </div>
       </div>

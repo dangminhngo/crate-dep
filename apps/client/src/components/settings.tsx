@@ -88,6 +88,7 @@ export default function Settings() {
                   ).map((value) => ({ value, label: value }))}
                   placeholder="Select tab size"
                   onValueChange={(value) => setTabSize(+value)}
+                  value={editor.tabSize.toString()}
                 />
               </div>
             </div>
@@ -116,7 +117,8 @@ const StyledSettingsContainer = styled('div', {
   },
 
   '.section__title': {
-    fontWeight: '$semibold',
+    fontWeight: '$medium',
+    color: '$accent',
   },
 
   '.section__container': {

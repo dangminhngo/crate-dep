@@ -12,3 +12,7 @@ export function downloadAsMd(title: string, code: string) {
   a.download = `${filename}.md`
   a.click()
 }
+
+export function clamp(value: number, min: number, max: number) {
+  return Math.max(Math.min(value, max), min)
+}

@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import Editor from '@/components/editor'
 import {
   Delete,
+  DeleteForever,
   Download,
   Draw,
   Fullscreen,
@@ -15,7 +16,20 @@ import {
   Visibility,
 } from '@/components/icons'
 import Preview from '@/components/preview'
-import { Icon } from '@/components/primitive'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Button,
+  Icon,
+} from '@/components/primitive'
+import Flex from '@/components/shared/flex'
 import IconButton from '@/components/shared/icon-button'
 import { useNoteById, useUpdateNoteById } from '@/hooks'
 import { downloadAsMd, formatDateTime } from '@/lib/helpers'
@@ -72,7 +86,7 @@ export default function NotePage() {
           <div className="toolbar__buttons">
             <IconButton
               variant={preview ? 'active' : 'default'}
-              tooltip="Change mode"
+              tooltip={preview ? 'Markdown' : 'Preview'}
               onClick={() => setPreview((preview) => !preview)}
             >
               <Icon as={preview ? Visibility : Draw} />
@@ -97,16 +111,41 @@ export default function NotePage() {
             </IconButton>
             <IconButton
               variant={note.trashed ? 'active' : 'default'}
-              tooltip="Delete"
+              tooltip={note.trashed ? 'Restore' : 'Delete'}
               onClick={() =>
                 mutation.mutate({ id: note.id, trashed: !note.trashed })
               }
             >
-              <Icon as={Delete} />
+              <Icon as={note.trashed ? Recycling : Delete} />
             </IconButton>
-            <IconButton tooltip="Restore">
-              <Icon as={Recycling} />
-            </IconButton>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <IconButton tooltip="Delete permanently">
+                  <Icon as={DeleteForever} />
+                </IconButton>
+              </AlertDialogTrigger>
+              <AlertDialogPortal>
+                <AlertDialogOverlay>
+                  <AlertDialogContent>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      this note.
+                    </AlertDialogDescription>
+                    <Flex css={{ justifyContent: 'flex-end', gap: '$2' }}>
+                      <AlertDialogAction>
+                        <Button variant="destructive">Yes, delete</Button>
+                      </AlertDialogAction>
+                      <AlertDialogCancel>
+                        <Button variant="outline">Cancel</Button>
+                      </AlertDialogCancel>
+                    </Flex>
+                  </AlertDialogContent>
+                </AlertDialogOverlay>
+              </AlertDialogPortal>
+            </AlertDialog>
           </div>
         </div>
       </div>

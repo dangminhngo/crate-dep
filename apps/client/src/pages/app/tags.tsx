@@ -1,5 +1,6 @@
 import { Label, Sort } from '@/components/icons'
 import { Icon } from '@/components/primitive'
+import Container from '@/components/shared/container'
 import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
 import TagList from '@/components/tag-list'
@@ -15,36 +16,46 @@ export default function TagsPage() {
 
   return (
     <StyledTagsPage>
-      <div className="titlebar">
-        <div className="titlebar__left">
-          <h3>
-            <Icon size="xl" as={Label} />
-            Tags
-          </h3>
-        </div>
-        <div className="titlebar__right">
-          <span>Last edited Apr 28</span>
-          <span>{tags.length} notes</span>
-          <div className="buttons">
-            <IconButton size="sm" tooltip="Sort">
-              <Icon as={Sort} />
-            </IconButton>
+      <Container className="container">
+        <div className="titlebar">
+          <div className="titlebar__left">
+            <h3>
+              <Icon size="xl" as={Label} />
+              Tags
+            </h3>
+          </div>
+          <div className="titlebar__right">
+            <span>Last edited Apr 28</span>
+            <span>{tags.length} notes</span>
+            <div className="buttons">
+              <IconButton size="sm" tooltip="Sort">
+                <Icon as={Sort} />
+              </IconButton>
+            </div>
           </div>
         </div>
-      </div>
-      {tags.length > 0 ? <TagList tags={tags} /> : <p>You have no tags</p>}
+        {tags.length > 0 ? (
+          <TagList tags={tags} />
+        ) : (
+          <p className="message">You have no tags</p>
+        )}
+      </Container>
     </StyledTagsPage>
   )
 }
 
 const StyledTagsPage = styled('div', {
   flex: 1,
-  px: '$64',
+  px: '$6',
   py: '$48',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'stretch',
-  gap: '$8',
+
+  '.container': {
+    maxW: '$lg',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    gap: '$8',
+  },
 
   '.titlebar': {
     display: 'flex',
@@ -74,5 +85,9 @@ const StyledTagsPage = styled('div', {
     display: 'flex',
     alignItems: 'center',
     gap: '$2',
+  },
+
+  '.message': {
+    textAlign: 'center',
   },
 })

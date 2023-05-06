@@ -1,6 +1,7 @@
 import { FilterAlt, Sort, Star } from '@/components/icons'
 import NoteList from '@/components/note-list'
 import { Icon } from '@/components/primitive'
+import Container from '@/components/shared/container'
 import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
 import { useNoteList } from '@/hooks'
@@ -17,43 +18,49 @@ export default function StarredPage() {
 
   return (
     <StyledStarredPage>
-      <div className="titlebar">
-        <div className="titlebar__left">
-          <h3>
-            <Icon size="xl" as={Star} />
-            Starred
-          </h3>
-        </div>
-        <div className="titlebar__right">
-          <span>Last edited Apr 28</span>
-          <span>{starredNotes.length} notes</span>
-          <div className="buttons">
-            <IconButton size="sm" tooltip="Filter">
-              <Icon as={FilterAlt} />
-            </IconButton>
-            <IconButton size="sm" tooltip="Sort">
-              <Icon as={Sort} />
-            </IconButton>
+      <Container className="container">
+        <div className="titlebar">
+          <div className="titlebar__left">
+            <h3>
+              <Icon size="xl" as={Star} />
+              Starred
+            </h3>
+          </div>
+          <div className="titlebar__right">
+            <span>Last edited Apr 28</span>
+            <span>{starredNotes.length} notes</span>
+            <div className="buttons">
+              <IconButton size="sm" tooltip="Filter">
+                <Icon as={FilterAlt} />
+              </IconButton>
+              <IconButton size="sm" tooltip="Sort">
+                <Icon as={Sort} />
+              </IconButton>
+            </div>
           </div>
         </div>
-      </div>
-      {starredNotes.length > 0 ? (
-        <NoteList notes={starredNotes} />
-      ) : (
-        <p>You have starred no notes</p>
-      )}
+        {starredNotes.length > 0 ? (
+          <NoteList notes={starredNotes} />
+        ) : (
+          <p className="message">You have starred no notes</p>
+        )}
+      </Container>
     </StyledStarredPage>
   )
 }
 
 const StyledStarredPage = styled('div', {
   flex: 1,
-  px: '$64',
+  px: '$6',
   py: '$48',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'stretch',
-  gap: '$8',
+
+  '.container': {
+    maxW: '$lg',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    gap: '$8',
+  },
 
   '.titlebar': {
     display: 'flex',
@@ -83,5 +90,9 @@ const StyledStarredPage = styled('div', {
     display: 'flex',
     alignItems: 'center',
     gap: '$2',
+  },
+
+  '.message': {
+    textAlign: 'center',
   },
 })

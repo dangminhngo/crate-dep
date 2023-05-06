@@ -35,6 +35,9 @@ const StyledEditor = styled('div', {
     pl: '$3 !important',
     pr: '$6 !important',
   },
+  '.cm-lineWrapping': {
+    py: 0,
+  },
   '.cm-line': {
     lineHeight: '$tall',
   },

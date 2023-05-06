@@ -66,7 +66,7 @@ export default function NotePage() {
         </div>
         <div className="toolbar__right">
           <p>
-            Edited at {formatDateTime(note.updatedAt, 'HH:MM')} on{' '}
+            Edited at {formatDateTime(note.updatedAt, 'HH:mm')} on{' '}
             {formatDateTime(note.updatedAt, 'LLL dd, yyyy')}
           </p>
           <div className="toolbar__buttons">

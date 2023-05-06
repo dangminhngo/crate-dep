@@ -1,5 +1,4 @@
 import React from 'react'
-import type { VariantProps } from '@stitches/react'
 
 import { styled } from '@/stitches.config'
 import {
@@ -15,6 +14,8 @@ const StyledIconButton = styled('button', {
   transition: '$base',
   cursor: 'pointer',
   br: '$base',
+  display: 'grid',
+  placeItems: 'center',
   variants: {
     variant: {
       default: {
@@ -45,14 +46,26 @@ const StyledIconButton = styled('button', {
       default: {
         h: '$9',
         w: '$9',
+        '& svg': {
+          h: '$5',
+          w: '$5',
+        },
       },
       sm: {
-        h: '$8',
-        w: '$8',
+        h: '$7',
+        w: '$7',
+        '& svg': {
+          h: '$4',
+          w: '$4',
+        },
       },
       lg: {
-        h: '$12',
-        w: '$12',
+        h: '$11',
+        w: '$11',
+        '& svg': {
+          h: '$6',
+          w: '$6',
+        },
       },
     },
   },
@@ -60,8 +73,7 @@ const StyledIconButton = styled('button', {
 })
 
 interface IconButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof StyledIconButton> {
+  extends React.ComponentPropsWithoutRef<typeof StyledIconButton> {
   tooltip?: string
 }
 

@@ -187,6 +187,7 @@ const tokens = {
   },
   lineHeights: {
     normal: 'normal',
+    base: 1.5,
     short: 1.375,
     tall: 1.625,
   },

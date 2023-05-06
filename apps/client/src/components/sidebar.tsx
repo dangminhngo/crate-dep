@@ -10,7 +10,6 @@ import {
   Logout,
   ManageAccounts,
   Search,
-  Settings,
   Star,
   StickyNote,
 } from './icons'
@@ -26,6 +25,7 @@ import {
   DropdownMenuTrigger,
   Icon,
 } from './primitive'
+import Settings from './settings'
 import SectionButton from './shared/section-button'
 
 export default function Sidebar() {
@@ -85,13 +85,7 @@ export default function Sidebar() {
           >
             Search
           </SectionButton>
-          <SectionButton
-            icon={Settings}
-            tooltip="Change your settings"
-            onClick={() => console.log('search')}
-          >
-            Settings
-          </SectionButton>
+          <Settings />
         </div>
         <div>
           <SectionButton

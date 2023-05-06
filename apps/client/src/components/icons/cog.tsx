@@ -1,6 +1,6 @@
 import { SVGProps } from '@/types/shared'
 
-export function Settings(props: SVGProps) {
+export function Cog(props: SVGProps) {
   return (
     <svg
       {...props}

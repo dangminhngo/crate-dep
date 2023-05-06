@@ -1,5 +1,4 @@
 import React from 'react'
-import { VariantProps } from '@stitches/react'
 
 import { styled } from '@/stitches.config'
 import { SVGProps } from '@/types/shared'
@@ -55,8 +54,7 @@ const StyledSectionButton = styled('button', {
 })
 
 interface SectionButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof StyledSectionButton> {
+  extends React.ComponentPropsWithoutRef<typeof StyledSectionButton> {
   icon: React.FC<SVGProps>
   tooltip?: string
 }

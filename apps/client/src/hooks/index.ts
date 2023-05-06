@@ -1,4 +1,6 @@
+export * from './useDeleteNoteById'
 export * from './useEditor'
+export * from './useEmptyTrash'
 export * from './useNoteById'
 export * from './useNoteList'
 export * from './useTagById'

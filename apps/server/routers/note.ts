@@ -1,5 +1,6 @@
 import {
   deleteNoteById,
+  emptyTrash,
   getNoteById,
   listNotes,
   updateNoteById,
@@ -11,4 +12,5 @@ export const noteRouter = router({
   byId: getNoteById,
   updateById: updateNoteById,
   deleteById: deleteNoteById,
+  emptyTrash: emptyTrash,
 })

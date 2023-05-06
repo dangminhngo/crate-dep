@@ -1,14 +1,32 @@
-import { Delete, Sort } from '@/components/icons'
+import { Delete, DeleteForever, Sort } from '@/components/icons'
 import NoteList from '@/components/note-list'
-import { Icon } from '@/components/primitive'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Button,
+  Icon,
+} from '@/components/primitive'
 import Container from '@/components/shared/container'
+import Flex from '@/components/shared/flex'
 import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
-import { useNoteList } from '@/hooks'
+import { useEmptyTrash, useNoteList } from '@/hooks'
 import { styled } from '@/stitches.config'
 
 export default function TrashPage() {
   const { status, data: notes } = useNoteList()
+  const { mutate: emptyTrash } = useEmptyTrash({
+    onSuccess: () => {
+      console.log('Trash is empty')
+    },
+  })
 
   if (status === 'loading') return <SectionSkeleton />
 
@@ -41,6 +59,39 @@ export default function TrashPage() {
         ) : (
           <p className="message">You have no notes</p>
         )}
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="destructive"
+              size="sm"
+              css={{ gap: '$2', alignSelf: 'end' }}
+            >
+              <Icon as={DeleteForever} />
+              Empty trash
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogPortal>
+            <AlertDialogOverlay>
+              <AlertDialogContent>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete all
+                  notes in your trash.
+                </AlertDialogDescription>
+                <Flex css={{ justifyContent: 'flex-end', gap: '$2' }}>
+                  <AlertDialogCancel>
+                    <Button variant="outline">Cancel</Button>
+                  </AlertDialogCancel>
+                  <AlertDialogAction asChild>
+                    <Button variant="destructive" onClick={() => emptyTrash()}>
+                      Yes, empty trash
+                    </Button>
+                  </AlertDialogAction>
+                </Flex>
+              </AlertDialogContent>
+            </AlertDialogOverlay>
+          </AlertDialogPortal>
+        </AlertDialog>
       </Container>
     </StyledTrashPage>
   )

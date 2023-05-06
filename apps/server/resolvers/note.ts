@@ -178,3 +178,11 @@ export const deleteNoteById = protectedProcedure
 
     return deleteNote
   })
+
+export const emptyTrash = protectedProcedure.mutation(async ({ ctx }) => {
+  const deleteNotes = await prisma.note.deleteMany({
+    where: { ownerId: ctx.user.id },
+  })
+
+  return deleteNotes
+})

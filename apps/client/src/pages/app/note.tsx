@@ -9,7 +9,6 @@ import {
   DeleteForever,
   Download,
   Draw,
-  Fullscreen,
   Recycling,
   Star,
   StickyNote,
@@ -99,9 +98,6 @@ export default function NotePage() {
             >
               <Icon as={preview ? Visibility : Draw} />
             </IconButton>
-            <IconButton tooltip="Fullscreen">
-              <Icon as={Fullscreen} />
-            </IconButton>
             <IconButton
               tooltip="Download"
               onClick={() => downloadAsMd(note.title, note.code)}
@@ -119,7 +115,7 @@ export default function NotePage() {
             </IconButton>
             <IconButton
               variant={note.trashed ? 'active' : 'default'}
-              tooltip={note.trashed ? 'Restore' : 'Delete'}
+              tooltip={note.trashed ? 'Restore' : 'Move to trash'}
               onClick={() =>
                 updateNote({ id: note.id, trashed: !note.trashed })
               }

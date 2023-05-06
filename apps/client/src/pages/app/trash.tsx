@@ -55,43 +55,50 @@ export default function TrashPage() {
           </div>
         </div>
         {trashedNotes.length > 0 ? (
-          <NoteList notes={trashedNotes} />
+          <>
+            <NoteList notes={trashedNotes} />
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  css={{ gap: '$2', alignSelf: 'end' }}
+                >
+                  <Icon as={DeleteForever} />
+                  Empty trash
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogPortal>
+                <AlertDialogOverlay>
+                  <AlertDialogContent>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      all notes in your trash.
+                    </AlertDialogDescription>
+                    <Flex css={{ justifyContent: 'flex-end', gap: '$2' }}>
+                      <AlertDialogCancel>
+                        <Button variant="outline">Cancel</Button>
+                      </AlertDialogCancel>
+                      <AlertDialogAction asChild>
+                        <Button
+                          variant="destructive"
+                          onClick={() => emptyTrash()}
+                        >
+                          Yes, empty trash
+                        </Button>
+                      </AlertDialogAction>
+                    </Flex>
+                  </AlertDialogContent>
+                </AlertDialogOverlay>
+              </AlertDialogPortal>
+            </AlertDialog>
+          </>
         ) : (
           <p className="message">You have no notes</p>
         )}
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button
-              variant="destructive"
-              size="sm"
-              css={{ gap: '$2', alignSelf: 'end' }}
-            >
-              <Icon as={DeleteForever} />
-              Empty trash
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogPortal>
-            <AlertDialogOverlay>
-              <AlertDialogContent>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete all
-                  notes in your trash.
-                </AlertDialogDescription>
-                <Flex css={{ justifyContent: 'flex-end', gap: '$2' }}>
-                  <AlertDialogCancel>
-                    <Button variant="outline">Cancel</Button>
-                  </AlertDialogCancel>
-                  <AlertDialogAction asChild>
-                    <Button variant="destructive" onClick={() => emptyTrash()}>
-                      Yes, empty trash
-                    </Button>
-                  </AlertDialogAction>
-                </Flex>
-              </AlertDialogContent>
-            </AlertDialogOverlay>
-          </AlertDialogPortal>
-        </AlertDialog>
       </Container>
     </StyledTrashPage>
   )

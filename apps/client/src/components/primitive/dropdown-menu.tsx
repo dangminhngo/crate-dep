@@ -31,15 +31,18 @@ const slideLeftAndFade = keyframes({
 })
 
 const contentStyles = {
-  minWidth: 220,
-  backgroundColor: 'white',
-  borderRadius: 6,
-  padding: 5,
-  boxShadow:
-    '0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2)',
+  mt: '$1',
+  minW: '$48',
+  backgroundColor: '$slate800',
+  br: '$base',
+  boxShadow: '$base',
   animationDuration: '400ms',
   animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
   willChange: 'transform, opacity',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+  overflow: 'hidden',
   '&[data-state="open"]': {
     '&[data-side="top"]': { animationName: slideDownAndFade },
     '&[data-side="right"]': { animationName: slideLeftAndFade },
@@ -54,30 +57,30 @@ const DropdownMenuSubContent = styled(
   contentStyles
 )
 
-const DropdownMenuArrow = styled(DropdownMenuPrimitive.Arrow, { fill: 'white' })
+const DropdownMenuArrow = styled(DropdownMenuPrimitive.Arrow, {
+  fill: '$slate800',
+})
 
 const itemStyles = {
   all: 'unset',
-  fontSize: 13,
-  lineHeight: 1,
-  color: '$slate200',
-  borderRadius: 3,
+  cursor: 'pointer',
+  px: '$4',
+  h: '$10',
+  fontSize: '$sm',
+  userSelect: 'none',
   display: 'flex',
   alignItems: 'center',
-  height: 25,
-  padding: '0 5px',
-  position: 'relative',
-  paddingLeft: 25,
-  userSelect: 'none',
+  gap: '$4',
+  color: '$slate200',
+  backgroundColor: 'transparent',
 
   '&[data-disabled]': {
-    color: '$slate200',
+    color: '$slate400',
     pointerEvents: 'none',
   },
 
   '&[data-highlighted]': {
-    backgroundColor: '$slate800',
-    color: '$slate200',
+    backgroundColor: '$slate700',
   },
 }
 
@@ -99,22 +102,22 @@ const DropdownMenuSubTrigger = styled(DropdownMenuPrimitive.SubTrigger, {
 })
 
 const DropdownMenuLabel = styled(DropdownMenuPrimitive.Label, {
-  paddingLeft: 25,
-  fontSize: 12,
-  lineHeight: '25px',
+  paddingLeft: '$4',
+  fontSize: '$xs',
+  lineHeight: '$tall',
   color: '$slate200',
 })
 
 const DropdownMenuSeparator = styled(DropdownMenuPrimitive.Separator, {
-  height: 1,
+  h: '1px',
   backgroundColor: '$slate200',
-  margin: 5,
+  my: '$1',
 })
 
 const DropdownMenuItemIndicator = styled(DropdownMenuPrimitive.ItemIndicator, {
   position: 'absolute',
   left: 0,
-  width: 25,
+  w: '$6',
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',

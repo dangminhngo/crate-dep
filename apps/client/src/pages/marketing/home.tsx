@@ -36,6 +36,7 @@ const StyledHomePage = styled('div', {
     fontFamily: '$heading',
     '& h1': {
       fontSize: '$8xl',
+      color: '$primary',
     },
     '& h2': {
       fontSize: '$4xl',

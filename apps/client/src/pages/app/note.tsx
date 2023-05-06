@@ -18,7 +18,7 @@ import Preview from '@/components/preview'
 import { Icon } from '@/components/primitive'
 import IconButton from '@/components/shared/icon-button'
 import { useNoteById, useUpdateNoteById } from '@/hooks'
-import { formatDateTime } from '@/lib/helpers'
+import { downloadAsMd, formatDateTime } from '@/lib/helpers'
 import { trpc } from '@/lib/trpc'
 import { styled } from '@/stitches.config'
 
@@ -80,7 +80,10 @@ export default function NotePage() {
             <IconButton tooltip="Fullscreen">
               <Icon as={Fullscreen} />
             </IconButton>
-            <IconButton tooltip="Download">
+            <IconButton
+              tooltip="Download"
+              onClick={() => downloadAsMd(note.title, note.code)}
+            >
               <Icon as={Download} />
             </IconButton>
             <IconButton

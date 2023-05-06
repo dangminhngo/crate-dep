@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -31,13 +32,25 @@ export default function Sidebar() {
   const { user, logout } = useAuth0()
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  const profileButtonRef = useRef<HTMLButtonElement>(null)
+  const [profileDropdownMenuWidth, setProfileDropdownMenuWidth] = useState(0)
+
+  useEffect(() => {
+    if (!profileButtonRef.current) return
+    const { width } = profileButtonRef.current.getBoundingClientRect()
+    setProfileDropdownMenuWidth(width)
+  }, [])
 
   return (
     <StyledSidebar>
       <div className="top">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="profile-button">
+            <Button
+              ref={profileButtonRef}
+              variant="outline"
+              className="profile-button"
+            >
               <div className="profile-button__user">
                 <Avatar className="profile-button__avatar">
                   <AvatarImage src={user?.picture} alt={user?.name} />
@@ -49,13 +62,13 @@ export default function Sidebar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuPortal>
-            <DropdownMenuContent className="min-w-[240px]">
-              <DropdownMenuItem className="flex items-center gap-4">
+            <DropdownMenuContent css={{ w: `${profileDropdownMenuWidth}px` }}>
+              <DropdownMenuItem>
                 <Icon as={ManageAccounts} />
                 <span>Account</span>
               </DropdownMenuItem>
               <DropdownMenuItem
-                className="flex items-center gap-4 text-red-400"
+                css={{ color: '$red' }}
                 onClick={() => logout()}
               >
                 <Icon as={Logout} />

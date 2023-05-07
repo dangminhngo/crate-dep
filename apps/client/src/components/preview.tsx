@@ -5,7 +5,7 @@ import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
 
 import { styled } from '@/stitches.config'
-import Container from './shared/container'
+import { Container } from './primitive'
 
 interface PreviewProps {
   code: string

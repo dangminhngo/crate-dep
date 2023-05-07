@@ -186,3 +186,37 @@ export const emptyTrash = protectedProcedure.mutation(async ({ ctx }) => {
 
   return deleteNotes
 })
+
+export const searchNotes = protectedProcedure
+  .input(z.string())
+  .query(async ({ ctx, input: keyword }) => {
+    const notes = await prisma.note.findMany({
+      where: {
+        ownerId: ctx.user.id,
+        OR: [
+          {
+            title: {
+              contains: keyword,
+              mode: 'insensitive',
+            },
+          },
+          {
+            description: {
+              contains: keyword,
+              mode: 'insensitive',
+            },
+          },
+        ],
+        trashed: false,
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    })
+
+    return notes
+  })

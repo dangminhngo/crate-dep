@@ -41,7 +41,9 @@ export default function Select({
           <SelectViewport>
             <SelectGroup>
               {items.map((item) => (
-                <SelectItem value={item.value}>{item.label}</SelectItem>
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectViewport>

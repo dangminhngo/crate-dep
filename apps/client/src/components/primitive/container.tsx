@@ -9,4 +9,4 @@ const Container = styled('div', {
   gap: '$8',
 })
 
-export default Container
+export { Container }

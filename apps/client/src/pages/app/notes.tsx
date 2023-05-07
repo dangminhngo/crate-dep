@@ -1,7 +1,6 @@
 import { FilterAlt, Sort, StickyNote } from '@/components/icons'
 import NoteList from '@/components/note-list'
-import { Icon } from '@/components/primitive'
-import Container from '@/components/shared/container'
+import { Container, Icon } from '@/components/primitive'
 import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
 import { useNoteList } from '@/hooks'

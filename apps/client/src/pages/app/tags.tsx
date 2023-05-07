@@ -1,6 +1,5 @@
 import { Label, Sort } from '@/components/icons'
-import { Icon } from '@/components/primitive'
-import Container from '@/components/shared/container'
+import { Container, Icon } from '@/components/primitive'
 import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
 import TagList from '@/components/tag-list'

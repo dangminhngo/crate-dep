@@ -11,10 +11,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   Button,
+  Container,
+  Flex,
   Icon,
 } from '@/components/primitive'
-import Container from '@/components/shared/container'
-import Flex from '@/components/shared/flex'
 import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
 import { useEmptyTrash, useNoteList } from '@/hooks'

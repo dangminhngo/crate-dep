@@ -3,13 +3,14 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { styled } from '@/stitches.config'
+import SearchDialog from './dialogs/search-dialog'
+import SettingsDialog from './dialogs/settings-dialog'
 import {
   Delete,
   ExpandMore,
   Label,
   Logout,
   ManageAccounts,
-  Search,
   Star,
   StickyNote,
 } from './icons'
@@ -25,7 +26,6 @@ import {
   DropdownMenuTrigger,
   Icon,
 } from './primitive'
-import Settings from './settings'
 import SectionButton from './shared/section-button'
 
 export default function Sidebar() {
@@ -78,14 +78,8 @@ export default function Sidebar() {
           </DropdownMenuPortal>
         </DropdownMenu>
         <div>
-          <SectionButton
-            icon={Search}
-            tooltip="Search notes"
-            onClick={() => console.log('search')}
-          >
-            Search
-          </SectionButton>
-          <Settings />
+          <SearchDialog />
+          <SettingsDialog />
         </div>
         <div>
           <SectionButton

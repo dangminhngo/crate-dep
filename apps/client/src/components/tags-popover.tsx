@@ -29,7 +29,7 @@ export default function TagsPopover({ note }: { note: NoteByIdOutput }) {
             <p className="title">Tags</p>
             <div className="tags">
               {note.tags.map((tag) => (
-                <Chip>
+                <Chip key={tag.id}>
                   <ChipLabel>{tag.title}</ChipLabel>
                   <ChipDeleteButton>
                     <Icon as={Clear} size="xs" />

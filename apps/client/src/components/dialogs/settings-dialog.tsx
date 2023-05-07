@@ -7,7 +7,7 @@ import {
   _toggleLineNumbers,
   _toggleLineWrapping,
 } from '@/store/slices/settings.slice'
-import { Clear, Cog } from './icons'
+import { Clear, Cog } from '../icons'
 import {
   Dialog,
   DialogClose,
@@ -20,11 +20,11 @@ import {
   Icon,
   Switch,
   SwitchThumb,
-} from './primitive'
-import SectionButton from './shared/section-button'
-import Select from './shared/select'
+} from '../primitive'
+import SectionButton from '../shared/section-button'
+import Select from '../shared/select'
 
-export default function Settings() {
+export default function SettingsDialog() {
   const { editor } = useSelector((state) => state.settings)
   const dispatch = useDispatch()
 

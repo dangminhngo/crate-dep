@@ -66,3 +66,24 @@ export const getTagById = protectedProcedure
 
     return tag
   })
+
+export const searchTags = protectedProcedure
+  .input(z.string())
+  .query(async ({ ctx, input: keyword }) => {
+    const tags = await prisma.tag.findMany({
+      where: {
+        ownerId: ctx.user.id,
+        title: { contains: keyword, mode: 'insensitive' },
+      },
+      select: {
+        id: true,
+        title: true,
+        color: true,
+        _count: { select: { notes: true } },
+        createdAt: true,
+        updatedAt: true,
+      },
+    })
+
+    return tags
+  })

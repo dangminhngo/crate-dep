@@ -26,9 +26,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   Button,
+  Flex,
   Icon,
 } from '@/components/primitive'
-import Flex from '@/components/shared/flex'
 import IconButton from '@/components/shared/icon-button'
 import TagsPopover from '@/components/tags-popover'
 import { useDeleteNoteById, useNoteById, useUpdateNoteById } from '@/hooks'

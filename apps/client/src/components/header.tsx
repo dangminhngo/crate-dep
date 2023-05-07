@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom'
 import { styled } from '@/stitches.config'
 import Logo from './logo'
 import MainNav from './main-nav'
-import { Button, Icon } from './primitive'
-import Container from './shared/container'
+import { Button, Container, Icon } from './primitive'
 
 export default function Header() {
   const { loginWithRedirect } = useAuth0()

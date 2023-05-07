@@ -1,5 +1,4 @@
-import { Button } from '@/components/primitive'
-import Container from '@/components/shared/container'
+import { Button, Container } from '@/components/primitive'
 import { styled } from '@/stitches.config'
 
 export default function HomePage() {

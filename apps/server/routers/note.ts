@@ -3,6 +3,7 @@ import {
   emptyTrash,
   getNoteById,
   listNotes,
+  searchNotes,
   updateNoteById,
 } from '../resolvers/note'
 import { router } from '../trpc'
@@ -13,4 +14,5 @@ export const noteRouter = router({
   updateById: updateNoteById,
   deleteById: deleteNoteById,
   emptyTrash: emptyTrash,
+  search: searchNotes,
 })

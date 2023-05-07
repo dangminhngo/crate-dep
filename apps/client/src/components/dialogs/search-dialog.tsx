@@ -7,6 +7,7 @@ import { Clear, Label, Search, StickyNote } from '../icons'
 import {
   Dialog,
   DialogClose,
+  DialogCloseButton,
   DialogContent,
   DialogOverlay,
   DialogPortal,
@@ -21,7 +22,6 @@ import {
   Input,
 } from '../primitive'
 import SectionButton from '../shared/section-button'
-import SearchSkeleton from '../skeletons/search-skeleton'
 
 export default function SearchDialog() {
   const [keyword, setKeyword] = useState('')
@@ -76,33 +76,37 @@ export default function SearchDialog() {
                 <ul>
                   {searchNote.data.map((note) => (
                     <li key={note.id}>
-                      <Link to={`/app/notes/${note.id}`} className="note">
-                        <h4 className="note__title">
-                          <Icon as={StickyNote} />
-                          {note.title}
-                        </h4>
-                        <p>{note.description}</p>
-                      </Link>
+                      <DialogClose asChild>
+                        <Link to={`/app/notes/${note.id}`} className="note">
+                          <h4 className="note__title">
+                            <Icon as={StickyNote} />
+                            {note.title}
+                          </h4>
+                          <p>{note.description}</p>
+                        </Link>
+                      </DialogClose>
                     </li>
                   ))}
                   {searchTag.data.map((tag) => (
                     <li key={tag.id}>
-                      <Link to={`/app/tags/${tag.id}`} className="tag">
-                        <h4 className="tag__title">
-                          <Icon as={Label} />
-                          {tag.title}
-                        </h4>
-                        <p>{tag._count.notes} notes</p>
-                      </Link>
+                      <DialogClose asChild>
+                        <Link to={`/app/tags/${tag.id}`} className="tag">
+                          <h4 className="tag__title">
+                            <Icon as={Label} />
+                            {tag.title}
+                          </h4>
+                          <p>{tag._count.notes} notes</p>
+                        </Link>
+                      </DialogClose>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
           </StyledSearchContainer>
-          <DialogClose>
+          <DialogCloseButton>
             <Icon as={Clear} />
-          </DialogClose>
+          </DialogCloseButton>
         </DialogContent>
       </DialogPortal>
     </Dialog>

@@ -10,7 +10,7 @@ import {
 import { Clear, Cog } from '../icons'
 import {
   Dialog,
-  DialogClose,
+  DialogCloseButton,
   DialogContent,
   DialogDescription,
   DialogOverlay,
@@ -93,9 +93,9 @@ export default function SettingsDialog() {
               </div>
             </div>
           </StyledSettingsContainer>
-          <DialogClose>
+          <DialogCloseButton>
             <Icon as={Clear} />
-          </DialogClose>
+          </DialogCloseButton>
         </DialogContent>
       </DialogPortal>
     </Dialog>

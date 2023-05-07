@@ -15,6 +15,7 @@ const contentShow = keyframes({
 const Dialog = DialogPrimitive.Root
 const DialogTrigger = DialogPrimitive.Trigger
 const DialogPortal = DialogPrimitive.Portal
+const DialogClose = DialogPrimitive.Close
 
 const DialogOverlay = styled(DialogPrimitive.Overlay, {
   bgAlpha: ['$slate900', 0.8],
@@ -59,7 +60,7 @@ const DialogDescription = styled(DialogPrimitive.Description, {
   lineHeight: '$base',
 })
 
-const DialogClose = styled(DialogPrimitive.Close, {
+const DialogCloseButton = styled(DialogPrimitive.Close, {
   all: 'unset',
   fontFamily: 'inherit',
   br: '$full',
@@ -86,4 +87,5 @@ export {
   DialogTitle,
   DialogDescription,
   DialogClose,
+  DialogCloseButton,
 }

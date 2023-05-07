@@ -18,7 +18,7 @@ const FormField = styled(FormPrimitive.Field, {
 })
 
 const FormLabel = styled(FormPrimitive.Label, {
-  mb: '$1',
+  mb: '$2',
   fontSize: '$sm',
   fontWeight: '$medium',
   lineHeight: '$base',

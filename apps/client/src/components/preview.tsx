@@ -84,8 +84,8 @@ const StyledPreview = styled('div', {
     borderCollapse: 'collapse',
   },
   'th, td': {
-    px: '$2',
-    py: '$4',
+    py: '$2',
+    px: '$4',
     textAlign: 'left',
     lineHeight: '$tall',
     border: '1px solid $slate700',
@@ -120,6 +120,7 @@ const StyledPreview = styled('div', {
     px: '$2',
     py: '$1',
     border: '1px solid $slate700',
+    br: '$sm',
     backgroundColor: '$slate800',
     fontFamily: '$mono',
     fontSize: '$sm',

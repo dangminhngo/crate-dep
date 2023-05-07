@@ -5,7 +5,14 @@ import {
   Chip,
   ChipDeleteButton,
   ChipLabel,
+  Flex,
+  Form,
+  FormControl,
+  FormField,
+  FormLabel,
+  FormMessage,
   Icon,
+  Input,
   Popover,
   PopoverArrow,
   PopoverClose,
@@ -26,7 +33,28 @@ export default function TagsPopover({ note }: { note: NoteByIdOutput }) {
       <PopoverPortal>
         <PopoverContent>
           <StyledTagsPopover>
-            <p className="title">Tags</p>
+            <Form>
+              <FormField name="tag">
+                <Flex
+                  css={{
+                    alignItems: 'baseline',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <FormLabel>Tags</FormLabel>
+                  <FormMessage match="valueMissing">
+                    Please enter at least one character
+                  </FormMessage>
+                </Flex>
+                <FormControl asChild>
+                  <Input
+                    type="text"
+                    required
+                    css={{ '&:hover': { backgroundColor: '$slate800' } }}
+                  />
+                </FormControl>
+              </FormField>
+            </Form>
             <div className="tags">
               {note.tags.map((tag) => (
                 <Chip key={tag.id}>

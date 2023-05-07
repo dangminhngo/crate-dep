@@ -220,3 +220,14 @@ export const searchNotes = protectedProcedure
 
     return notes
   })
+
+export const removeTag = protectedProcedure
+  .input(
+    z.object({
+      id: z.string(),
+      tagId: z.string(),
+    })
+  )
+  .mutation(async ({ ctx, input }) => {
+    return
+  })

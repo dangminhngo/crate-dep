@@ -67,10 +67,10 @@ export default function SearchDialog() {
             </Form>
             {searchNote.status === 'loading' ||
             searchTag.status === 'loading' ? (
-              <div>Searching...</div>
+              <div></div>
             ) : searchNote.status === 'error' ||
               searchTag.status === 'error' ? (
-              <div>Error</div>
+              <div>There was an error</div>
             ) : (
               <div className="search__result">
                 <ul>

@@ -66,45 +66,50 @@ export default function TagsPopover({ note }: { note: NoteByIdOutput }) {
       <PopoverPortal>
         <PopoverContent css={{ mb: '$2', maxW: '300px' }}>
           <StyledTagsPopover>
-            <Form css={{ position: 'relative' }}>
-              <FormField name="tag">
-                <Flex
-                  css={{
-                    alignItems: 'baseline',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <FormLabel>Tags</FormLabel>
-                  <FormMessage match="valueMissing">
-                    Please enter at least one character
-                  </FormMessage>
-                </Flex>
-                <FormControl asChild>
-                  <Input
-                    ref={inputRef}
-                    type="text"
-                    required
-                    placeholder="Search a tag"
-                    autoComplete="false"
-                    autoCorrect="false"
-                    value={title}
-                    onChange={handleInputChange}
-                    onFocus={() => setSearchVisible(true)}
-                    autoFocus={false}
-                    tabIndex={-1}
-                  />
-                </FormControl>
-              </FormField>
+            <div className="field">
+              <Form>
+                <FormField name="tag">
+                  <Flex
+                    css={{
+                      alignItems: 'baseline',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <FormLabel>Tags</FormLabel>
+                    <FormMessage match="valueMissing">
+                      Please enter at least one character
+                    </FormMessage>
+                  </Flex>
+                  <FormControl asChild>
+                    <Input
+                      ref={inputRef}
+                      type="text"
+                      required
+                      placeholder="Search a tag"
+                      autoComplete="false"
+                      autoCorrect="false"
+                      value={title}
+                      onChange={handleInputChange}
+                      onFocus={() => setSearchVisible(true)}
+                      autoFocus={false}
+                      tabIndex={-1}
+                    />
+                  </FormControl>
+                </FormField>
+              </Form>
               {isSearchVisible && (
                 <ul ref={searchRef} className="search">
-                  {!tags
-                    .map((t) => t.title.toLowerCase())
-                    .includes(title.toLowerCase().trim()) && (
-                    <li onClick={() => handleAssignTag({ id: note.id, title })}>
-                      <Icon as={AddCircle} />
-                      {title}
-                    </li>
-                  )}
+                  {title !== '' &&
+                    !tags
+                      .map((t) => t.title.toLowerCase())
+                      .includes(title.toLowerCase().trim()) && (
+                      <li
+                        onClick={() => handleAssignTag({ id: note.id, title })}
+                      >
+                        <Icon as={AddCircle} size="sm" />
+                        Create <strong>{title}</strong>
+                      </li>
+                    )}
                   {tags.map((t) => (
                     <li
                       key={t.id}
@@ -112,13 +117,13 @@ export default function TagsPopover({ note }: { note: NoteByIdOutput }) {
                         handleAssignTag({ id: note.id, title: t.title })
                       }
                     >
-                      <Icon as={Label} />
+                      <Icon as={Label} size="sm" />
                       {t.title}
                     </li>
                   ))}
                 </ul>
               )}
-            </Form>
+            </div>
             <div className="tags">
               {note.tags.map((tag) => (
                 <Chip key={tag.id}>
@@ -152,6 +157,10 @@ const StyledTagsPopover = styled('div', {
     fontWeight: '$medium',
   },
 
+  '.field': {
+    position: 'relative',
+  },
+
   '.search': {
     mt: '$1',
     position: 'absolute',
@@ -162,6 +171,9 @@ const StyledTagsPopover = styled('div', {
     backgroundColor: '$slate800',
     br: '$base',
     overflow: 'hidden',
+    fontSize: '$xs',
+    fontWeight: '$medium',
+    boxShadow: '4px 4px 8px rgba(0, 0, 0, 0.25)',
     '& > li': {
       py: '$2',
       px: '$4',
@@ -181,35 +193,5 @@ const StyledTagsPopover = styled('div', {
     display: 'flex',
     flexWrap: 'wrap',
     gap: '$3',
-  },
-
-  '.autocomplete': {
-    position: 'absolute',
-    zIndex: '$10',
-    top: '$full',
-    left: 0,
-    w: '$full',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    backgroundColor: '$slate800',
-    color: '$slate400',
-    br: '$base',
-    border: '1px solid $slate900',
-    overflow: 'hidden',
-  },
-
-  '.autocomplete button': {
-    cursor: 'pointer',
-    px: '$4',
-    py: '$2',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '$2',
-    transition: '$base',
-    '&:hover': {
-      backgroundColor: '$slate700',
-      color: '$slate200',
-    },
   },
 })

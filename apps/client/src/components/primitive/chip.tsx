@@ -1,9 +1,10 @@
 import { styled } from '@/stitches.config'
 
 const Chip = styled('div', {
-  backgroundColor: '$slate100',
-  color: '$slate900',
+  backgroundColor: '$slate700',
+  color: '$slate200',
   fontWeight: '$medium',
+  boxShadow: '2px 2px 6px rgba(0, 0, 0, 0.25)',
   display: 'flex',
   alignItems: 'center',
   gap: '$1',

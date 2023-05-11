@@ -228,6 +228,115 @@ export const removeTag = protectedProcedure
       tagId: z.string(),
     })
   )
-  .mutation(async ({ ctx, input }) => {
-    return
+  .mutation(async ({ ctx, input: { id, tagId } }) => {
+    const note = await prisma.note.findUnique({ where: { id } })
+
+    if (!note) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: `Cannot find the note with id "${id}"`,
+      })
+    }
+
+    if (note.ownerId !== ctx.user.id) {
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: 'No privileges to access this note',
+      })
+    }
+
+    const updateNote = await prisma.note.update({
+      where: { id },
+      data: {
+        tags: { disconnect: { id: tagId } },
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        tags: {
+          select: {
+            id: true,
+            title: true,
+            color: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+        code: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    })
+
+    return updateNote
+  })
+
+export const assignTag = protectedProcedure
+  .input(
+    z.object({
+      id: z.string(),
+      title: z
+        .string()
+        .min(1, { message: 'Tag title is at least one character' })
+        .trim(),
+    })
+  )
+  .mutation(async ({ ctx, input: { id, title } }) => {
+    const note = await prisma.note.findUnique({ where: { id } })
+
+    if (!note) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: `Cannot find the note with id "${id}"`,
+      })
+    }
+
+    if (note.ownerId !== ctx.user.id) {
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: 'No privileges to access this note',
+      })
+    }
+
+    const updateNote = await prisma.note.update({
+      where: { id },
+      data: {
+        tags: {
+          connectOrCreate: [
+            {
+              where: {
+                title_ownerId: {
+                  title,
+                  ownerId: ctx.user.id,
+                },
+              },
+              create: {
+                title,
+                ownerId: ctx.user.id,
+              },
+            },
+          ],
+        },
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        tags: {
+          select: {
+            id: true,
+            title: true,
+            color: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+        code: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    })
+
+    return updateNote
   })

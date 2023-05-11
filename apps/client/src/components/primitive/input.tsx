@@ -21,6 +21,7 @@ const Input = styled('input', {
   ...inputStyles,
   h: '$10',
   px: '$4',
+  transition: '$base',
 })
 
 const Textarea = styled('textarea', {

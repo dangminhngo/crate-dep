@@ -14,6 +14,7 @@ import {
   StickyNote,
   Visibility,
 } from '@/components/icons'
+import TagsPopover from '@/components/popovers/tags-popover'
 import Preview from '@/components/preview'
 import {
   AlertDialog,
@@ -30,7 +31,6 @@ import {
   Icon,
 } from '@/components/primitive'
 import IconButton from '@/components/shared/icon-button'
-import TagsPopover from '@/components/tags-popover'
 import { useDeleteNoteById, useNoteById, useUpdateNoteById } from '@/hooks'
 import { downloadAsMd, formatDateTime } from '@/lib/helpers'
 import { trpc } from '@/lib/trpc'
@@ -53,7 +53,6 @@ export default function NotePage() {
   })
   const { mutate: deleteNote } = useDeleteNoteById({
     onSuccess: () => {
-      console.log('Note deleted')
       navigate(-1)
     },
   })

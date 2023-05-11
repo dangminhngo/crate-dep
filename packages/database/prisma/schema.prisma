@@ -36,7 +36,7 @@ model Note {
 
 model Tag {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String @db.String
+  title String
   color String?
   noteIds String[] @db.ObjectId
   notes Note[] @relation(fields: [noteIds], references: [id])
@@ -44,4 +44,6 @@ model Tag {
   updatedAt DateTime @updatedAt
   ownerId String @db.ObjectId
   owner User @relation(fields: [ownerId], references: [id])
+
+  @@unique([title, ownerId])
 }

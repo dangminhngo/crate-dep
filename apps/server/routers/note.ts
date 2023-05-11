@@ -1,8 +1,10 @@
 import {
+  assignTag,
   deleteNoteById,
   emptyTrash,
   getNoteById,
   listNotes,
+  removeTag,
   searchNotes,
   updateNoteById,
 } from '../resolvers/note'
@@ -15,4 +17,6 @@ export const noteRouter = router({
   deleteById: deleteNoteById,
   emptyTrash: emptyTrash,
   search: searchNotes,
+  removeTag,
+  assignTag,
 })

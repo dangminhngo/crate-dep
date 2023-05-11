@@ -87,3 +87,58 @@ export const searchTags = protectedProcedure
 
     return tags
   })
+
+export const updateTagById = protectedProcedure
+  .input(
+    z.object({
+      id: z.string(),
+      data: z.object({ title: z.string(), color: z.string() }).partial(),
+    })
+  )
+  .mutation(async ({ ctx, input: { id, data } }) => {
+    const tag = await prisma.tag.findUnique({ where: { id } })
+
+    if (!tag) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: `Cannot find a tag with id ${id}`,
+      })
+    }
+
+    if (tag.ownerId !== ctx.user.id) {
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: 'No privileges to delete this tag',
+      })
+    }
+
+    const updateTag = await prisma.tag.update({
+      where: { id },
+      data,
+    })
+
+    return updateTag
+  })
+
+export const deleteTagById = protectedProcedure
+  .input(z.string())
+  .mutation(async ({ ctx, input }) => {
+    const tag = await prisma.tag.findUnique({ where: { id: input } })
+
+    if (!tag) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: `Cannot find a tag with id ${input}`,
+      })
+    }
+
+    if (tag.ownerId !== ctx.user.id) {
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: 'No privileges to delete this tag',
+      })
+    }
+
+    const deleteTag = await prisma.tag.delete({ where: { id: input } })
+    return deleteTag
+  })

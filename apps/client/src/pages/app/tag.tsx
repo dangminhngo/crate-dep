@@ -1,16 +1,36 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import { FilterAlt, Label, Sort } from '@/components/icons'
+import { Delete, FilterAlt, Label, Sort } from '@/components/icons'
 import NoteList from '@/components/note-list'
-import { Container, Icon } from '@/components/primitive'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Button,
+  Container,
+  Flex,
+  Icon,
+} from '@/components/primitive'
 import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
-import { useTagById } from '@/hooks'
+import { useDeleteTagById, useTagById } from '@/hooks'
 import { styled } from '@/stitches.config'
 
 export default function TagPage() {
   const params = useParams()
+  const navigate = useNavigate()
   const { status, data: tag } = useTagById(params.id as string)
+  const { mutate: deleteTag } = useDeleteTagById({
+    onSuccess: () => {
+      navigate('/app/tags')
+    },
+  })
 
   if (status === 'loading') return <SectionSkeleton />
 
@@ -30,6 +50,43 @@ export default function TagPage() {
             <span>Last edited Apr 28</span>
             <span>{tag.notes.length} notes</span>
             <div className="buttons">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <IconButton
+                    variant="destructive"
+                    tooltip="Delete permanently"
+                  >
+                    <Icon as={Delete} />
+                  </IconButton>
+                </AlertDialogTrigger>
+                <AlertDialogPortal>
+                  <AlertDialogOverlay>
+                    <AlertDialogContent>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete this tag.
+                      </AlertDialogDescription>
+                      <Flex css={{ justifyContent: 'flex-end', gap: '$2' }}>
+                        <AlertDialogCancel>
+                          <Button variant="outline">Cancel</Button>
+                        </AlertDialogCancel>
+                        <AlertDialogAction asChild>
+                          <Button
+                            variant="destructive"
+                            onClick={() => deleteTag(tag.id)}
+                          >
+                            Yes, delete
+                          </Button>
+                        </AlertDialogAction>
+                      </Flex>
+                    </AlertDialogContent>
+                  </AlertDialogOverlay>
+                </AlertDialogPortal>
+              </AlertDialog>
+
               <IconButton size="sm" tooltip="Filter">
                 <Icon as={FilterAlt} />
               </IconButton>

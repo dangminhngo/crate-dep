@@ -68,7 +68,7 @@ export default function NotePage() {
         ) : (
           <Editor
             code={note.code}
-            setCode={(code) => updateNote({ id: note.id, code })}
+            setCode={(code) => updateNote({ id: note.id, data: { code } })}
           />
         )}
       </div>
@@ -101,7 +101,7 @@ export default function NotePage() {
               variant={note.starred ? 'active' : 'default'}
               tooltip={note.starred ? 'Unstar' : 'Star'}
               onClick={() =>
-                updateNote({ id: note.id, starred: !note.starred })
+                updateNote({ id: note.id, data: { starred: !note.starred } })
               }
             >
               <Icon as={Star} />
@@ -110,7 +110,7 @@ export default function NotePage() {
               variant={note.trashed ? 'active' : 'default'}
               tooltip={note.trashed ? 'Restore' : 'Move to trash'}
               onClick={() =>
-                updateNote({ id: note.id, trashed: !note.trashed })
+                updateNote({ id: note.id, data: { trashed: !note.trashed } })
               }
             >
               <Icon as={note.trashed ? Recycling : Delete} />

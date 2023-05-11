@@ -112,19 +112,21 @@ export const toggleStarred = protectedProcedure
 
 export const updateNoteById = protectedProcedure
   .input(
-    z
-      .object({
-        id: z.string(),
-        title: z.string(),
-        description: z.string(),
-        code: z.string(),
-        tagIds: z.array(z.string()),
-        starred: z.boolean(),
-        trashed: z.boolean(),
-      })
-      .partial()
+    z.object({
+      id: z.string(),
+      data: z
+        .object({
+          title: z.string(),
+          description: z.string(),
+          code: z.string(),
+          tagIds: z.array(z.string()),
+          starred: z.boolean(),
+          trashed: z.boolean(),
+        })
+        .partial(),
+    })
   )
-  .mutation(async ({ ctx, input: { id, ...data } }) => {
+  .mutation(async ({ ctx, input: { id, data } }) => {
     const note = await prisma.note.findUnique({ where: { id } })
 
     if (!note) {

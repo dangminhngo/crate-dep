@@ -1,5 +1,6 @@
 import {
   assignTag,
+  createNote,
   deleteNoteById,
   emptyTrash,
   getNoteById,
@@ -13,6 +14,7 @@ import { router } from '../trpc'
 export const noteRouter = router({
   list: listNotes,
   byId: getNoteById,
+  create: createNote,
   updateById: updateNoteById,
   deleteById: deleteNoteById,
   emptyTrash: emptyTrash,

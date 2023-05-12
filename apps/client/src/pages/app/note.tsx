@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { getQueryKey } from '@trpc/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import NoteFormDialog from '@/components/dialogs/note-form-dialog'
 import Editor from '@/components/editor'
 import {
   Delete,
@@ -76,6 +77,7 @@ export default function NotePage() {
         <div className="toolbar__left">
           <Icon as={StickyNote} />
           <span>{note.title}</span>
+          <NoteFormDialog note={note} />
         </div>
         <div className="toolbar__right">
           <p>

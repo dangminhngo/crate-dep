@@ -60,33 +60,19 @@ export const getNoteById = protectedProcedure
     return note
   })
 
-export const toggleStarred = protectedProcedure
-  .input(z.string())
-  .mutation(async ({ ctx, input }) => {
-    const note = await prisma.note.findUnique({
-      where: { id: input },
+export const createNote = protectedProcedure
+  .input(
+    z.object({
+      title: z.string(),
+      description: z.string(),
     })
-
-    if (!note) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: `Cannot find a note with id ${input}`,
-      })
-    }
-
-    if (note.ownerId !== ctx.user.id) {
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: 'No privileges to access this note',
-      })
-    }
-
-    const updateNote = await prisma.note.update({
-      where: {
-        id: input,
-      },
+  )
+  .mutation(async ({ ctx, input }) => {
+    const note = await prisma.note.create({
       data: {
-        starred: !note.starred,
+        ...input,
+        code: '',
+        ownerId: ctx.user.id,
       },
       select: {
         id: true,
@@ -102,12 +88,14 @@ export const toggleStarred = protectedProcedure
           },
         },
         code: true,
+        starred: true,
+        trashed: true,
         createdAt: true,
         updatedAt: true,
       },
     })
 
-    return updateNote
+    return note
   })
 
 export const updateNoteById = protectedProcedure
@@ -146,6 +134,25 @@ export const updateNoteById = protectedProcedure
     const updateNote = await prisma.note.update({
       where: { id },
       data,
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        tags: {
+          select: {
+            id: true,
+            title: true,
+            color: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+        code: true,
+        starred: true,
+        trashed: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     })
 
     return updateNote

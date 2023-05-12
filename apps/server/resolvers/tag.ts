@@ -103,6 +103,32 @@ export const createTag = protectedProcedure
         ...input,
         ownerId: ctx.user.id,
       },
+      select: {
+        id: true,
+        title: true,
+        color: true,
+        notes: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            tags: {
+              select: {
+                id: true,
+                title: true,
+                color: true,
+                createdAt: true,
+                updatedAt: true,
+              },
+            },
+            code: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
+      },
     })
 
     return tag

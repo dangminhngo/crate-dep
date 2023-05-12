@@ -1,3 +1,4 @@
+import NoteFormDialog from '@/components/dialogs/note-form-dialog'
 import { FilterAlt, Sort, StickyNote } from '@/components/icons'
 import NoteList from '@/components/note-list'
 import { Container, Icon } from '@/components/primitive'
@@ -29,6 +30,7 @@ export default function NotesPage() {
             <span>Last edited Apr 28</span>
             <span>{filteredNotes.length} notes</span>
             <div className="buttons">
+              <NoteFormDialog />
               <IconButton tooltip="Filter">
                 <Icon as={FilterAlt} />
               </IconButton>

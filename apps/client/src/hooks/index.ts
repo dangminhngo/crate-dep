@@ -8,6 +8,7 @@ export * from './useOnClickOutside'
 
 export * from './useNoteList'
 export * from './useNoteById'
+export * from './useCreateNote'
 export * from './useUpdateNoteById'
 export * from './useDeleteNoteById'
 export * from './useRemoveNoteTag'

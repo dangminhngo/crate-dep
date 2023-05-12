@@ -20,6 +20,18 @@ export default function Header() {
     })
   }
 
+  const handleSignup = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: '/app',
+      },
+      authorizationParams: {
+        prompt: 'login',
+        screen_hint: 'signup',
+      },
+    })
+  }
+
   return (
     <StyledHeader>
       <Container className="container">
@@ -32,7 +44,7 @@ export default function Header() {
           <Button variant="ghost" onClick={handleLogin}>
             Sign in
           </Button>
-          <Button>Try for free</Button>
+          <Button onClick={handleSignup}>Try for free</Button>
         </div>
       </Container>
     </StyledHeader>

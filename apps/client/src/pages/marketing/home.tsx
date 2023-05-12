@@ -1,7 +1,23 @@
+import { useAuth0 } from '@auth0/auth0-react'
+
 import { Button, Container } from '@/components/primitive'
 import { styled } from '@/stitches.config'
 
 export default function HomePage() {
+  const { loginWithRedirect } = useAuth0()
+
+  const handleSignup = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: '/app',
+      },
+      authorizationParams: {
+        prompt: 'login',
+        screen_hint: 'signup',
+      },
+    })
+  }
+
   return (
     <StyledHomePage>
       <Container className="container">
@@ -10,9 +26,17 @@ export default function HomePage() {
           <h1>writes markdown</h1>
         </div>
         <div className="hero__buttons">
-          <Button size="lg">Try now</Button>
-          <Button variant="outline" size="lg">
-            Github
+          <Button size="lg" onClick={handleSignup}>
+            Try Now (v0.0.1)
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() =>
+              window.open('https://github.com/dangminhngo/crate', '_blank')
+            }
+          >
+            Github Repository
           </Button>
         </div>
       </Container>

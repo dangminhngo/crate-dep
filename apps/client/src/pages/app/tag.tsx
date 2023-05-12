@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
+import TagFormDialog from '@/components/dialogs/tag-form-dialog'
 import { Delete, FilterAlt, Label, Sort } from '@/components/icons'
 import NoteList from '@/components/note-list'
 import {
@@ -41,9 +42,10 @@ export default function TagPage() {
       <Container className="container">
         <div className="titlebar">
           <div className="titlebar__left">
-            <h3>
+            <h3 style={{ color: tag.color ?? '$slate200' }}>
               <Icon size="xl" as={Label} />
-              Tag: {tag.title}
+              {tag.title}
+              <TagFormDialog tag={tag} />
             </h3>
           </div>
           <div className="titlebar__right">
@@ -86,11 +88,10 @@ export default function TagPage() {
                   </AlertDialogOverlay>
                 </AlertDialogPortal>
               </AlertDialog>
-
-              <IconButton size="sm" tooltip="Filter">
+              <IconButton tooltip="Filter">
                 <Icon as={FilterAlt} />
               </IconButton>
-              <IconButton size="sm" tooltip="Sort">
+              <IconButton tooltip="Sort">
                 <Icon as={Sort} />
               </IconButton>
             </div>

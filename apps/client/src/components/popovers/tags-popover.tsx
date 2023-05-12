@@ -8,7 +8,7 @@ import {
   useSearchTag,
 } from '@/hooks'
 import { styled } from '@/stitches.config'
-import { AddCircle, Clear, Label } from '../icons'
+import { AddBox, Clear, Label } from '../icons'
 import {
   Chip,
   ChipDeleteButton,
@@ -106,7 +106,7 @@ export default function TagsPopover({ note }: { note: NoteByIdOutput }) {
                       <li
                         onClick={() => handleAssignTag({ id: note.id, title })}
                       >
-                        <Icon as={AddCircle} size="sm" />
+                        <Icon as={AddBox} size="sm" />
                         Create <strong>{title}</strong>
                       </li>
                     )}

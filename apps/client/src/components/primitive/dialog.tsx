@@ -37,7 +37,6 @@ const DialogContent = styled(DialogPrimitive.Content, {
   w: '90vw',
   maxW: '600px',
   maxH: '60vh',
-  minH: '60vh',
   p: '$6',
   display: 'flex',
   flexDirection: 'column',

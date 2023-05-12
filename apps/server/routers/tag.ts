@@ -1,4 +1,5 @@
 import {
+  createTag,
   deleteTagById,
   getTagById,
   listTags,
@@ -11,6 +12,7 @@ export const tagRouter = router({
   list: listTags,
   byId: getTagById,
   search: searchTags,
+  create: createTag,
   updateById: updateTagById,
   deleteById: deleteTagById,
 })

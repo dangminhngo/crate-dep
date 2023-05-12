@@ -12,6 +12,7 @@ export const listTags = protectedProcedure.query(async ({ ctx }) => {
     select: {
       id: true,
       title: true,
+      color: true,
       createdAt: true,
       updatedAt: true,
       _count: {
@@ -33,6 +34,7 @@ export const getTagById = protectedProcedure
       select: {
         id: true,
         title: true,
+        color: true,
         notes: {
           select: {
             id: true,
@@ -88,6 +90,24 @@ export const searchTags = protectedProcedure
     return tags
   })
 
+export const createTag = protectedProcedure
+  .input(
+    z.object({
+      title: z.string(),
+      color: z.string().optional(),
+    })
+  )
+  .mutation(async ({ ctx, input }) => {
+    const tag = await prisma.tag.create({
+      data: {
+        ...input,
+        ownerId: ctx.user.id,
+      },
+    })
+
+    return tag
+  })
+
 export const updateTagById = protectedProcedure
   .input(
     z.object({
@@ -115,6 +135,32 @@ export const updateTagById = protectedProcedure
     const updateTag = await prisma.tag.update({
       where: { id },
       data,
+      select: {
+        id: true,
+        title: true,
+        color: true,
+        notes: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            tags: {
+              select: {
+                id: true,
+                title: true,
+                color: true,
+                createdAt: true,
+                updatedAt: true,
+              },
+            },
+            code: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+        createdAt: true,
+        updatedAt: true,
+      },
     })
 
     return updateTag

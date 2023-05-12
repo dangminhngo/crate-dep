@@ -8,6 +8,10 @@ const FormValidityState = FormPrimitive.ValidityState
 
 const Form = styled(FormPrimitive.Root, {
   w: '$full',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'stretch',
+  gap: '$4',
 })
 
 const FormField = styled(FormPrimitive.Field, {
@@ -22,7 +26,7 @@ const FormLabel = styled(FormPrimitive.Label, {
   fontSize: '$sm',
   fontWeight: '$medium',
   lineHeight: '$base',
-  color: 'white',
+  color: '$slate200',
 })
 
 const FormMessage = styled(FormPrimitive.Message, {

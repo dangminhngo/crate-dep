@@ -48,7 +48,7 @@ export default function TrashPage() {
             <span>Last edited Apr 28</span>
             <span>{trashedNotes.length} notes</span>
             <div className="buttons">
-              <IconButton size="sm" tooltip="Sort">
+              <IconButton tooltip="Sort">
                 <Icon as={Sort} />
               </IconButton>
             </div>

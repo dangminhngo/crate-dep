@@ -29,10 +29,10 @@ export default function NotesPage() {
             <span>Last edited Apr 28</span>
             <span>{filteredNotes.length} notes</span>
             <div className="buttons">
-              <IconButton size="sm" tooltip="Filter">
+              <IconButton tooltip="Filter">
                 <Icon as={FilterAlt} />
               </IconButton>
-              <IconButton size="sm" tooltip="Sort">
+              <IconButton tooltip="Sort">
                 <Icon as={Sort} />
               </IconButton>
             </div>

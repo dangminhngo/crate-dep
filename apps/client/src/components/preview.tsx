@@ -123,7 +123,7 @@ const StyledPreview = styled('div', {
     br: '$sm',
     backgroundColor: '$slate800',
     fontFamily: '$mono',
-    fontSize: '$sm',
+    fontSize: '$md',
   },
   // Prism codeblock highlighting
   "code[class*='language-'], pre[class*='language-']": {

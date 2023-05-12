@@ -26,6 +26,7 @@ const StyledEditor = styled('div', {
   '.cm-scroller': {
     overflow: 'auto',
     flexGrow: 1,
+    fontFamily: '$mono',
   },
   '.cm-gutter': {
     lineHeight: '$tall',

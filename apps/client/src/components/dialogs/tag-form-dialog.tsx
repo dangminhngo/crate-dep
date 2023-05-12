@@ -52,17 +52,13 @@ export default function TagFormDialog({ tag }: { tag?: TagByIdOutput }) {
     <Dialog open={visible} onOpenChange={setVisible}>
       <DialogTrigger asChild>
         {editing ? (
-          <IconButton tooltip="Edit" className="edit-button">
+          <IconButton tooltip="Edit">
             <Icon as={Pen} />
           </IconButton>
         ) : (
-          <Button
-            size="sm"
-            css={{ alignSelf: 'flex-end', alignItems: 'center', gap: '$2' }}
-          >
+          <IconButton tooltip="New">
             <Icon as={AddBox} />
-            Create
-          </Button>
+          </IconButton>
         )}
       </DialogTrigger>
       <DialogPortal>

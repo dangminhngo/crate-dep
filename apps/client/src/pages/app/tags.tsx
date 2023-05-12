@@ -1,6 +1,6 @@
 import TagFormDialog from '@/components/dialogs/tag-form-dialog'
-import { AddBox, Label, Sort } from '@/components/icons'
-import { Button, Container, Icon } from '@/components/primitive'
+import { Label, Sort } from '@/components/icons'
+import { Container, Icon } from '@/components/primitive'
 import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
 import TagList from '@/components/tag-list'
@@ -28,6 +28,7 @@ export default function TagsPage() {
             <span>Last edited Apr 28</span>
             <span>{tags.length} notes</span>
             <div className="buttons">
+              <TagFormDialog />
               <IconButton tooltip="Sort">
                 <Icon as={Sort} />
               </IconButton>
@@ -39,7 +40,6 @@ export default function TagsPage() {
         ) : (
           <p className="message">You have no tags</p>
         )}
-        <TagFormDialog />
       </Container>
     </StyledTagsPage>
   )

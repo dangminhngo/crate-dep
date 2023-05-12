@@ -9,7 +9,7 @@ const inputStyles = {
   justifyContent: 'center',
   br: '$base',
   fontSize: '$sm',
-  color: 'white',
+  color: '$slate200',
   backgroundColor: '$slate800',
   border: '1px solid $slate700',
   '&:hover': { boxShadow: `0 0 0 1px black` },

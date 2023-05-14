@@ -5,3 +5,5 @@ export interface EditorConfig {
   lineWrapping: boolean
   tabSize: number
 }
+
+export type ArrayElementType<T> = T extends (infer Item)[] ? Item : T

@@ -32,6 +32,7 @@ const PopoverContent = styled(PopoverPrimitive.Content, {
   minW: '300px',
   minH: '300px',
   backgroundColor: '$slate900',
+  border: '1px solid $slate700',
   boxShadow:
     'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
   animationDuration: '400ms',

@@ -27,14 +27,32 @@ import {
   PopoverContent,
   PopoverPortal,
   PopoverTrigger,
+  useToast,
 } from '../primitive'
 import IconButton from '../shared/icon-button'
 
 export default function TagsPopover({ note }: { note: NoteByIdOutput }) {
+  const { toast } = useToast()
   const [title, setTitle] = useState('')
   const [isSearchVisible, setSearchVisible] = useState(false)
-  const { mutate: removeTag } = useRemoveNoteTag()
-  const { mutate: assignTag } = useAssignNoteTag()
+  const { mutate: removeTag } = useRemoveNoteTag({
+    onError: (error) => {
+      toast({
+        variant: 'destructive',
+        title: 'Remove Tag Error',
+        description: error.message,
+      })
+    },
+  })
+  const { mutate: assignTag } = useAssignNoteTag({
+    onError: (error) => {
+      toast({
+        variant: 'destructive',
+        title: 'Assign Tag Error',
+        description: error.message,
+      })
+    },
+  })
   const { data: searchTags } = useSearchTag(title)
   const inputRef = useRef<HTMLInputElement>(null)
   const searchRef = useRef<HTMLUListElement>(null)

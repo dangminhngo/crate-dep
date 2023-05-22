@@ -255,6 +255,7 @@ const tokens = {
     8: '80',
     9: '90',
     10: '100',
+    100: '1000',
   },
   transitions: {
     base: 'all 150ms ease-out',

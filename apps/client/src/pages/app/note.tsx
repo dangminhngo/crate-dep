@@ -30,6 +30,7 @@ import {
   Button,
   Flex,
   Icon,
+  useToast,
 } from '@/components/primitive'
 import IconButton from '@/components/shared/icon-button'
 import { useDeleteNoteById, useNoteById, useUpdateNoteById } from '@/hooks'
@@ -41,6 +42,8 @@ export default function NotePage() {
   const navigate = useNavigate()
   const params = useParams()
   const [preview, setPreview] = useState(false)
+
+  const { toast } = useToast()
   const queryClient = useQueryClient()
   const { status, data: note } = useNoteById(params.id as string)
   const { mutate: updateNote } = useUpdateNoteById({
@@ -51,9 +54,30 @@ export default function NotePage() {
       queryClient.setQueryData(noteQueryKey, () => data)
       return previousNote
     },
+    onSuccess: (_, variables) => {
+      if (variables.data.trashed) {
+        toast({
+          variant: 'destructive',
+          title: 'Trash Updated',
+          description: 'A note has been trashed.',
+        })
+      } else {
+        toast({
+          variant: 'success',
+          title: 'Note Restored',
+          description: 'A note has been restored.',
+        })
+      }
+    },
   })
+
   const { mutate: deleteNote } = useDeleteNoteById({
     onSuccess: () => {
+      toast({
+        variant: 'destructive',
+        title: 'Note Deleted',
+        description: 'A note has been permanently deleted.',
+      })
       navigate(-1)
     },
   })
@@ -95,7 +119,13 @@ export default function NotePage() {
             <TagsPopover note={note} />
             <IconButton
               tooltip="Download"
-              onClick={() => downloadAsMd(note.title, note.code)}
+              onClick={() => {
+                const filename = downloadAsMd(note.title, note.code)
+                toast({
+                  title: 'Note Downloaded',
+                  description: `A note downloaded as "${filename}"`,
+                })
+              }}
             >
               <Icon as={Download} />
             </IconButton>
@@ -107,15 +137,6 @@ export default function NotePage() {
               }
             >
               <Icon as={Star} />
-            </IconButton>
-            <IconButton
-              variant={note.trashed ? 'active' : 'default'}
-              tooltip={note.trashed ? 'Restore' : 'Move to trash'}
-              onClick={() =>
-                updateNote({ id: note.id, data: { trashed: !note.trashed } })
-              }
-            >
-              <Icon as={note.trashed ? Recycling : Delete} />
             </IconButton>
             {note.trashed && (
               <AlertDialog>
@@ -155,6 +176,15 @@ export default function NotePage() {
                 </AlertDialogPortal>
               </AlertDialog>
             )}
+            <IconButton
+              variant={note.trashed ? 'active' : 'default'}
+              tooltip={note.trashed ? 'Restore' : 'Move to trash'}
+              onClick={() =>
+                updateNote({ id: note.id, data: { trashed: !note.trashed } })
+              }
+            >
+              <Icon as={note.trashed ? Recycling : Delete} />
+            </IconButton>
           </div>
         </div>
       </div>
@@ -174,7 +204,7 @@ const StyledNotePage = styled('div', {
   },
 
   '.toolbar': {
-    h: '$12',
+    h: '$10',
     px: '$4',
     display: 'flex',
     alignItems: 'center',
@@ -201,6 +231,6 @@ const StyledNotePage = styled('div', {
   '.toolbar__buttons': {
     display: 'flex',
     alignItems: 'center',
-    gap: '$2',
+    gap: '$1',
   },
 })

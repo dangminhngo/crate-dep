@@ -14,6 +14,7 @@ export function downloadAsMd(title: string, code: string) {
   a.href = URL.createObjectURL(new Blob([code], { type: 'text/markdown' }))
   a.download = `${filename}.md`
   a.click()
+  return `${filename}.md`
 }
 
 export function clamp(value: number, min: number, max: number) {

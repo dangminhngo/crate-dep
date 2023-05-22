@@ -21,6 +21,7 @@ import {
   FormMessage,
   Icon,
   Input,
+  useToast,
 } from '../primitive'
 import ColorPicker from '../shared/color-picker'
 import IconButton from '../shared/icon-button'
@@ -32,8 +33,25 @@ export default function TagFormDialog({ tag }: { tag?: TagByIdOutput }) {
   const [color, setColor] = useState<string | undefined>(
     tag?.color ?? undefined
   )
-  const { mutate: updateTag } = useUpdateTagById()
-  const { mutate: createTag } = useCreateTag()
+  const { toast } = useToast()
+  const { mutate: updateTag } = useUpdateTagById({
+    onSuccess: () => {
+      toast({
+        variant: 'success',
+        title: 'Tag Updated',
+        description: `A tag has been updated.`,
+      })
+    },
+  })
+  const { mutate: createTag } = useCreateTag({
+    onSuccess: () => {
+      toast({
+        variant: 'success',
+        title: 'Tag Created',
+        description: `A tag has been added.`,
+      })
+    },
+  })
 
   const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setTitle(e.target.value)

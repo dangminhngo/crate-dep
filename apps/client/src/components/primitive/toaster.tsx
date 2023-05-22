@@ -17,13 +17,13 @@ export function Toaster() {
     <ToastProvider>
       {toasts.map(({ id, title, description, action, ...props }) => (
         <Toast key={id} {...props}>
-          <div className="grid gap-1">
-            {title && <ToastTitle>{title}</ToastTitle>}
+          <div className="grid gap-2">
+            {title && <ToastTitle variant={props.variant}>{title}</ToastTitle>}
             {description && <ToastDescription>{description}</ToastDescription>}
           </div>
           {action}
           <ToastClose asChild>
-            <IconButton size="sm">
+            <IconButton size="sm" tooltip="Dismiss">
               <Clear />
             </IconButton>
           </ToastClose>

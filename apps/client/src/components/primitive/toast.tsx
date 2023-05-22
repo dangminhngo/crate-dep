@@ -4,14 +4,14 @@ import { keyframes, styled } from '@/stitches.config'
 
 const { Provider: ToastProvider, Close: ToastClose } = ToastPrimitive
 
-const VIEWPORT_PADDING = 24
+const VIEWPORT_PADDING = 16
 
 const ToastViewport = styled(ToastPrimitive.Viewport, {
   position: 'fixed',
   zIndex: '$10',
   bottom: 0,
   right: 0,
-  padding: VIEWPORT_PADDING,
+  p: VIEWPORT_PADDING,
   m: 0,
   maxW: '$screenX',
   display: 'flex',
@@ -35,11 +35,13 @@ const swipeOut = keyframes({
 })
 
 const Toast = styled(ToastPrimitive.Root, {
-  backgroundColor: 'white',
-  borderRadius: 6,
+  minW: '20vw',
+  backgroundColor: '$slate950',
+  border: '1px solid $slate700',
+  borderRadius: '$base',
   boxShadow:
     'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
-  padding: 15,
+  padding: '$4',
   display: 'grid',
   gridTemplateAreas: '"title action" "description action"',
   gridTemplateColumns: 'auto max-content',
@@ -76,18 +78,31 @@ const Toast = styled(ToastPrimitive.Root, {
 
 const ToastTitle = styled(ToastPrimitive.Title, {
   gridArea: 'title',
-  marginBottom: 5,
-  fontWeight: 500,
-  color: '$slate200',
-  fontSize: 15,
+  marginBottom: '$2',
+  fontWeight: '$semibold',
+  fontSize: '$sm',
+  variants: {
+    variant: {
+      success: {
+        color: '$accent',
+      },
+      destructive: {
+        color: '$red',
+      },
+    },
+  },
+  defaultVariants: {
+    variant: 'success',
+  },
 })
 
 const ToastDescription = styled(ToastPrimitive.Description, {
   gridArea: 'description',
   margin: 0,
   color: '$slate400',
-  fontSize: 13,
-  lineHeight: 1.3,
+  fontSize: '$sm',
+  fontWeight: '$medium',
+  lineHeight: '$short',
 })
 
 const ToastAction = styled(ToastPrimitive.Action, {

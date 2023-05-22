@@ -15,6 +15,7 @@ const TooltipContent = styled(TooltipPrimitive.Content, {
   br: '$sm',
   backgroundColor: '$tooltipBg',
   color: '$tooltipFg',
+  zIndex: '$100',
 
   '& svg': {
     fill: '$tooltipBg',

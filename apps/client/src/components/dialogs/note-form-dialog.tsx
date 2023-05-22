@@ -21,16 +21,32 @@ import {
   FormMessage,
   Icon,
   Input,
+  useToast,
 } from '../primitive'
 import IconButton from '../shared/icon-button'
 
 export default function NoteFormDialog({ note }: { note?: NoteByIdOutput }) {
+  const { toast } = useToast()
   const editing = !!note
   const [visible, setVisible] = useState(false)
   const [title, setTitle] = useState(note?.title ?? '')
   const [description, setDescription] = useState(note?.description ?? '')
-  const { mutate: updateNote } = useUpdateNoteById()
-  const { mutate: createNote } = useCreateNote()
+  const { mutate: updateNote } = useUpdateNoteById({
+    onSuccess: () => {
+      toast({
+        title: `Note Updated`,
+        description: `A note has been updated`,
+      })
+    },
+  })
+  const { mutate: createNote } = useCreateNote({
+    onSuccess: () => {
+      toast({
+        title: `Note Added`,
+        description: `A new note has been added`,
+      })
+    },
+  })
 
   const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (e) =>
     setTitle(e.target.value)

@@ -1,133 +1,139 @@
 import { styled } from '@/stitches.config'
-import { Skeleton, Table } from '../primitive'
+import { Container, Skeleton, Table } from '../primitive'
 
 export default function SectionSkeleton() {
   return (
     <StyledSectionSkeleton>
-      <div className="titlebar">
-        <div className="titlebar__left">
-          <h3>
-            <Skeleton
-              css={{
-                h: '$8',
-                w: '$8',
-              }}
-            />
-            <Skeleton
-              css={{
-                h: '$8',
-                w: '$20',
-              }}
-            />
-          </h3>
-        </div>
-        <div className="titlebar__right">
-          <Skeleton />
-          <Skeleton />
-          <div className="buttons">
-            <Skeleton
-              css={{
-                h: '$9',
-                w: '$9',
-              }}
-            />
-            <Skeleton
-              css={{
-                h: '$9',
-                w: '$9',
-              }}
-            />
+      <Container className="container">
+        <div className="titlebar">
+          <div className="titlebar__left">
+            <h3>
+              <Skeleton
+                css={{
+                  h: '$8',
+                  w: '$8',
+                }}
+              />
+              <Skeleton
+                css={{
+                  h: '$8',
+                  w: '$20',
+                }}
+              />
+            </h3>
+          </div>
+          <div className="titlebar__right">
+            <Skeleton />
+            <Skeleton />
+            <div className="buttons">
+              <Skeleton
+                css={{
+                  h: '$9',
+                  w: '$9',
+                }}
+              />
+              <Skeleton
+                css={{
+                  h: '$9',
+                  w: '$9',
+                }}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <Table>
-        <thead>
-          <tr>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-          </tr>
-          <tr>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-          </tr>
-          <tr>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-          </tr>
-          <tr>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-            <th>
-              <Skeleton />
-            </th>
-          </tr>
-        </tbody>
-      </Table>
+        <Table>
+          <thead>
+            <tr>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+            </tr>
+            <tr>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+            </tr>
+            <tr>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+            </tr>
+            <tr>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+              <th>
+                <Skeleton />
+              </th>
+            </tr>
+          </tbody>
+        </Table>
+      </Container>
     </StyledSectionSkeleton>
   )
 }
 
 const StyledSectionSkeleton = styled('div', {
   flex: 1,
-  px: '$64',
+  px: '$6',
   py: '$48',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'stretch',
-  gap: '$8',
+
+  '.container': {
+    maxW: '$lg',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    gap: '$8',
+  },
 
   '.titlebar': {
     display: 'flex',
@@ -157,5 +163,9 @@ const StyledSectionSkeleton = styled('div', {
     display: 'flex',
     alignItems: 'center',
     gap: '$2',
+  },
+
+  '.message': {
+    textAlign: 'center',
   },
 })

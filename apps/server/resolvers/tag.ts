@@ -1,36 +1,37 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { prisma } from '../lib/prisma'
 import { protectedProcedure } from '../trpc'
 
-export const listTags = protectedProcedure.query(async ({ ctx }) => {
-  const tags = await prisma.tag.findMany({
-    where: {
-      ownerId: ctx.user.id,
-    },
-    select: {
-      id: true,
-      title: true,
-      color: true,
-      createdAt: true,
-      updatedAt: true,
-      _count: {
-        select: {
-          notes: true,
+export const listTags = protectedProcedure.query(
+  async ({ ctx: { prisma, user } }) => {
+    const tags = await prisma.tag.findMany({
+      where: {
+        ownerId: user.id,
+      },
+      select: {
+        id: true,
+        title: true,
+        color: true,
+        createdAt: true,
+        updatedAt: true,
+        _count: {
+          select: {
+            notes: true,
+          },
         },
       },
-    },
-  })
+    })
 
-  return tags
-})
+    return tags
+  }
+)
 
 export const getTagById = protectedProcedure
   .input(z.string())
-  .query(async ({ ctx, input }) => {
+  .query(async ({ ctx: { prisma, user }, input }) => {
     const tag = await prisma.tag.findFirstOrThrow({
-      where: { id: input, ownerId: ctx.user.id },
+      where: { id: input, ownerId: user.id },
       select: {
         id: true,
         title: true,
@@ -71,10 +72,10 @@ export const getTagById = protectedProcedure
 
 export const searchTags = protectedProcedure
   .input(z.string())
-  .query(async ({ ctx, input: keyword }) => {
+  .query(async ({ ctx: { prisma, user }, input: keyword }) => {
     const tags = await prisma.tag.findMany({
       where: {
-        ownerId: ctx.user.id,
+        ownerId: user.id,
         title: { contains: keyword, mode: 'insensitive' },
       },
       select: {
@@ -97,11 +98,11 @@ export const createTag = protectedProcedure
       color: z.string().optional(),
     })
   )
-  .mutation(async ({ ctx, input }) => {
+  .mutation(async ({ ctx: { prisma, user }, input }) => {
     const tag = await prisma.tag.create({
       data: {
         ...input,
-        ownerId: ctx.user.id,
+        ownerId: user.id,
       },
       select: {
         id: true,
@@ -141,7 +142,7 @@ export const updateTagById = protectedProcedure
       data: z.object({ title: z.string(), color: z.string() }).partial(),
     })
   )
-  .mutation(async ({ ctx, input: { id, data } }) => {
+  .mutation(async ({ ctx: { prisma, user }, input: { id, data } }) => {
     const tag = await prisma.tag.findUnique({ where: { id } })
 
     if (!tag) {
@@ -151,7 +152,7 @@ export const updateTagById = protectedProcedure
       })
     }
 
-    if (tag.ownerId !== ctx.user.id) {
+    if (tag.ownerId !== user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to delete this tag',
@@ -194,7 +195,7 @@ export const updateTagById = protectedProcedure
 
 export const deleteTagById = protectedProcedure
   .input(z.string())
-  .mutation(async ({ ctx, input }) => {
+  .mutation(async ({ ctx: { prisma, user }, input }) => {
     const tag = await prisma.tag.findUnique({ where: { id: input } })
 
     if (!tag) {
@@ -204,7 +205,7 @@ export const deleteTagById = protectedProcedure
       })
     }
 
-    if (tag.ownerId !== ctx.user.id) {
+    if (tag.ownerId !== user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to delete this tag',

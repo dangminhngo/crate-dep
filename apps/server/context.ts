@@ -1,6 +1,7 @@
 import { promisify } from 'util'
 import { TRPCError, inferAsyncReturnType } from '@trpc/server'
 import { CreateExpressContextOptions } from '@trpc/server/adapters/express'
+import { prisma, type Prisma } from 'database'
 import {
   InvalidTokenError,
   UnauthorizedError,
@@ -8,7 +9,6 @@ import {
 } from 'express-oauth2-jwt-bearer'
 
 import config from './config/default'
-import { prisma } from './lib/prisma'
 
 const validateJwt = promisify(
   auth({
@@ -17,6 +17,34 @@ const validateJwt = promisify(
   })
 )
 
+type CreateContextOptions = {
+  user: UserPayload
+  token: string
+}
+/**
+ * Inner context. Will always be available in your procedures, in contrast to the outer context.
+ */
+export async function createInnerContext(opts: CreateContextOptions) {
+  return {
+    ...opts,
+    prisma,
+  }
+}
+
+const userSelect = {
+  id: true,
+  userId: true,
+  createdAt: true,
+  updatedAt: true,
+} satisfies Prisma.UserSelect
+
+type UserPayload = Prisma.UserGetPayload<{ select: typeof userSelect }>
+
+/**
+ * Outer context. Used in the routers and will e.g. bring `req` & `res` to the context as "not `undefined`".
+ *
+ * @see https://trpc.io/docs/context#inner-and-outer-context
+ */
 export async function createContext({ req, res }: CreateExpressContextOptions) {
   try {
     await validateJwt(req, res)
@@ -36,9 +64,10 @@ export async function createContext({ req, res }: CreateExpressContextOptions) {
       create: {
         userId,
       },
+      select: userSelect,
     })
 
-    return { user, token }
+    return await createInnerContext({ user, token })
   } catch (err) {
     console.error(err)
     if (err instanceof InvalidTokenError) {

@@ -1,8 +1,6 @@
-/*
- * @link https://www.prisma.io/docs/support/help-articles/nextjs-prisma-client-dev-practices
- */
+import { PrismaClient } from './generated/prisma-client'
 
-import { PrismaClient } from 'database'
+export * from './generated/prisma-client'
 
 const globalForPrisma = global as unknown as {
   prisma: PrismaClient | undefined

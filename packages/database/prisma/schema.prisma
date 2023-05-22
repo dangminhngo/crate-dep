@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../generated/prisma-client"
 }
 
 datasource db {
@@ -11,39 +12,39 @@ datasource db {
 }
 
 model User {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @unique
-  notes Note[]
-  tags Tag[]
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @unique
+  notes     Note[]
+  tags      Tag[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Note {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String @db.String
-  description String @db.String
-  code String
-  tagIds String[] @db.ObjectId
-  tags Tag[] @relation(fields: [tagIds], references: [id])
-  starred Boolean @default(false)
-  trashed Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  ownerId String @db.ObjectId
-  owner User @relation(fields: [ownerId], references: [id])
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String   @db.String
+  description String   @db.String
+  code        String
+  tagIds      String[] @db.ObjectId
+  tags        Tag[]    @relation(fields: [tagIds], references: [id])
+  starred     Boolean  @default(false)
+  trashed     Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  ownerId     String   @db.ObjectId
+  owner       User     @relation(fields: [ownerId], references: [id])
 }
 
 model Tag {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  color String?
-  noteIds String[] @db.ObjectId
-  notes Note[] @relation(fields: [noteIds], references: [id])
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  color     String?
+  noteIds   String[] @db.ObjectId
+  notes     Note[]   @relation(fields: [noteIds], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  ownerId String @db.ObjectId
-  owner User @relation(fields: [ownerId], references: [id])
+  ownerId   String   @db.ObjectId
+  owner     User     @relation(fields: [ownerId], references: [id])
 
   @@unique([title, ownerId])
 }

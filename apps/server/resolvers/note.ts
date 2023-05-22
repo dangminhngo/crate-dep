@@ -1,34 +1,35 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { prisma } from '../lib/prisma'
 import { protectedProcedure } from '../trpc'
 
-export const listNotes = protectedProcedure.query(async ({ ctx }) => {
-  const notes = await prisma.note.findMany({
-    where: {
-      ownerId: ctx.user.id,
-    },
-    select: {
-      id: true,
-      title: true,
-      description: true,
-      tags: true,
-      starred: true,
-      trashed: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  })
+export const listNotes = protectedProcedure.query(
+  async ({ ctx: { prisma, user } }) => {
+    const notes = await prisma.note.findMany({
+      where: {
+        ownerId: user.id,
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        tags: true,
+        starred: true,
+        trashed: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    })
 
-  return notes
-})
+    return notes
+  }
+)
 
 export const getNoteById = protectedProcedure
   .input(z.string())
-  .query(async ({ ctx, input }) => {
+  .query(async ({ ctx: { prisma, user }, input }) => {
     const note = await prisma.note.findFirst({
-      where: { id: input, ownerId: ctx.user.id },
+      where: { id: input, ownerId: user.id },
       select: {
         id: true,
         title: true,
@@ -67,12 +68,12 @@ export const createNote = protectedProcedure
       description: z.string(),
     })
   )
-  .mutation(async ({ ctx, input }) => {
+  .mutation(async ({ ctx: { prisma, user }, input }) => {
     const note = await prisma.note.create({
       data: {
         ...input,
         code: '',
-        ownerId: ctx.user.id,
+        ownerId: user.id,
       },
       select: {
         id: true,
@@ -114,7 +115,7 @@ export const updateNoteById = protectedProcedure
         .partial(),
     })
   )
-  .mutation(async ({ ctx, input: { id, data } }) => {
+  .mutation(async ({ ctx: { prisma, user }, input: { id, data } }) => {
     const note = await prisma.note.findUnique({ where: { id } })
 
     if (!note) {
@@ -124,7 +125,7 @@ export const updateNoteById = protectedProcedure
       })
     }
 
-    if (note.ownerId !== ctx.user.id) {
+    if (note.ownerId !== user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to access this note',
@@ -160,7 +161,7 @@ export const updateNoteById = protectedProcedure
 
 export const deleteNoteById = protectedProcedure
   .input(z.string())
-  .mutation(async ({ ctx, input }) => {
+  .mutation(async ({ ctx: { prisma, user }, input }) => {
     const note = await prisma.note.findUnique({
       where: {
         id: input,
@@ -174,7 +175,7 @@ export const deleteNoteById = protectedProcedure
       })
     }
 
-    if (note.ownerId !== ctx.user.id) {
+    if (note.ownerId !== user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to access this note',
@@ -188,20 +189,22 @@ export const deleteNoteById = protectedProcedure
     return deleteNote
   })
 
-export const emptyTrash = protectedProcedure.mutation(async ({ ctx }) => {
-  const deleteNotes = await prisma.note.deleteMany({
-    where: { ownerId: ctx.user.id, trashed: true },
-  })
+export const emptyTrash = protectedProcedure.mutation(
+  async ({ ctx: { prisma, user } }) => {
+    const deleteNotes = await prisma.note.deleteMany({
+      where: { ownerId: user.id, trashed: true },
+    })
 
-  return deleteNotes
-})
+    return deleteNotes
+  }
+)
 
 export const searchNotes = protectedProcedure
   .input(z.string())
-  .query(async ({ ctx, input: keyword }) => {
+  .query(async ({ ctx: { prisma, user }, input: keyword }) => {
     const notes = await prisma.note.findMany({
       where: {
-        ownerId: ctx.user.id,
+        ownerId: user.id,
         OR: [
           {
             title: {
@@ -237,7 +240,7 @@ export const removeTag = protectedProcedure
       tagId: z.string(),
     })
   )
-  .mutation(async ({ ctx, input: { id, tagId } }) => {
+  .mutation(async ({ ctx: { prisma, user }, input: { id, tagId } }) => {
     const note = await prisma.note.findUnique({ where: { id } })
 
     if (!note) {
@@ -247,7 +250,7 @@ export const removeTag = protectedProcedure
       })
     }
 
-    if (note.ownerId !== ctx.user.id) {
+    if (note.ownerId !== user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to access this note',
@@ -291,7 +294,7 @@ export const assignTag = protectedProcedure
         .trim(),
     })
   )
-  .mutation(async ({ ctx, input: { id, title } }) => {
+  .mutation(async ({ ctx: { prisma, user }, input: { id, title } }) => {
     const note = await prisma.note.findUnique({ where: { id } })
 
     if (!note) {
@@ -301,7 +304,7 @@ export const assignTag = protectedProcedure
       })
     }
 
-    if (note.ownerId !== ctx.user.id) {
+    if (note.ownerId !== user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to access this note',
@@ -317,12 +320,12 @@ export const assignTag = protectedProcedure
               where: {
                 title_ownerId: {
                   title,
-                  ownerId: ctx.user.id,
+                  ownerId: user.id,
                 },
               },
               create: {
                 title,
-                ownerId: ctx.user.id,
+                ownerId: user.id,
               },
             },
           ],

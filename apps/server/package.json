@@ -6,7 +6,8 @@
   "types": "./app.ts",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch app",
-    "lint": "tsc --noEmit && eslint --fix \"./**/*.{js,ts}\""
+    "lint": "tsc --noEmit && eslint --fix \"./**/*.{js,ts}\"",
+    "test": "jest"
   },
   "dependencies": {
     "@trpc/server": "^10.23.0",

@@ -1,23 +1,39 @@
 import { TRPCError } from '@trpc/server'
+import type { Prisma } from 'database'
 import { z } from 'zod'
 
 import { protectedProcedure } from '../trpc'
 
+const defaultNoteSelect = {
+  id: true,
+  title: true,
+  description: true,
+  tags: {
+    select: {
+      id: true,
+      title: true,
+      color: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  },
+  code: true,
+  starred: true,
+  trashed: true,
+  createdAt: true,
+  updatedAt: true,
+} satisfies Prisma.NoteSelect
+
 export const listNotes = protectedProcedure.query(
-  async ({ ctx: { prisma, user } }) => {
+  async ({ ctx: { prisma, session } }) => {
     const notes = await prisma.note.findMany({
       where: {
-        ownerId: user.id,
+        ownerId: session.user.id,
       },
       select: {
-        id: true,
-        title: true,
-        description: true,
+        ...defaultNoteSelect,
         tags: true,
-        starred: true,
-        trashed: true,
-        createdAt: true,
-        updatedAt: true,
+        code: false,
       },
     })
 
@@ -27,28 +43,10 @@ export const listNotes = protectedProcedure.query(
 
 export const getNoteById = protectedProcedure
   .input(z.string())
-  .query(async ({ ctx: { prisma, user }, input }) => {
+  .query(async ({ ctx: { prisma, session }, input }) => {
     const note = await prisma.note.findFirst({
-      where: { id: input, ownerId: user.id },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        tags: {
-          select: {
-            id: true,
-            title: true,
-            color: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-        code: true,
-        starred: true,
-        trashed: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      where: { id: input, ownerId: session.user.id },
+      select: defaultNoteSelect,
     })
 
     if (!note) {
@@ -68,32 +66,14 @@ export const createNote = protectedProcedure
       description: z.string(),
     })
   )
-  .mutation(async ({ ctx: { prisma, user }, input }) => {
+  .mutation(async ({ ctx: { prisma, session }, input }) => {
     const note = await prisma.note.create({
       data: {
         ...input,
         code: '',
-        ownerId: user.id,
+        ownerId: session.user.id,
       },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        tags: {
-          select: {
-            id: true,
-            title: true,
-            color: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-        code: true,
-        starred: true,
-        trashed: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: defaultNoteSelect,
     })
 
     return note
@@ -115,7 +95,7 @@ export const updateNoteById = protectedProcedure
         .partial(),
     })
   )
-  .mutation(async ({ ctx: { prisma, user }, input: { id, data } }) => {
+  .mutation(async ({ ctx: { prisma, session }, input: { id, data } }) => {
     const note = await prisma.note.findUnique({ where: { id } })
 
     if (!note) {
@@ -125,7 +105,7 @@ export const updateNoteById = protectedProcedure
       })
     }
 
-    if (note.ownerId !== user.id) {
+    if (note.ownerId !== session.user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to access this note',
@@ -135,25 +115,7 @@ export const updateNoteById = protectedProcedure
     const updateNote = await prisma.note.update({
       where: { id },
       data,
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        tags: {
-          select: {
-            id: true,
-            title: true,
-            color: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-        code: true,
-        starred: true,
-        trashed: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: defaultNoteSelect,
     })
 
     return updateNote
@@ -161,7 +123,7 @@ export const updateNoteById = protectedProcedure
 
 export const deleteNoteById = protectedProcedure
   .input(z.string())
-  .mutation(async ({ ctx: { prisma, user }, input }) => {
+  .mutation(async ({ ctx: { prisma, session }, input }) => {
     const note = await prisma.note.findUnique({
       where: {
         id: input,
@@ -175,7 +137,7 @@ export const deleteNoteById = protectedProcedure
       })
     }
 
-    if (note.ownerId !== user.id) {
+    if (note.ownerId !== session.user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to access this note',
@@ -190,9 +152,9 @@ export const deleteNoteById = protectedProcedure
   })
 
 export const emptyTrash = protectedProcedure.mutation(
-  async ({ ctx: { prisma, user } }) => {
+  async ({ ctx: { prisma, session } }) => {
     const deleteNotes = await prisma.note.deleteMany({
-      where: { ownerId: user.id, trashed: true },
+      where: { ownerId: session.user.id, trashed: true },
     })
 
     return deleteNotes
@@ -201,10 +163,10 @@ export const emptyTrash = protectedProcedure.mutation(
 
 export const searchNotes = protectedProcedure
   .input(z.string())
-  .query(async ({ ctx: { prisma, user }, input: keyword }) => {
+  .query(async ({ ctx: { prisma, session }, input: keyword }) => {
     const notes = await prisma.note.findMany({
       where: {
-        ownerId: user.id,
+        ownerId: session.user.id,
         OR: [
           {
             title: {
@@ -222,11 +184,11 @@ export const searchNotes = protectedProcedure
         trashed: false,
       },
       select: {
-        id: true,
-        title: true,
-        description: true,
-        createdAt: true,
-        updatedAt: true,
+        ...defaultNoteSelect,
+        tags: false,
+        code: false,
+        starred: false,
+        trashed: false,
       },
     })
 
@@ -240,7 +202,7 @@ export const removeTag = protectedProcedure
       tagId: z.string(),
     })
   )
-  .mutation(async ({ ctx: { prisma, user }, input: { id, tagId } }) => {
+  .mutation(async ({ ctx: { prisma, session }, input: { id, tagId } }) => {
     const note = await prisma.note.findUnique({ where: { id } })
 
     if (!note) {
@@ -250,7 +212,7 @@ export const removeTag = protectedProcedure
       })
     }
 
-    if (note.ownerId !== user.id) {
+    if (note.ownerId !== session.user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to access this note',
@@ -262,23 +224,7 @@ export const removeTag = protectedProcedure
       data: {
         tags: { disconnect: { id: tagId } },
       },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        tags: {
-          select: {
-            id: true,
-            title: true,
-            color: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-        code: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: defaultNoteSelect,
     })
 
     return updateNote
@@ -294,7 +240,7 @@ export const assignTag = protectedProcedure
         .trim(),
     })
   )
-  .mutation(async ({ ctx: { prisma, user }, input: { id, title } }) => {
+  .mutation(async ({ ctx: { prisma, session }, input: { id, title } }) => {
     const note = await prisma.note.findUnique({ where: { id } })
 
     if (!note) {
@@ -304,7 +250,7 @@ export const assignTag = protectedProcedure
       })
     }
 
-    if (note.ownerId !== user.id) {
+    if (note.ownerId !== session.user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to access this note',
@@ -320,34 +266,18 @@ export const assignTag = protectedProcedure
               where: {
                 title_ownerId: {
                   title,
-                  ownerId: user.id,
+                  ownerId: session.user.id,
                 },
               },
               create: {
                 title,
-                ownerId: user.id,
+                ownerId: session.user.id,
               },
             },
           ],
         },
       },
-      select: {
-        id: true,
-        title: true,
-        description: true,
-        tags: {
-          select: {
-            id: true,
-            title: true,
-            color: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-        code: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: defaultNoteSelect,
     })
 
     return updateNote

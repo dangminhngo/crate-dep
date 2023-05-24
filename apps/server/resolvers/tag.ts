@@ -1,20 +1,45 @@
 import { TRPCError } from '@trpc/server'
+import type { Prisma } from 'database'
 import { z } from 'zod'
 
 import { protectedProcedure } from '../trpc'
 
+const defaultTagSelect = {
+  id: true,
+  title: true,
+  color: true,
+  notes: {
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      tags: {
+        select: {
+          id: true,
+          title: true,
+          color: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+      code: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  },
+  createdAt: true,
+  updatedAt: true,
+} satisfies Prisma.TagSelect
+
 export const listTags = protectedProcedure.query(
-  async ({ ctx: { prisma, user } }) => {
+  async ({ ctx: { prisma, session } }) => {
     const tags = await prisma.tag.findMany({
       where: {
-        ownerId: user.id,
+        ownerId: session.user.id,
       },
       select: {
-        id: true,
-        title: true,
-        color: true,
-        createdAt: true,
-        updatedAt: true,
+        ...defaultTagSelect,
+        notes: false,
         _count: {
           select: {
             notes: true,
@@ -29,35 +54,10 @@ export const listTags = protectedProcedure.query(
 
 export const getTagById = protectedProcedure
   .input(z.string())
-  .query(async ({ ctx: { prisma, user }, input }) => {
+  .query(async ({ ctx: { prisma, session }, input }) => {
     const tag = await prisma.tag.findFirstOrThrow({
-      where: { id: input, ownerId: user.id },
-      select: {
-        id: true,
-        title: true,
-        color: true,
-        notes: {
-          select: {
-            id: true,
-            title: true,
-            description: true,
-            tags: {
-              select: {
-                id: true,
-                title: true,
-                color: true,
-                createdAt: true,
-                updatedAt: true,
-              },
-            },
-            code: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-        createdAt: true,
-        updatedAt: true,
-      },
+      where: { id: input, ownerId: session.user.id },
+      select: defaultTagSelect,
     })
 
     if (!tag) {
@@ -72,19 +72,16 @@ export const getTagById = protectedProcedure
 
 export const searchTags = protectedProcedure
   .input(z.string())
-  .query(async ({ ctx: { prisma, user }, input: keyword }) => {
+  .query(async ({ ctx: { prisma, session }, input: keyword }) => {
     const tags = await prisma.tag.findMany({
       where: {
-        ownerId: user.id,
+        ownerId: session.user.id,
         title: { contains: keyword, mode: 'insensitive' },
       },
       select: {
-        id: true,
-        title: true,
-        color: true,
+        ...defaultTagSelect,
+        notes: false,
         _count: { select: { notes: true } },
-        createdAt: true,
-        updatedAt: true,
       },
     })
 
@@ -98,38 +95,13 @@ export const createTag = protectedProcedure
       color: z.string().optional(),
     })
   )
-  .mutation(async ({ ctx: { prisma, user }, input }) => {
+  .mutation(async ({ ctx: { prisma, session }, input }) => {
     const tag = await prisma.tag.create({
       data: {
         ...input,
-        ownerId: user.id,
+        ownerId: session.user.id,
       },
-      select: {
-        id: true,
-        title: true,
-        color: true,
-        notes: {
-          select: {
-            id: true,
-            title: true,
-            description: true,
-            tags: {
-              select: {
-                id: true,
-                title: true,
-                color: true,
-                createdAt: true,
-                updatedAt: true,
-              },
-            },
-            code: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: defaultTagSelect,
     })
 
     return tag
@@ -142,7 +114,7 @@ export const updateTagById = protectedProcedure
       data: z.object({ title: z.string(), color: z.string() }).partial(),
     })
   )
-  .mutation(async ({ ctx: { prisma, user }, input: { id, data } }) => {
+  .mutation(async ({ ctx: { prisma, session }, input: { id, data } }) => {
     const tag = await prisma.tag.findUnique({ where: { id } })
 
     if (!tag) {
@@ -152,7 +124,7 @@ export const updateTagById = protectedProcedure
       })
     }
 
-    if (tag.ownerId !== user.id) {
+    if (tag.ownerId !== session.user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to delete this tag',
@@ -162,32 +134,7 @@ export const updateTagById = protectedProcedure
     const updateTag = await prisma.tag.update({
       where: { id },
       data,
-      select: {
-        id: true,
-        title: true,
-        color: true,
-        notes: {
-          select: {
-            id: true,
-            title: true,
-            description: true,
-            tags: {
-              select: {
-                id: true,
-                title: true,
-                color: true,
-                createdAt: true,
-                updatedAt: true,
-              },
-            },
-            code: true,
-            createdAt: true,
-            updatedAt: true,
-          },
-        },
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: defaultTagSelect,
     })
 
     return updateTag
@@ -195,7 +142,7 @@ export const updateTagById = protectedProcedure
 
 export const deleteTagById = protectedProcedure
   .input(z.string())
-  .mutation(async ({ ctx: { prisma, user }, input }) => {
+  .mutation(async ({ ctx: { prisma, session }, input }) => {
     const tag = await prisma.tag.findUnique({ where: { id: input } })
 
     if (!tag) {
@@ -205,7 +152,7 @@ export const deleteTagById = protectedProcedure
       })
     }
 
-    if (tag.ownerId !== user.id) {
+    if (tag.ownerId !== session.user.id) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: 'No privileges to delete this tag',

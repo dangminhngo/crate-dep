@@ -55,8 +55,8 @@ export const listTags = protectedProcedure.query(
 export const getTagById = protectedProcedure
   .input(z.string())
   .query(async ({ ctx: { prisma, session }, input }) => {
-    const tag = await prisma.tag.findFirstOrThrow({
-      where: { id: input, ownerId: session.user.id },
+    const tag = await prisma.tag.findUnique({
+      where: { id_ownerId: { id: input, ownerId: session.user.id } },
       select: defaultTagSelect,
     })
 

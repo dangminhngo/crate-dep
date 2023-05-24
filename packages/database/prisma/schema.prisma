@@ -49,4 +49,5 @@ model Tag {
   owner     User     @relation(fields: [ownerId], references: [id])
 
   @@unique([title, ownerId])
+  @@unique([id, ownerId])
 }

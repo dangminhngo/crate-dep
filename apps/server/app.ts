@@ -4,15 +4,9 @@ import express, { Request, Response } from 'express'
 
 import config from './config/default'
 import { createContext } from './context'
-import { noteRouter, tagRouter } from './routers'
-import { router } from './trpc'
+import { appRouter, type AppRouter } from './routers/_app'
 
-export const appRouter = router({
-  note: noteRouter,
-  tag: tagRouter,
-})
-
-export type AppRouter = typeof appRouter
+export { appRouter, type AppRouter }
 
 const app = express()
 

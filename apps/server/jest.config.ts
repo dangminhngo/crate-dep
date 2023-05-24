@@ -5,10 +5,13 @@ import type { Config } from 'jest'
 
 const config: Config = {
   displayName: 'client',
+  testEnvironment: 'node',
+  clearMocks: true,
   rootDir: './',
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
+  setupFilesAfterEnv: ['./prisma-mock.ts'],
 }
 
 export default config

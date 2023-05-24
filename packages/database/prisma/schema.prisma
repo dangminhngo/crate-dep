@@ -33,6 +33,8 @@ model Note {
   updatedAt   DateTime @updatedAt
   ownerId     String   @db.ObjectId
   owner       User     @relation(fields: [ownerId], references: [id])
+
+  @@unique([id, ownerId])
 }
 
 model Tag {

@@ -1,10 +1,10 @@
 import { TRPCError } from '@trpc/server'
-import type { Prisma } from 'database'
+import { Prisma } from 'database'
 import { z } from 'zod'
 
 import { protectedProcedure } from '../trpc'
 
-const defaultNoteSelect = {
+export const defaultNoteSelect = {
   id: true,
   title: true,
   description: true,
@@ -44,8 +44,8 @@ export const listNotes = protectedProcedure.query(
 export const getNoteById = protectedProcedure
   .input(z.string())
   .query(async ({ ctx: { prisma, session }, input }) => {
-    const note = await prisma.note.findFirst({
-      where: { id: input, ownerId: session.user.id },
+    const note = await prisma.note.findUnique({
+      where: { id_ownerId: { id: input, ownerId: session.user.id } },
       select: defaultNoteSelect,
     })
 

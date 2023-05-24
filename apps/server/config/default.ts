@@ -17,7 +17,7 @@ interface Config {
 }
 
 const config: Config = {
-  port: Number(process.env.PORT) ?? 8080,
+  port: Number(process.env.PORT) || 8080,
   clientOriginUrl: process.env.CLIENT_ORIGIN_URL as string,
   auth0Audience: process.env.AUTH0_AUDIENCE as string,
   auth0Domain: process.env.AUTH0_DOMAIN as string,

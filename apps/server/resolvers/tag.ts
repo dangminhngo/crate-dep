@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { protectedProcedure } from '../trpc'
 
-const defaultTagSelect = {
+export const defaultTagSelect = {
   id: true,
   title: true,
   color: true,

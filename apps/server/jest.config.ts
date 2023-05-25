@@ -11,7 +11,7 @@ const config: Config = {
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
-  setupFilesAfterEnv: ['./prisma-mock.ts'],
+  setupFilesAfterEnv: ['./mocks/index.ts'],
 }
 
 export default config

@@ -2,7 +2,7 @@ import { inferProcedureInput } from '@trpc/server'
 import type { Prisma } from 'database'
 
 import { type CreateContextOptions } from '../context'
-import { prismaMock } from '../prisma-mock'
+import { prismaMock } from '../mocks'
 import { defaultTagSelect } from '../resolvers/tag'
 import { appRouter, type AppRouter } from './_app'
 

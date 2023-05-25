@@ -3,10 +3,7 @@ import ReactDOM from 'react-dom/client'
 
 import { globalCss } from '@/stitches.config'
 import App from './app'
-import AuthProvider from './providers/auth'
-import RouterProvider from './providers/router'
-import ServiceProvider from './providers/service'
-import StoreProvider from './providers/store'
+import Providers from './providers'
 
 const globals = globalCss({
   '*, *::before, *::after': {
@@ -37,14 +34,8 @@ globals()
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider>
-      <AuthProvider>
-        <ServiceProvider>
-          <StoreProvider>
-            <App />
-          </StoreProvider>
-        </ServiceProvider>
-      </AuthProvider>
-    </RouterProvider>
+    <Providers>
+      <App />
+    </Providers>
   </React.StrictMode>
 )

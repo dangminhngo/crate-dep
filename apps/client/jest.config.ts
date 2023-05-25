@@ -7,9 +7,14 @@ const config: Config = {
   displayName: 'client',
   rootDir: './',
   testEnvironment: 'jsdom',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  moduleDirectories: ['node_modules', 'src'],
   setupFilesAfterEnv: ['./setup-test.ts'],
   transform: {
-    '^.+\\.ts?$': 'ts-jest',
+    '^.+\\.tsx?$': 'ts-jest',
+  },
+  moduleNameMapper: {
+    '@/(.*)': '<rootDir>/src/$1',
   },
 }
 

@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "wait-port 8080 & vite --port 3000",
     "build": "tsc && vite build",
+    "start": "vite preview --port 3000",
     "lint": "tsc --noEmit && eslint --fix \"src/**/*.{ts,tsx}\"",
-    "test": "jest",
-    "preview": "vite preview"
+    "test": "jest"
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.0.2",

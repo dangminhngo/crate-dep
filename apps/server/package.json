@@ -6,6 +6,7 @@
   "types": "./app.ts",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx watch app",
+    "start": "cross-env NODE_ENV=production tsx app",
     "lint": "tsc --noEmit && eslint --fix \"./**/*.{js,ts}\"",
     "test": "jest"
   },

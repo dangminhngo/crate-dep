@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 
-import type { NoteListOutput, TagByIdOutput } from '@/hooks'
 import { formatDateTime } from '@/lib/helpers'
+import type { RouterOutputs } from '@/lib/trpc'
 import { styled } from '@/stitches.config'
 import { Chip, ChipLabel, Table } from './primitive'
 
 interface NoteListProps {
-  notes: NoteListOutput | TagByIdOutput['notes']
+  notes: RouterOutputs['note']['list'] | RouterOutputs['tag']['byId']['notes']
 }
 
 export default function NoteList({ notes }: NoteListProps) {

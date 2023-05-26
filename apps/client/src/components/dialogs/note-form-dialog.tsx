@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-import { NoteByIdOutput, useCreateNote, useUpdateNoteById } from '@/hooks'
+import { useCreateNote, useUpdateNoteById } from '@/hooks'
+import type { RouterOutputs } from '@/lib/trpc'
 import { styled } from '@/stitches.config'
 import { AddBox, Clear, Pen } from '../icons'
 import {
@@ -25,7 +26,11 @@ import {
 } from '../primitive'
 import IconButton from '../shared/icon-button'
 
-export default function NoteFormDialog({ note }: { note?: NoteByIdOutput }) {
+export default function NoteFormDialog({
+  note,
+}: {
+  note?: RouterOutputs['note']['byId']
+}) {
   const { toast } = useToast()
   const editing = !!note
   const [visible, setVisible] = useState(false)

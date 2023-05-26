@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 
-import type { TagListOutput } from '@/hooks'
 import { formatDateTime } from '@/lib/helpers'
+import type { RouterOutputs } from '@/lib/trpc'
 import { styled } from '@/stitches.config'
 import { Table } from './primitive'
 
 interface TagListProps {
-  tags: TagListOutput
+  tags: RouterOutputs['tag']['list']
 }
 
 export default function TagList({ tags }: TagListProps) {

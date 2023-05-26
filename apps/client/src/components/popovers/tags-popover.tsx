@@ -1,12 +1,12 @@
 import { useMemo, useRef, useState } from 'react'
 
 import {
-  NoteByIdOutput,
   useAssignNoteTag,
   useOnClickOutside,
   useRemoveNoteTag,
   useSearchTag,
 } from '@/hooks'
+import type { RouterOutputs } from '@/lib/trpc'
 import { styled } from '@/stitches.config'
 import { AddBox, Clear, Label } from '../icons'
 import {
@@ -31,7 +31,11 @@ import {
 } from '../primitive'
 import IconButton from '../shared/icon-button'
 
-export default function TagsPopover({ note }: { note: NoteByIdOutput }) {
+export default function TagsPopover({
+  note,
+}: {
+  note: RouterOutputs['note']['byId']
+}) {
   const { toast } = useToast()
   const [title, setTitle] = useState('')
   const [isSearchVisible, setSearchVisible] = useState(false)

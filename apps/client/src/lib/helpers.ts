@@ -1,8 +1,8 @@
 import { format, parseISO } from 'date-fns'
 import slugify from 'slugify'
 
-import type { NoteListOutput } from '@/hooks'
-import { ArrayElementType } from '@/types'
+import type { ArrayElementType } from '@/types'
+import type { RouterOutputs } from './trpc'
 
 export function formatDateTime(dateTime: string, fmt: string) {
   return format(parseISO(dateTime), fmt)
@@ -21,6 +21,7 @@ export function clamp(value: number, min: number, max: number) {
   return Math.max(Math.min(value, max), min)
 }
 
+type NoteListOutput = RouterOutputs['note']['list']
 type NoteKey = keyof ArrayElementType<NoteListOutput>
 type SortInput = { [prop: string]: 'asc' | 'desc' }
 function sort(notes: NoteListOutput, input?: SortInput): NoteListOutput {

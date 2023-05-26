@@ -1,10 +1,38 @@
 /*
+ * @link https://usehooks-ts.com/react-hook/use-on-click-outside
+ */
+import { useEffect, useLayoutEffect, useRef, type RefObject } from 'react'
+
+type Handler = (event: MouseEvent) => void
+
+function useOnClickOutside<T extends HTMLElement = HTMLElement>(
+  ref: RefObject<T>,
+  handler: Handler,
+  mouseEvent: 'mousedown' | 'mouseup' = 'mousedown'
+): void {
+  useEventListener(mouseEvent, (event) => {
+    const el = ref?.current
+
+    // Do nothing if clicking ref's element or descendent elements
+    if (!el || el.contains(event.target as Node)) {
+      return
+    }
+
+    handler(event)
+  })
+}
+
+/*
+ * @link https://usehooks-ts.com/react-hook/use-isomorphic-layout-effect
+ */
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect
+
+export { useIsomorphicLayoutEffect }
+
+/*
  * @link https://usehooks-ts.com/react-hook/use-event-listener
  */
-import { RefObject, useEffect, useRef } from 'react'
-
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
-
 // MediaQueryList Event based useEventListener interface
 function useEventListener<K extends keyof MediaQueryListEventMap>(
   eventName: K,
@@ -82,4 +110,4 @@ function useEventListener<
   }, [eventName, element, options])
 }
 
-export { useEventListener }
+export { useEventListener, useOnClickOutside }

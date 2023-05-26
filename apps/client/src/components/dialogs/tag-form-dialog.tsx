@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-import { TagByIdOutput, useCreateTag, useUpdateTagById } from '@/hooks'
+import { useCreateTag, useUpdateTagById } from '@/hooks'
+import type { RouterOutputs } from '@/lib/trpc'
 import { styled } from '@/stitches.config'
 import { AddBox, Clear, Pen } from '../icons'
 import {
@@ -26,7 +27,11 @@ import {
 import ColorPicker from '../shared/color-picker'
 import IconButton from '../shared/icon-button'
 
-export default function TagFormDialog({ tag }: { tag?: TagByIdOutput }) {
+export default function TagFormDialog({
+  tag,
+}: {
+  tag?: RouterOutputs['tag']['byId']
+}) {
   const editing = !!tag
   const [visible, setVisible] = useState(false)
   const [title, setTitle] = useState(tag?.title ?? '')

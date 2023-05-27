@@ -6,7 +6,7 @@
     "build": "turbo build",
     "dev": "dotenv -e .env.local turbo dev",
     "start": "turbo start",
-    "start-server": "pnpm dev",
+    "clean": "npx npkill -D",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo test",
@@ -32,7 +32,7 @@
     "prettier": "^2.8.8",
     "start-server-and-test": "^2.0.0",
     "ts-jest": "^29.1.0",
-    "turbo": "^1.9.3"
+    "turbo": "^1.9.9"
   },
   "packageManager": "pnpm@8.3.1",
   "dependencies": {

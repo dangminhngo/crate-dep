@@ -15,7 +15,9 @@
     "test:start": "start-server-and-test start http://localhost:3000 test",
     "db:generate": "turbo db:generate",
     "db:push": "turbo db:push",
-    "db:seed": "turbo db:seed"
+    "db:seed": "turbo db:seed",
+    "prepare": "husky install",
+    "postinstall": "pnpm db:generate"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.1",

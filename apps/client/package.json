@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wait-port 8080 & vite --port 3000",
+    "dev": "wait-port 8080 & vite",
     "build": "tsc && vite build",
     "start": "vite preview --port 3000",
     "lint": "tsc --noEmit && eslint --fix \"src/**/*.{ts,tsx}\"",
@@ -61,7 +61,7 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
     "@types/testing-library__jest-dom": "^5.14.5",
-    "@vitejs/plugin-react": "^4.0.0",
+    "@vitejs/plugin-react-swc": "^3.3.1",
     "eslint": "^8.39.0",
     "eslint-config-custom": "workspace:*",
     "jest-environment-jsdom": "^29.5.0",

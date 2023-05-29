@@ -23,6 +23,9 @@
       "cache": false
     },
     "lint": {},
+    "ts:check": {
+      "cache": false
+    },
     "test": {},
     "db:generate": {
       "cache": false

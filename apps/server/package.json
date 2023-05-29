@@ -8,7 +8,8 @@
     "dev": "cross-env NODE_ENV=development tsx watch app",
     "start": "cross-env NODE_ENV=production tsx app",
     "clean": "rm -rf .turbo && rm -rf node_modules",
-    "lint": "tsc --noEmit && eslint --fix \"./**/*.{js,ts}\"",
+    "lint": "eslint --fix \"./**/*.{js,ts}\"",
+    "ts:check": "tsc --noEmit",
     "test": "jest"
   },
   "dependencies": {

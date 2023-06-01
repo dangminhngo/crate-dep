@@ -5,7 +5,6 @@
   "scripts": {
     "build": "turbo build",
     "dev": "dotenv -e .env.local turbo dev",
-    "start": "turbo start",
     "clean": "rm -rf node_modules && rm -rf out && turbo clean",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

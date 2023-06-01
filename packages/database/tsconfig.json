@@ -7,5 +7,5 @@
     "declarationMap": false,
     "strictPropertyInitialization": false
   },
-  "include": ["./**/*.ts"]
+  "include": ["./**/*.ts", "tsup.config.ts"]
 }

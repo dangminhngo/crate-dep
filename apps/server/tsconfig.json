@@ -1,11 +1,13 @@
 {
   "extends": "tsconfig/base.json",
   "compilerOptions": {
+    "outDir": "dist",
     "target": "ES6",
     "module": "commonjs",
     "strictPropertyInitialization": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true
   },
-  "include": ["./**/*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["mocks/**/*.ts", "*.config.ts", "dist"]
 }

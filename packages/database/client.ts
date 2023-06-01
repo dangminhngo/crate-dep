@@ -1,6 +1,6 @@
-import { PrismaClient } from './generated/prisma-client'
+import { PrismaClient } from '@prisma/client'
 
-export * from './generated/prisma-client'
+export * from '@prisma/client'
 
 const globalForPrisma = global as unknown as {
   prisma: PrismaClient | undefined
@@ -11,8 +11,7 @@ export const prisma =
   new PrismaClient({
     log:
       process.env.NODE_ENV === 'development'
-        ? // ? ['query', 'error', 'warn']
-          []
+        ? ['query', 'error', 'warn']
         : ['error'],
   })
 

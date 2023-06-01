@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { Suspense, lazy, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { getQueryKey } from '@trpc/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import NoteFormDialog from '@/components/dialogs/note-form-dialog'
-import Editor from '@/components/editor'
 import {
   Delete,
   DeleteForever,
@@ -16,7 +15,6 @@ import {
   Visibility,
 } from '@/components/icons'
 import TagsPopover from '@/components/popovers/tags-popover'
-import Preview from '@/components/preview'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,6 +35,10 @@ import { useDeleteNoteById, useNoteById, useUpdateNoteById } from '@/hooks'
 import { downloadAsMd, formatDateTime } from '@/lib/helpers'
 import { trpc } from '@/lib/trpc'
 import { styled } from '@/stitches.config'
+
+const Editor = lazy(() => import('@/components/editor'))
+
+const Preview = lazy(() => import('@/components/preview'))
 
 export default function NotePage() {
   const navigate = useNavigate()
@@ -87,16 +89,18 @@ export default function NotePage() {
 
   return (
     <StyledNotePage>
-      <div className="editor">
-        {preview ? (
-          <Preview code={note.code} />
-        ) : (
-          <Editor
-            code={note.code}
-            setCode={(code) => updateNote({ id: note.id, data: { code } })}
-          />
-        )}
-      </div>
+      <Suspense fallback={'loading...'}>
+        <div className="editor">
+          {preview ? (
+            <Preview code={note.code} />
+          ) : (
+            <Editor
+              code={note.code}
+              setCode={(code) => updateNote({ id: note.id, data: { code } })}
+            />
+          )}
+        </div>
+      </Suspense>
       <div className="toolbar">
         <div className="toolbar__left">
           <Icon as={StickyNote} />

@@ -1,10 +1,13 @@
+import { Suspense, lazy } from 'react'
+
 import { FilterAlt, Sort, Star } from '@/components/icons'
-import NoteList from '@/components/note-list'
 import { Container, Icon } from '@/components/primitive'
 import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
 import { useNoteList } from '@/hooks'
 import { styled } from '@/stitches.config'
+
+const NoteList = lazy(() => import('@/components/note-list'))
 
 export default function StarredPage() {
   const { status, data: notes } = useNoteList()
@@ -39,7 +42,9 @@ export default function StarredPage() {
           </div>
         </div>
         {starredNotes.length > 0 ? (
-          <NoteList notes={starredNotes} />
+          <Suspense fallback={<SectionSkeleton />}>
+            <NoteList notes={starredNotes} />
+          </Suspense>
         ) : (
           <p className="message">You have starred no notes</p>
         )}

@@ -1,5 +1,6 @@
+import { Suspense, lazy } from 'react'
+
 import { Delete, DeleteForever, Sort } from '@/components/icons'
-import NoteList from '@/components/note-list'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,6 +20,8 @@ import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
 import { useEmptyTrash, useNoteList } from '@/hooks'
 import { styled } from '@/stitches.config'
+
+const NoteList = lazy(() => import('@/components/note-list'))
 
 export default function TrashPage() {
   const { status, data: notes } = useNoteList()
@@ -56,7 +59,9 @@ export default function TrashPage() {
         </div>
         {trashedNotes.length > 0 ? (
           <>
-            <NoteList notes={trashedNotes} />
+            <Suspense fallback={<SectionSkeleton />}>
+              <NoteList notes={trashedNotes} />
+            </Suspense>
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button

@@ -1,8 +1,8 @@
+import { Suspense, lazy } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import TagFormDialog from '@/components/dialogs/tag-form-dialog'
 import { Delete, FilterAlt, Label, Sort } from '@/components/icons'
-import NoteList from '@/components/note-list'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,6 +22,8 @@ import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
 import { useDeleteTagById, useTagById } from '@/hooks'
 import { styled } from '@/stitches.config'
+
+const NoteList = lazy(() => import('@/components/note-list'))
 
 export default function TagPage() {
   const params = useParams()
@@ -98,7 +100,9 @@ export default function TagPage() {
           </div>
         </div>
         {tag.notes.length > 0 ? (
-          <NoteList notes={tag.notes} />
+          <Suspense fallback={<SectionSkeleton />}>
+            <NoteList notes={tag.notes} />
+          </Suspense>
         ) : (
           <p className="message">You have no notes with tag "{tag.title}"</p>
         )}

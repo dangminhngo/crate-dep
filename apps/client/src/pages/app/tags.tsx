@@ -1,11 +1,14 @@
+import { Suspense, lazy } from 'react'
+
 import TagFormDialog from '@/components/dialogs/tag-form-dialog'
 import { Label, Sort } from '@/components/icons'
 import { Container, Icon } from '@/components/primitive'
 import IconButton from '@/components/shared/icon-button'
 import SectionSkeleton from '@/components/skeletons/section-skeleton'
-import TagList from '@/components/tag-list'
 import { useTagList } from '@/hooks'
 import { styled } from '@/stitches.config'
+
+const TagList = lazy(() => import('@/components/tag-list'))
 
 export default function TagsPage() {
   const { status, data: tags } = useTagList()
@@ -36,7 +39,9 @@ export default function TagsPage() {
           </div>
         </div>
         {tags.length > 0 ? (
-          <TagList tags={tags} />
+          <Suspense fallback={<SectionSkeleton />}>
+            <TagList tags={tags} />
+          </Suspense>
         ) : (
           <p className="message">You have no tags</p>
         )}

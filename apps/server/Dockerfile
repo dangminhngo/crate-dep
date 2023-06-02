@@ -46,4 +46,4 @@ RUN adduser --system --uid 1001 server
 USER server
 COPY --from=installer /app .
 
-CMD npx tsx apps/server/app
+CMD pnpm --filter server start

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "wait-port 8080 & vite",
     "build": "tsc && vite build",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "clean": "rimraf ./{.turbo,dist,node_modules}",
     "preview": "vite preview --port 3000",
     "lint": "eslint --fix \"src/**/*.{ts,tsx}\"",
     "ts:check": "tsc --noEmit",

@@ -28,6 +28,8 @@ export default function AuthProvider({ children }: AuthProviderProps) {
         audience: config.auth0Audience,
       }}
       onRedirectCallback={onRedirectCallback}
+      useRefreshTokens={true}
+      cacheLocation="localstorage"
     >
       {children}
     </Auth0Provider>

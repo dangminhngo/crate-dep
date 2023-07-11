@@ -1,8 +1,7 @@
 import { Outlet } from 'react-router-dom'
-
-import { Toaster } from '@/components/primitive'
-import Sidebar from '@/components/sidebar'
-import { styled } from '@/stitches.config'
+import { Toaster } from '~/components/primitive'
+import Sidebar from '~/components/sidebar'
+import { styled } from '~/stitches.config'
 
 export default function AppLayout() {
   return (

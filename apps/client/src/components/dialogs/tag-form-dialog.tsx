@@ -1,8 +1,8 @@
 import { useState } from 'react'
+import { useCreateTag, useUpdateTagById } from '~/hooks'
+import type { RouterOutputs } from '~/lib/trpc'
+import { styled } from '~/stitches.config'
 
-import { useCreateTag, useUpdateTagById } from '@/hooks'
-import type { RouterOutputs } from '@/lib/trpc'
-import { styled } from '@/stitches.config'
 import { AddBox, Clear, Pen } from '../icons'
 import {
   Button,

@@ -1,4 +1,4 @@
-import { SVGProps } from '@/types/shared'
+import { SVGProps } from '~/types/shared'
 
 export default function Logo(props: SVGProps) {
   return (

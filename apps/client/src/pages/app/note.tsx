@@ -2,8 +2,7 @@ import { Suspense, lazy, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { getQueryKey } from '@trpc/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
-
-import NoteFormDialog from '@/components/dialogs/note-form-dialog'
+import NoteFormDialog from '~/components/dialogs/note-form-dialog'
 import {
   Delete,
   DeleteForever,
@@ -13,8 +12,8 @@ import {
   Star,
   StickyNote,
   Visibility,
-} from '@/components/icons'
-import TagsPopover from '@/components/popovers/tags-popover'
+} from '~/components/icons'
+import TagsPopover from '~/components/popovers/tags-popover'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,16 +28,16 @@ import {
   Flex,
   Icon,
   useToast,
-} from '@/components/primitive'
-import IconButton from '@/components/shared/icon-button'
-import { useDeleteNoteById, useNoteById, useUpdateNoteById } from '@/hooks'
-import { downloadAsMd, formatDateTime } from '@/lib/helpers'
-import { trpc } from '@/lib/trpc'
-import { styled } from '@/stitches.config'
+} from '~/components/primitive'
+import IconButton from '~/components/shared/icon-button'
+import { useDeleteNoteById, useNoteById, useUpdateNoteById } from '~/hooks'
+import { downloadAsMd, formatDateTime } from '~/lib/helpers'
+import { trpc } from '~/lib/trpc'
+import { styled } from '~/stitches.config'
 
-const Editor = lazy(() => import('@/components/editor'))
+const Editor = lazy(() => import('~/components/editor'))
 
-const Preview = lazy(() => import('@/components/preview'))
+const Preview = lazy(() => import('~/components/preview'))
 
 export default function NotePage() {
   const navigate = useNavigate()

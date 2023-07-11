@@ -5,8 +5,7 @@
 import { type PreloadedState } from '@reduxjs/toolkit'
 import { render, type RenderOptions } from '@testing-library/react'
 import { Provider } from 'react-redux'
-
-import { setupStore, type AppStore, type RootState } from '@/store'
+import { setupStore, type AppStore, type RootState } from '~/store'
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: PreloadedState<RootState>

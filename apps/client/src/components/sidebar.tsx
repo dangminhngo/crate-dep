@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { styled } from '~/stitches.config'
 
-import { styled } from '@/stitches.config'
 import SearchDialog from './dialogs/search-dialog'
 import SettingsDialog from './dialogs/settings-dialog'
 import {

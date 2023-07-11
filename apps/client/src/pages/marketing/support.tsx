@@ -1,5 +1,5 @@
-import { Container } from '@/components/primitive'
-import { styled } from '@/stitches.config'
+import { Container } from '~/components/primitive'
+import { styled } from '~/stitches.config'
 
 export default function SupportPage() {
   return (

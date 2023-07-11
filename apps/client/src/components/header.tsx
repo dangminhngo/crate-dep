@@ -1,7 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { Link } from 'react-router-dom'
+import { styled } from '~/stitches.config'
 
-import { styled } from '@/stitches.config'
 import Logo from './logo'
 import MainNav from './main-nav'
 import { Button, Container, Icon } from './primitive'

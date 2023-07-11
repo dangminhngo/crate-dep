@@ -1,14 +1,13 @@
 import { Suspense, lazy } from 'react'
+import NoteFormDialog from '~/components/dialogs/note-form-dialog'
+import { FilterAlt, Sort, StickyNote } from '~/components/icons'
+import { Container, Icon } from '~/components/primitive'
+import IconButton from '~/components/shared/icon-button'
+import SectionSkeleton from '~/components/skeletons/section-skeleton'
+import { useNoteList } from '~/hooks'
+import { styled } from '~/stitches.config'
 
-import NoteFormDialog from '@/components/dialogs/note-form-dialog'
-import { FilterAlt, Sort, StickyNote } from '@/components/icons'
-import { Container, Icon } from '@/components/primitive'
-import IconButton from '@/components/shared/icon-button'
-import SectionSkeleton from '@/components/skeletons/section-skeleton'
-import { useNoteList } from '@/hooks'
-import { styled } from '@/stitches.config'
-
-const NoteList = lazy(() => import('@/components/note-list'))
+const NoteList = lazy(() => import('~/components/note-list'))
 
 export default function NotesPage() {
   const { status, data: notes } = useNoteList()

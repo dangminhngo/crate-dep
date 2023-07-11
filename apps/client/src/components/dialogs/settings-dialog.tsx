@@ -1,12 +1,13 @@
-import { useDispatch, useSelector } from '@/hooks'
-import { styled } from '@/stitches.config'
+import { useDispatch, useSelector } from '~/hooks'
+import { styled } from '~/stitches.config'
 import {
   _setTabSize,
   _toggleAutocomplete,
   _toggleHighlightActiveLine,
   _toggleLineNumbers,
   _toggleLineWrapping,
-} from '@/store/slices/settings.slice'
+} from '~/store/slices/settings.slice'
+
 import { Clear, Cog } from '../icons'
 import {
   Dialog,

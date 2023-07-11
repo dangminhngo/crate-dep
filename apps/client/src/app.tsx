@@ -18,20 +18,20 @@ import SupportPage from './pages/marketing/support'
 export default function App() {
   return (
     <Routes>
-      <Route element={<MarketingLayout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/features" element={<FeaturesPage />} />
-        <Route path="/documentation" element={<DocsPage />} />
-        <Route path="/support" element={<SupportPage />} />
+      <Route path="/" element={<MarketingLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="features" element={<FeaturesPage />} />
+        <Route path="documentation" element={<DocsPage />} />
+        <Route path="support" element={<SupportPage />} />
       </Route>
-      <Route element={<AuthGuard component={AppLayout} />}>
-        <Route path="/app" element={<Navigate to="/app/notes" />} />
-        <Route path="/app/notes" element={<NotesPage />} />
-        <Route path="/app/notes/:id" element={<NotePage />} />
-        <Route path="/app/tags" element={<TagsPage />} />
-        <Route path="/app/tags/:id" element={<TagPage />} />
-        <Route path="/app/starred" element={<StarredPage />} />
-        <Route path="/app/trash" element={<TrashPage />} />
+      <Route path="/app" element={<AuthGuard component={AppLayout} />}>
+        <Route path="" element={<Navigate to="/app/notes" />} />
+        <Route path="notes" element={<NotesPage />} />
+        <Route path="notes/:id" element={<NotePage />} />
+        <Route path="tags" element={<TagsPage />} />
+        <Route path="tags/:id" element={<TagPage />} />
+        <Route path="starred" element={<StarredPage />} />
+        <Route path="trash" element={<TrashPage />} />
       </Route>
       <Route path="/callback" element={<CallbackPage />} />
     </Routes>

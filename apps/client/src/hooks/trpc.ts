@@ -1,4 +1,4 @@
-import { trpc, type ReactQueryOptions, type RouterInputs } from '@/lib/trpc'
+import { trpc, type ReactQueryOptions, type RouterInputs } from '~/lib/trpc'
 
 function useCreateNote(options?: ReactQueryOptions['note']['create']) {
   const utils = trpc.useContext()

@@ -1,8 +1,7 @@
 import { Suspense, lazy } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-
-import TagFormDialog from '@/components/dialogs/tag-form-dialog'
-import { Delete, FilterAlt, Label, Sort } from '@/components/icons'
+import TagFormDialog from '~/components/dialogs/tag-form-dialog'
+import { Delete, FilterAlt, Label, Sort } from '~/components/icons'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,13 +16,13 @@ import {
   Container,
   Flex,
   Icon,
-} from '@/components/primitive'
-import IconButton from '@/components/shared/icon-button'
-import SectionSkeleton from '@/components/skeletons/section-skeleton'
-import { useDeleteTagById, useTagById } from '@/hooks'
-import { styled } from '@/stitches.config'
+} from '~/components/primitive'
+import IconButton from '~/components/shared/icon-button'
+import SectionSkeleton from '~/components/skeletons/section-skeleton'
+import { useDeleteTagById, useTagById } from '~/hooks'
+import { styled } from '~/stitches.config'
 
-const NoteList = lazy(() => import('@/components/note-list'))
+const NoteList = lazy(() => import('~/components/note-list'))
 
 export default function TagPage() {
   const params = useParams()

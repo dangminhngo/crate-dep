@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom'
+import { formatDateTime } from '~/lib/helpers'
+import type { RouterOutputs } from '~/lib/trpc'
+import { styled } from '~/stitches.config'
 
-import { formatDateTime } from '@/lib/helpers'
-import type { RouterOutputs } from '@/lib/trpc'
-import { styled } from '@/stitches.config'
 import { Chip, ChipLabel, Table } from './primitive'
 
 interface NoteListProps {

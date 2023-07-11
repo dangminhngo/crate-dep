@@ -1,6 +1,5 @@
 import { HexColorPicker } from 'react-colorful'
-
-import { styled } from '@/stitches.config'
+import { styled } from '~/stitches.config'
 
 interface ColorPickerProps
   extends React.ComponentPropsWithoutRef<typeof HexColorPicker> {

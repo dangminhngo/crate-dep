@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import type { EditorConfig } from '~/types'
 
-import type { EditorConfig } from '@/types'
 import type { RootState } from '..'
 
 interface SettingsState {

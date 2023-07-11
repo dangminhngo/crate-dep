@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { globalCss } from '~/stitches.config'
 
-import { globalCss } from '@/stitches.config'
 import App from './app'
 import Providers from './providers'
 

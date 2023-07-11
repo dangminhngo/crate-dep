@@ -1,4 +1,5 @@
-import { styled } from '@/stitches.config'
+import { styled } from '~/stitches.config'
+
 import { Container, Skeleton, Table } from '../primitive'
 
 export default function SectionSkeleton() {

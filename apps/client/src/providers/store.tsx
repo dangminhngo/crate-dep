@@ -1,6 +1,5 @@
 import { Provider } from 'react-redux'
-
-import { setupStore } from '@/store'
+import { setupStore } from '~/store'
 
 export default function StoreProvider({ children }: React.PropsWithChildren) {
   const store = setupStore()

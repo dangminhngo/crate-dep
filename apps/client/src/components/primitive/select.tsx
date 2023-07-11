@@ -1,7 +1,7 @@
 import React from 'react'
 import * as SelectPrimitive from '@radix-ui/react-select'
+import { styled } from '~/stitches.config'
 
-import { styled } from '@/stitches.config'
 import { Icon } from '.'
 import { Check } from '../icons'
 

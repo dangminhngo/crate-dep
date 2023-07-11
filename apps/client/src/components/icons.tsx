@@ -1,4 +1,4 @@
-import type { SVGProps } from '@/types/shared'
+import type { SVGProps } from '~/types/shared'
 
 function AddBox(props: SVGProps) {
   return (

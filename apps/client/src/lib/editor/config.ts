@@ -34,8 +34,7 @@ import {
   keymap,
   lineNumbers,
 } from '@codemirror/view'
-
-import { EditorConfig } from '@/types'
+import { EditorConfig } from '~/types'
 
 export function basicSetup(): Extension {
   return [

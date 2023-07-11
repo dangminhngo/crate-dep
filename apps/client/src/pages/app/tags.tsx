@@ -1,14 +1,13 @@
 import { Suspense, lazy } from 'react'
+import TagFormDialog from '~/components/dialogs/tag-form-dialog'
+import { Label, Sort } from '~/components/icons'
+import { Container, Icon } from '~/components/primitive'
+import IconButton from '~/components/shared/icon-button'
+import SectionSkeleton from '~/components/skeletons/section-skeleton'
+import { useTagList } from '~/hooks'
+import { styled } from '~/stitches.config'
 
-import TagFormDialog from '@/components/dialogs/tag-form-dialog'
-import { Label, Sort } from '@/components/icons'
-import { Container, Icon } from '@/components/primitive'
-import IconButton from '@/components/shared/icon-button'
-import SectionSkeleton from '@/components/skeletons/section-skeleton'
-import { useTagList } from '@/hooks'
-import { styled } from '@/stitches.config'
-
-const TagList = lazy(() => import('@/components/tag-list'))
+const TagList = lazy(() => import('~/components/tag-list'))
 
 export default function TagsPage() {
   const { status, data: tags } = useTagList()

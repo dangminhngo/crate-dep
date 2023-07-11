@@ -1,5 +1,5 @@
-import { useEditor, useSelector } from '@/hooks'
-import { styled } from '@/stitches.config'
+import { useEditor, useSelector } from '~/hooks'
+import { styled } from '~/stitches.config'
 
 interface EditorProps {
   code: string

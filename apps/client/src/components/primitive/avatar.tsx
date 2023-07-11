@@ -1,6 +1,5 @@
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
-
-import { styled } from '@/stitches.config'
+import { styled } from '~/stitches.config'
 
 const Avatar = styled(AvatarPrimitive.Root, {
   position: 'relative',

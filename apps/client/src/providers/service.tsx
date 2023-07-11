@@ -3,9 +3,8 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { httpBatchLink } from '@trpc/client'
-
-import config from '@/config/default'
-import { trpc } from '@/lib/trpc'
+import config from '~/config/default'
+import { trpc } from '~/lib/trpc'
 
 export default function ServiceProvider({ children }: React.PropsWithChildren) {
   const { getAccessTokenSilently } = useAuth0()

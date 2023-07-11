@@ -1,14 +1,13 @@
 import { RefObject, useEffect, useMemo, useRef, useState } from 'react'
 import { Compartment, EditorState } from '@codemirror/state'
 import { EditorView, ViewUpdate } from '@codemirror/view'
-
 import {
   basicSetup,
   createEditorThemeExtension,
   getCustomExtensionsFromConfig,
-} from '@/lib/editor'
-import { theme } from '@/stitches.config'
-import { EditorConfig } from '@/types'
+} from '~/lib/editor'
+import { theme } from '~/stitches.config'
+import { EditorConfig } from '~/types'
 
 export function useEditor({
   code,

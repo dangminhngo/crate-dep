@@ -1,6 +1,5 @@
 import * as FormPrimitive from '@radix-ui/react-form'
-
-import { styled } from '@/stitches.config'
+import { styled } from '~/stitches.config'
 
 const FormSubmit = FormPrimitive.Submit
 const FormControl = FormPrimitive.Control

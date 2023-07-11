@@ -1,8 +1,7 @@
 import { HighlightStyle, syntaxHighlighting } from '@codemirror/language'
 import { EditorView } from '@codemirror/view'
 import { tags as t } from '@lezer/highlight'
-
-import type { Theme } from '@/stitches.config'
+import type { Theme } from '~/stitches.config'
 
 export function createEditorThemeExtension(theme: Theme) {
   const c = theme.colors

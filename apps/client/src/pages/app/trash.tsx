@@ -1,6 +1,5 @@
 import { Suspense, lazy } from 'react'
-
-import { Delete, DeleteForever, Sort } from '@/components/icons'
+import { Delete, DeleteForever, Sort } from '~/components/icons'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,13 +14,13 @@ import {
   Container,
   Flex,
   Icon,
-} from '@/components/primitive'
-import IconButton from '@/components/shared/icon-button'
-import SectionSkeleton from '@/components/skeletons/section-skeleton'
-import { useEmptyTrash, useNoteList } from '@/hooks'
-import { styled } from '@/stitches.config'
+} from '~/components/primitive'
+import IconButton from '~/components/shared/icon-button'
+import SectionSkeleton from '~/components/skeletons/section-skeleton'
+import { useEmptyTrash, useNoteList } from '~/hooks'
+import { styled } from '~/stitches.config'
 
-const NoteList = lazy(() => import('@/components/note-list'))
+const NoteList = lazy(() => import('~/components/note-list'))
 
 export default function TrashPage() {
   const { status, data: notes } = useNoteList()

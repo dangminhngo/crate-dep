@@ -1,7 +1,7 @@
 import { motion, useTime, useTransform } from 'framer-motion'
+import { styled } from '~/stitches.config'
+import { SVGProps } from '~/types/shared'
 
-import { styled } from '@/stitches.config'
-import { SVGProps } from '@/types/shared'
 import { Icon } from './primitive'
 
 interface SplashProps {

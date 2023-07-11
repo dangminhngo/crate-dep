@@ -1,7 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react'
-
-import { Button, Container } from '@/components/primitive'
-import { styled } from '@/stitches.config'
+import { Button, Container } from '~/components/primitive'
+import { styled } from '~/stitches.config'
 
 export default function HomePage() {
   const { loginWithRedirect } = useAuth0()

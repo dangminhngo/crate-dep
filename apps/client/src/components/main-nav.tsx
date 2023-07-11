@@ -1,6 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-
-import { styled } from '@/stitches.config'
+import { styled } from '~/stitches.config'
 
 const items = [
   {

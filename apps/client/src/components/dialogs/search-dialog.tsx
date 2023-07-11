@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useSearchNote, useSearchTag } from '~/hooks'
+import { styled } from '~/stitches.config'
 
-import { useSearchNote, useSearchTag } from '@/hooks'
-import { styled } from '@/stitches.config'
 import { Clear, Label, Search, StickyNote } from '../icons'
 import {
   Dialog,

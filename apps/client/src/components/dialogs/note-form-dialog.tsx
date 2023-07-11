@@ -1,8 +1,8 @@
 import { useState } from 'react'
+import { useCreateNote, useUpdateNoteById } from '~/hooks'
+import type { RouterOutputs } from '~/lib/trpc'
+import { styled } from '~/stitches.config'
 
-import { useCreateNote, useUpdateNoteById } from '@/hooks'
-import type { RouterOutputs } from '@/lib/trpc'
-import { styled } from '@/stitches.config'
 import { AddBox, Clear, Pen } from '../icons'
 import {
   Button,

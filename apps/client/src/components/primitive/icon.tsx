@@ -1,7 +1,6 @@
 import type { CSS, VariantProps } from '@stitches/react'
-
-import { css, styled } from '@/stitches.config'
-import { SVGProps } from '@/types/shared'
+import { css, styled } from '~/stitches.config'
+import { SVGProps } from '~/types/shared'
 
 const iconVariants = css({
   variants: {

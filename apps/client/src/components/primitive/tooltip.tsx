@@ -1,6 +1,5 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-
-import { styled } from '@/stitches.config'
+import { styled } from '~/stitches.config'
 
 const TooltipProvider = TooltipPrimitive.Provider
 const Tooltip = TooltipPrimitive.Root

@@ -1,7 +1,7 @@
 import { format, parseISO } from 'date-fns'
 import slugify from 'slugify'
+import type { ArrayElementType } from '~/types'
 
-import type { ArrayElementType } from '@/types'
 import type { RouterOutputs } from './trpc'
 
 export function formatDateTime(dateTime: string, fmt: string) {

@@ -1,13 +1,13 @@
 import { useMemo, useRef, useState } from 'react'
-
 import {
   useAssignNoteTag,
   useOnClickOutside,
   useRemoveNoteTag,
   useSearchTag,
-} from '@/hooks'
-import type { RouterOutputs } from '@/lib/trpc'
-import { styled } from '@/stitches.config'
+} from '~/hooks'
+import type { RouterOutputs } from '~/lib/trpc'
+import { styled } from '~/stitches.config'
+
 import { AddBox, Clear, Label } from '../icons'
 import {
   Chip,

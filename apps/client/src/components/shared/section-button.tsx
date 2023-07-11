@@ -1,7 +1,7 @@
 import React from 'react'
+import { styled } from '~/stitches.config'
+import { SVGProps } from '~/types/shared'
 
-import { styled } from '@/stitches.config'
-import { SVGProps } from '@/types/shared'
 import {
   Icon,
   Tooltip,

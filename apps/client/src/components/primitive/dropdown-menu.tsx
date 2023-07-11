@@ -1,6 +1,5 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-
-import { keyframes, styled } from '@/stitches.config'
+import { keyframes, styled } from '~/stitches.config'
 
 const DropdownMenu = DropdownMenuPrimitive.Root
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger

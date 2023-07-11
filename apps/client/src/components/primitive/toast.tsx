@@ -1,6 +1,5 @@
 import * as ToastPrimitive from '@radix-ui/react-toast'
-
-import { keyframes, styled } from '@/stitches.config'
+import { keyframes, styled } from '~/stitches.config'
 
 const { Provider: ToastProvider, Close: ToastClose } = ToastPrimitive
 

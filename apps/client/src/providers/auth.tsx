@@ -20,6 +20,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
+    // FIX: Loop redirect to callback when login successfully
     <Auth0Provider
       domain={config.auth0Domain}
       clientId={config.auth0ClientId}
@@ -29,6 +30,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       }}
       onRedirectCallback={onRedirectCallback}
       useRefreshTokens={true}
+      useRefreshTokensFallback={true}
       cacheLocation="localstorage"
     >
       {children}

@@ -2,6 +2,7 @@ import { Suspense, lazy, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { getQueryKey } from '@trpc/react-query'
 import { useNavigate, useParams } from 'react-router-dom'
+import { throttle } from 'throttle-debounce'
 import NoteFormDialog from '~/components/dialogs/note-form-dialog'
 import {
   Delete,
@@ -47,6 +48,7 @@ export default function NotePage() {
   const { toast } = useToast()
   const queryClient = useQueryClient()
   const { status, data: note } = useNoteById(params.id as string)
+
   const { mutate: updateNote } = useUpdateNoteById({
     onMutate: async (data) => {
       const noteQueryKey = getQueryKey(trpc.note.byId)
@@ -56,13 +58,16 @@ export default function NotePage() {
       return previousNote
     },
     onSuccess: (_, variables) => {
-      if (variables.data.trashed) {
+      if (variables.data.trashed === true) {
         toast({
           variant: 'destructive',
           title: 'Trash Updated',
           description: 'A note has been trashed.',
         })
-      } else {
+        return
+      }
+
+      if (variables.data.trashed === false) {
         toast({
           variant: 'success',
           title: 'Note Restored',
@@ -71,6 +76,7 @@ export default function NotePage() {
       }
     },
   })
+  const throttleUpdateNote = throttle(1500, updateNote)
 
   const { mutate: deleteNote } = useDeleteNoteById({
     onSuccess: () => {
@@ -95,7 +101,9 @@ export default function NotePage() {
           ) : (
             <Editor
               code={note.code}
-              setCode={(code) => updateNote({ id: note.id, data: { code } })}
+              setCode={(code) =>
+                throttleUpdateNote({ id: note.id, data: { code } })
+              }
             />
           )}
         </div>

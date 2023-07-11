@@ -54,7 +54,8 @@
     "rehype-prism-plus": "^1.5.1",
     "rehype-slug": "^5.1.0",
     "remark-gfm": "^3.0.1",
-    "slugify": "^1.6.6"
+    "slugify": "^1.6.6",
+    "throttle-debounce": "^5.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -63,6 +64,7 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
     "@types/testing-library__jest-dom": "^5.14.5",
+    "@types/throttle-debounce": "^5.0.0",
     "@vitejs/plugin-react-swc": "^3.3.1",
     "eslint": "^8.39.0",
     "eslint-config-custom": "workspace:*",

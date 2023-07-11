@@ -1,7 +1,13 @@
 /*
  * @link https://usehooks-ts.com/react-hook/use-on-click-outside
  */
-import { useEffect, useLayoutEffect, useRef, type RefObject } from 'react'
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from 'react'
 
 type Handler = (event: MouseEvent) => void
 
@@ -108,6 +114,20 @@ function useEventListener<
       targetElement.removeEventListener(eventName, listener, options)
     }
   }, [eventName, element, options])
+}
+
+export function useDebounce<T>(value: T, delay?: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(value), delay || 500)
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [value, delay])
+
+  return debouncedValue
 }
 
 export { useEventListener, useOnClickOutside }

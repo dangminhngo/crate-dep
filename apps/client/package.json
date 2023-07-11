@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wait-port 8080 & vite",
+    "dev": "wait-port 8080 & vite --port 3000",
     "build": "tsc && vite build",
     "clean": "rimraf ./{.turbo,dist,node_modules}",
     "preview": "vite preview --port 3000",

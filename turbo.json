@@ -32,7 +32,8 @@
     },
     "db:seed": {
       "cache": false
-    }
+    },
+    "db:studio": { "cache": false }
   },
   "globalDependencies": [".env.local", ".env"],
   "globalEnv": [

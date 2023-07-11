@@ -17,8 +17,7 @@
     "db:push": "dotenv -e .env.local turbo db:push",
     "db:seed": "dotenv -e .env.local turbo db:seed",
     "db:studio": "dotenv -e .env.local turbo db:studio",
-    "prepare": "husky install",
-    "postinstall": "pnpm db:generate"
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.1",

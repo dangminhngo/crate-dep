@@ -57,14 +57,6 @@ export function useEditor({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref])
 
-  // update code when the current note changes
-  useEffect(() => {
-    view?.dispatch({
-      changes: { from: 0, to: view.state.doc.length, insert: code },
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [code])
-
   // dynamic configs
   useEffect(() => {
     view?.dispatch({

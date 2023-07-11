@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useSearchNote, useSearchTag } from '~/hooks'
+import { useDebounce, useSearchNote, useSearchTag } from '~/hooks'
 import { styled } from '~/stitches.config'
 
 import { Clear, Label, Search, StickyNote } from '../icons'
@@ -25,8 +25,9 @@ import SectionButton from '../shared/section-button'
 
 export default function SearchDialog() {
   const [keyword, setKeyword] = useState('')
-  const searchNote = useSearchNote(keyword)
-  const searchTag = useSearchTag(keyword)
+  const debouncedKeyword = useDebounce(keyword, 500)
+  const searchNote = useSearchNote(debouncedKeyword)
+  const searchTag = useSearchTag(debouncedKeyword)
 
   const handleSearchInputChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -122,7 +123,7 @@ const StyledSearchContainer = styled('div', {
   gap: '$6',
 
   '.search__result': {
-    maxH: '390px',
+    h: '60vh',
     overflow: 'auto',
   },
 

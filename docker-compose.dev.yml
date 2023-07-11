@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  db:
+    image: mongo
+    container_name: db
+    restart: always
+    expose:
+      - 27017
+    ports:
+      - 27017:27017
+    command: mongod --replSet rs0 --bind_ip_all --port 27017
+    volumes:
+      - dbdata:/data/db
+
+volumes:
+  dbdata:

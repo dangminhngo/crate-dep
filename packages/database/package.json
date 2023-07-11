@@ -16,9 +16,9 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate",
     "db:seed": "prisma db seed",
+    "db:studio": "prisma studio",
     "prebuild": "pnpm generate",
-    "predev": "pnpm generate",
-    "studio": "prisma studio"
+    "predev": "pnpm generate"
   },
   "dependencies": {
     "@prisma/client": "latest"

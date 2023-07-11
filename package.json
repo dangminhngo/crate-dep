@@ -13,9 +13,10 @@
     "test:e2e": "start-server-and-test dev http://localhost:3000 \"playwright test\"",
     "test:dev": "start-server-and-test dev http://localhost:3000 test",
     "test:start": "start-server-and-test start http://localhost:3000 test",
-    "db:generate": "turbo db:generate",
-    "db:push": "turbo db:push",
-    "db:seed": "turbo db:seed",
+    "db:generate": "dotenv -e .env.local turbo db:generate",
+    "db:push": "dotenv -e .env.local turbo db:push",
+    "db:seed": "dotenv -e .env.local turbo db:seed",
+    "db:studio": "dotenv -e .env.local turbo db:studio",
     "prepare": "husky install",
     "postinstall": "pnpm db:generate"
   },

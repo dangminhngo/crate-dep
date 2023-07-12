@@ -30,7 +30,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "eslint": "^8.39.0",
-    "eslint-config-custom": "workspace:*",
+    "eslint-config-custom-server": "workspace:*",
     "tsconfig": "workspace:*",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^3.12.7",

@@ -13,7 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@auth0/auth0-react": "^2.0.2",
+    "@auth0/auth0-react": "^2.1.1",
     "@codemirror/autocomplete": "^6.6.0",
     "@codemirror/commands": "^6.2.3",
     "@codemirror/lang-markdown": "^6.1.1",

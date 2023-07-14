@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import AuthGuard from './components/auth-guard'
+import config from './config/default'
 import AppLayout from './pages/app/layout'
 import NotePage from './pages/app/note'
 import NotesPage from './pages/app/notes'
@@ -16,6 +17,7 @@ import MarketingLayout from './pages/marketing/layout'
 import SupportPage from './pages/marketing/support'
 
 export default function App() {
+  console.log(config)
   return (
     <Routes>
       <Route path="/" element={<MarketingLayout />}>

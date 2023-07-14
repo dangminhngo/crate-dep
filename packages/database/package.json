@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
-  "types": "./index.ts",
+  "types": "./src/index.ts",
   "files": [
     "dist/**"
   ],
@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "clean": "rimraf ./{.turbo,node_modules,dist}",
+    "clean": "rimraf .turbo node_modules dist generated",
     "db:generate": "prisma generate",
     "db:push": "prisma db push --skip-generate",
     "db:seed": "prisma db seed",
@@ -21,11 +21,12 @@
     "predev": "pnpm generate"
   },
   "dependencies": {
-    "@prisma/client": "latest"
+    "@prisma/client": "^4.16.2"
   },
   "devDependencies": {
     "@types/node": "^18.16.3",
-    "prisma": "latest",
+    "eslint-config-custom-server": "workspace:*",
+    "prisma": "^4.16.2",
     "tsconfig": "workspace:*",
     "tsup": "^6.7.0",
     "tsx": "^3.12.7",

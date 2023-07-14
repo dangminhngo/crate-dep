@@ -1,15 +1,14 @@
 {
   "extends": "./base.json",
+  "display": "Vite",
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
     "resolveJsonModule": true,
-    "sourceMap": true,
-    "declaration": false,
-    "declarationMap": false,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true

@@ -12,12 +12,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     navigate(appState?.returnTo || window.location.pathname)
   }
 
-  if (
-    !(config.auth0Domain && config.auth0ClientId && config.auth0CallbackURL)
-  ) {
-    return null
-  }
-
   return (
     // FIX: Loop redirect to callback when login successfully
     <Auth0Provider

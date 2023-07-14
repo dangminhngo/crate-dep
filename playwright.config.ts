@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3000'
+const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3002'
 const opts = {
   headless: !!process.env.CI || !!process.env.PLAYWRIGHT_HEADLESS,
 }

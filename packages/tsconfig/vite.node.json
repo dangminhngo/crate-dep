@@ -1,6 +1,7 @@
 {
+  "display": "Vite Node",
   "compilerOptions": {
     "composite": true,
-    "allowSyntheticDefaultImports": true 
+    "allowSyntheticDefaultImports": true
   }
 }

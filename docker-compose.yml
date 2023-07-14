@@ -3,33 +3,45 @@ version: '3'
 services:
   db:
     image: mongo
-    container_name: db
+    container_name: crate-db
     restart: always
+    expose:
+      - 27017
     ports:
-      - 27017:27017
+      - 27018:27017
+    command: mongod --replSet rs0 --bind_ip_all --port 27017
     networks:
-      - app_network
+      - crate
+    volumes:
+      - dbdata:/data/db
   client:
-    container_name: client
+    container_name: crate-client
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: ./apps/client/Dockerfile
     restart: always
     ports:
-      - 3000:80
+      - 3002:3002
     networks:
-      - app_network
+      - crate
   server:
-    container_name: server
+    container_name: crate-server
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: ./apps/server/Dockerfile
     restart: always
     ports:
-      - 8080:8080
+      - 3001:3001
     networks:
-      - app_network
+      - crate
 
 networks:
-  app_network:
-    external: true
+  crate:
+    driver: bridge
+
+volumes:
+  dbdata:

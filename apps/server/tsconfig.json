@@ -8,6 +8,6 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true
   },
-  "include": ["**/*.ts"],
-  "exclude": ["mocks/**/*.ts", "*.config.ts", "dist"]
+  "include": ["src"],
+  "exclude": ["src/mocks", "*.config.ts", "dist"]
 }

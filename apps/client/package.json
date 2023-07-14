@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wait-port 8080 & vite --port 3000",
+    "dev": "wait-port 3001 & vite --port 3002",
     "build": "tsc && vite build",
-    "clean": "rimraf ./{.turbo,dist,node_modules}",
-    "preview": "vite preview --port 3000",
+    "clean": "rimraf .turbo dist node_modules",
+    "preview": "vite preview --port 3002",
     "lint": "eslint --fix \"src/**/*.{ts,tsx}\"",
     "ts:check": "tsc --noEmit",
     "test": "jest"

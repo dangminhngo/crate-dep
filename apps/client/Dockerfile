@@ -1,5 +1,5 @@
 FROM node:18-alpine AS base
-RUN corepack enable && corepack prepare pnpm@8.6.1 --activate
+RUN corepack enable && corepack prepare pnpm@8.6.6 --activate
 
 # The web Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
 # Make sure you update this Dockerfile, the Dockerfile in the web workspace and copy that over to Dockerfile in the docs.
@@ -19,7 +19,6 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 WORKDIR /app
 # First install dependencies (as they change less often)
-COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 # Build the project and its dependencies
@@ -33,7 +32,8 @@ RUN pnpm i
 
 # ARG TURBO_TOKEN
 # ENV TURBO_TOKEN=$TURBO_TOKEN
-
+COPY .env ./apps/client/.env
+RUN pnpm run db:generate 
 RUN pnpm dlx turbo run build --filter="@crate/client..."
 
 FROM nginx:1.23.3-alpine AS runner

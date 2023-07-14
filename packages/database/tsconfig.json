@@ -5,7 +5,8 @@
     "module": "commonjs",
     "declaration": false,
     "declarationMap": false,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "outDir": "dist"
   },
-  "include": ["./**/*.ts", "tsup.config.ts"]
+  "include": ["src", "tsup.config.ts"]
 }

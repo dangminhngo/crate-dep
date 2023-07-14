@@ -5,12 +5,12 @@ import StoreProvider from './store'
 
 export default function Providers({ children }: React.PropsWithChildren) {
   return (
-    <RouterProvider>
-      <AuthProvider>
-        <ServiceProvider>
-          <StoreProvider>{children}</StoreProvider>
-        </ServiceProvider>
-      </AuthProvider>
-    </RouterProvider>
+    <StoreProvider>
+      <RouterProvider>
+        <AuthProvider>
+          <ServiceProvider>{children}</ServiceProvider>
+        </AuthProvider>
+      </RouterProvider>
+    </StoreProvider>
   )
 }

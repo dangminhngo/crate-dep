@@ -10,8 +10,6 @@ export { appRouter, type AppRouter }
 
 const app = express()
 
-console.log(config)
-
 app.use(
   cors({
     origin: [config.clientOriginUrl],

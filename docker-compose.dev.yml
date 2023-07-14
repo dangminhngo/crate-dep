@@ -1,14 +1,14 @@
 version: '3'
 
 services:
-  db:
+  devmongo:
     image: mongo
     container_name: crate-dev-db
     restart: always
     expose:
       - 27017
     ports:
-      - 27019:27017
+      - 27017:27017
     command: mongod --replSet rs0 --bind_ip_all --port 27017
     volumes:
       - dbdata:/data/db

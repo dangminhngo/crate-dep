@@ -27,7 +27,6 @@ const AlertDialogOverlay = styled(AlertDialogPrimitive.Overlay, {
 const AlertDialogContent = styled(AlertDialogPrimitive.Content, {
   backgroundColor: '$slate900',
   borderRadius: '$base',
-  border: `1px solid $slate800`,
   position: 'fixed',
   top: '50%',
   left: '50%',

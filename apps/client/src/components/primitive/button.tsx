@@ -34,7 +34,7 @@ const Button = styled('button', {
         border: '1px solid',
         borderColor: '$slate700',
         '&:hover': {
-          background: '$slate800',
+          background: '$slate900',
           color: '$primaryLight',
         },
       },

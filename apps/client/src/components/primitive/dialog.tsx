@@ -24,7 +24,7 @@ const DialogOverlay = styled(DialogPrimitive.Overlay, {
 })
 
 const DialogContent = styled(DialogPrimitive.Content, {
-  backgroundColor: '$slate900',
+  backgroundColor: '$slate950',
   br: '$base',
   border: '1px solid $slate800',
   boxShadow:

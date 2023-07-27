@@ -30,8 +30,7 @@ const PopoverContent = styled(PopoverPrimitive.Content, {
   p: '$4',
   minW: '300px',
   minH: '300px',
-  backgroundColor: '$slate900',
-  border: '1px solid $slate700',
+  backgroundColor: '$slate950',
   boxShadow:
     'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
   animationDuration: '400ms',
@@ -49,7 +48,7 @@ const PopoverContent = styled(PopoverPrimitive.Content, {
 })
 
 const PopoverArrow = styled(PopoverPrimitive.Arrow, {
-  fill: '$slate900',
+  fill: '$slate950',
 })
 
 const PopoverClose = styled(PopoverPrimitive.Close, {
